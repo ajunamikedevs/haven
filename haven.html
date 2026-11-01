@@ -132,7 +132,8 @@ svg.i { width: 20px; height: 20px; flex: none; fill: none; stroke: currentColor;
 
 /* ---------- App shell ---------- */
 body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--bg); }
-.app-top { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: color-mix(in srgb, var(--bg) 92%, transparent); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); }
+/* Solid background on purpose: a backdrop-filter here would trap the phone tab bar (position: fixed) inside the header. */
+.app-top { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--bg); border-bottom: 1px solid var(--line); }
 .app-top .wrap { display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 64px; }
 .tabs { display: flex; gap: 4px; }
 .tab { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 14px; border-radius: 12px; text-decoration: none; color: var(--muted); font-weight: 500; font-size: 15px; position: relative; }
@@ -208,10 +209,14 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
 .cook-btn { align-self: center; min-height: 40px; padding: 0 10px; border-radius: 10px; border: 1px solid var(--sage-line); background: var(--surface); color: var(--sage-ink); font-size: 13px; font-weight: 600; display: inline-flex; align-items: center; gap: 4px; flex: none; }
 .cook-btn[aria-pressed="true"] { background: var(--sage); border-color: var(--sage); color: var(--on-sage); }
 .cook-btn svg { width: 16px; height: 16px; }
-.dinner-empty { margin-top: 12px; border: 1.5px dashed var(--line); border-radius: var(--r-md); padding: 14px; display: flex; flex-direction: column; gap: 12px; }
-.dinner-empty p { font-size: 14px; }
-.dinner-empty .row { display: flex; gap: 8px; flex-wrap: wrap; }
-.dinner-empty .row .btn { flex: 1 1 140px; }
+.dinner-add { margin-top: 12px; width: 100%; min-height: 76px; display: flex; align-items: center; gap: 12px; padding: 12px 14px; text-align: left; border: 1.5px dashed var(--line); border-radius: var(--r-md); background: transparent; color: var(--ink); }
+.dinner-add:hover { border-color: var(--clay); background: var(--sand); }
+.dinner-add .plus { width: 44px; height: 44px; border-radius: 12px; background: var(--sand); color: var(--clay-ink); display: grid; place-items: center; flex: none; }
+.dinner-add .plus svg { width: 22px; height: 22px; stroke-width: 2.2; }
+.dinner-add strong { display: block; font-size: 16px; font-weight: 600; }
+.dinner-add span.hint { display: block; font-size: 13px; color: var(--muted); }
+.saved-note { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; color: var(--muted); }
+.saved-note svg { width: 16px; height: 16px; color: var(--sage-ink); }
 
 /* ---------- Grocery ---------- */
 .page-head { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 16px; margin-bottom: 20px; }
@@ -266,17 +271,21 @@ dialog::backdrop { background: rgba(35,30,26,.45); }
 .chips { display: flex; flex-wrap: wrap; gap: 8px; }
 .chip { min-height: 40px; padding: 0 14px; border-radius: 999px; border: 1px solid var(--line); background: var(--surface); font-size: 14px; font-weight: 500; }
 .chip[aria-pressed="true"] { background: var(--ink); border-color: var(--ink); color: var(--bg); }
+.dlg-section { display: flex; flex-direction: column; gap: 10px; }
+.dlg-section h3 { font-size: 16px; }
 .meals { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
-.meal { display: flex; align-items: center; gap: 12px; padding: 12px 14px; border-radius: 16px; background: var(--surface); border: 1px solid var(--line); }
+.meal { width: 100%; min-height: 64px; display: flex; align-items: center; gap: 12px; padding: 12px 14px; text-align: left; border-radius: 16px; background: var(--surface); border: 1px solid var(--line); color: var(--ink); }
+.meal:hover { border-color: var(--clay); }
+.meal .go { color: var(--muted); }
 .meal.current { border-color: var(--sage); background: var(--sage-tint); }
-.meal.suggested { border-color: var(--gold); }
+.meal.suggested { border: 2px solid var(--gold); }
 .meal-text { flex: 1; min-width: 0; display: flex; flex-direction: column; }
 .meal-name { font-weight: 600; font-size: 15px; }
 .meal-meta { font-size: 13px; color: var(--muted); }
 .current-card { display: flex; align-items: center; gap: 12px; background: var(--sage-tint); border: 1px solid var(--sage-line); border-radius: 16px; padding: 12px 14px; }
-details.own { border: 1px solid var(--line); border-radius: 16px; background: var(--surface); }
-details.own summary { cursor: pointer; padding: 14px 16px; font-weight: 600; font-size: 15px; min-height: 48px; }
-details.own form { padding: 0 16px 16px; display: flex; flex-direction: column; gap: 12px; }
+.own-form { display: flex; flex-direction: column; gap: 10px; background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 14px; }
+details.more summary { cursor: pointer; font-size: 14px; font-weight: 500; color: var(--clay-ink); min-height: 44px; display: flex; align-items: center; }
+details.more[open] summary { margin-bottom: 6px; }
 .form-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 12px; }
 
 .toast { position: fixed; left: 50%; bottom: calc(24px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%) translateY(20px); opacity: 0; background: var(--ink); color: var(--bg); padding: 12px 18px; border-radius: 14px; font-size: 15px; font-weight: 500; pointer-events: none; transition: opacity .2s ease, transform .2s ease; z-index: 30; max-width: calc(100% - 32px); }
@@ -642,8 +651,9 @@ details.own form { padding: 0 16px 16px; display: flex; flex-direction: column; 
     const organizer = state.members[0] ? ', ' + esc(state.members[0].name) : '';
 
     let html = '<div class="week-head"><div><p class="sub">' + greeting + organizer + '</p><h1>This week</h1><p class="sub">' + esc(fmtDay(0)) + ' – ' + esc(fmtDay(6)) + '</p></div>';
+    html += '<div style="display:flex;flex-direction:column;align-items:flex-start;gap:6px">';
     if (state.isExample) html += '<span class="example-note">Example week. Change anything you like.</span>';
-    html += '</div>';
+    html += '<span class="saved-note">' + icon('check') + 'Your week is saved on this device</span></div></div>';
 
     html += '<section class="summary" aria-label="Week summary"><div class="summary-text"><div class="summary-line"><strong>' + planned + ' of 7 dinners planned</strong>';
     if (firstOpen != null) html += '<a href="#day-' + firstOpen + '" data-act="jump" data-day="' + firstOpen + '">' + (openDays.length === 1 ? DAY_NAMES[firstOpen] + ' is still open' : openDays.length + ' nights still open') + '</a>';
@@ -691,9 +701,8 @@ details.own form { padding: 0 16px 16px; display: flex; flex-direction: column; 
       h += '<div class="dinner' + (dinner.cooked ? ' cooked' : '') + '"><button class="dinner-main" type="button" data-act="open-dinner" data-day="' + i + '" aria-label="Change dinner for ' + DAY_NAMES[i] + ': ' + esc(dinner.name) + '"><span class="pot">' + icon('pot') + '</span><span class="dinner-text"><span class="label">Dinner</span><span class="dinner-name">' + esc(dinner.name) + '</span><span class="dinner-meta">' + esc(mealMeta(dinner)) + '</span></span></button>' +
         '<button class="cook-btn" type="button" data-act="toggle-cooked" data-day="' + i + '" aria-pressed="' + (dinner.cooked ? 'true' : 'false') + '">' + (dinner.cooked ? icon('check') + 'Cooked' : 'Mark cooked') + '</button></div>';
     } else {
-      const busy = isBusyEvening(i);
-      h += '<div class="dinner-empty"><div><span class="label" style="color:var(--muted)">Dinner · not planned</span><p>' + (busy ? 'Busy evening. A 15–25 minute meal could help.' : 'Pick a meal and its ingredients go on the grocery list.') + '</p></div>' +
-        '<div class="row"><button class="btn btn-sage btn-sm" type="button" data-act="suggest" data-day="' + i + '">' + icon('shuffle') + 'Suggest a meal</button><button class="btn btn-quiet btn-sm" type="button" data-act="open-dinner" data-day="' + i + '">Choose a meal</button></div></div>';
+      const hint = isBusyEvening(i) ? 'Busy evening, so a quick meal might help' : 'Pick a family favorite or type your own';
+      h += '<button class="dinner-add" type="button" data-act="open-dinner" data-day="' + i + '"><span class="plus">' + icon('plus') + '</span><span><strong>No dinner planned yet. Tap to add.</strong><span class="hint">' + hint + '</span></span></button>';
     }
     h += '</div></section>';
     return h;
@@ -780,31 +789,37 @@ details.own form { padding: 0 16px 16px; display: flex; flex-direction: column; 
     const day = ui.dinnerDay, current = state.dinners[day];
     let list = LIBRARY.filter((m) => ui.effortFilter === 'all' || m.effort === ui.effortFilter);
     if (ui.suggestedId) list = list.slice().sort((a, b) => (b.id === ui.suggestedId) - (a.id === ui.suggestedId));
+    const own = current && !current.libId ? current : null;
     let h = '<div class="dlg-head"><h2 id="dinnerTitle">Dinner for ' + esc(fmtDay(day)) + '</h2><button class="icon-btn" type="button" data-act="close-dialog" aria-label="Close">' + icon('x') + '</button></div><div class="dlg-body">';
-    if (isBusyEvening(day)) h += '<div class="note">' + icon('clock') + '<span>' + DAY_NAMES[day] + ' has plans after 5 pm, so quick meals are shown first.</span></div>';
+
+    // Current dinner, with the one way to clear it
     if (current) {
-      h += '<div class="current-card"><span class="pot">' + icon('pot') + '</span><div class="meal-text"><span class="label">Planned</span><span class="meal-name">' + esc(current.name) + '</span><span class="meal-meta">' + esc(mealMeta(current)) + '</span></div><button class="btn btn-danger btn-sm" type="button" data-act="remove-dinner">Remove</button></div>';
+      h += '<div class="current-card"><span class="pot">' + icon('pot') + '</span><div class="meal-text"><span class="label">Planned now</span><span class="meal-name">' + esc(current.name) + '</span></div><button class="btn btn-danger btn-sm" type="button" data-act="remove-dinner">' + icon('trash') + 'Clear</button></div>';
     }
-    h += '<div style="display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between"><div class="chips" role="group" aria-label="Filter by effort">';
-    [['all', 'All meals'], ['quick', 'Quick'], ['normal', 'Normal'], ['involved', 'Involved']].forEach(([k, label]) => {
+
+    // 1. Type your own: the quickest path
+    h += '<form class="dlg-section own-form" data-form="own-meal"><h3><label for="ownName">' + (current ? 'Change it to something else' : 'What’s for dinner?') + '</label></h3>' +
+      '<input class="input" id="ownName" name="name" required placeholder="Type a meal, like Grandma’s chili" autocomplete="off" value="' + (own ? esc(own.name) : '') + '">' +
+      '<details class="more"' + (own && own.ing.length ? ' open' : '') + '><summary>Add ingredients for the grocery list (optional)</summary>' +
+      '<textarea class="input" id="ownIng" name="ing" aria-label="Ingredients, one per line" placeholder="One per line, for example&#10;ground beef&#10;kidney beans&#10;chili powder">' + (own ? esc(own.ing.map((r) => r[0]).join('\n')) : '') + '</textarea></details>' +
+      '<button class="btn btn-primary" type="submit">' + icon('check') + 'Save dinner</button></form>';
+
+    // 2. Or pick a family favorite
+    h += '<section class="dlg-section" aria-labelledby="favTitle"><h3 id="favTitle">Or pick a family favorite</h3>';
+    if (isBusyEvening(day)) h += '<div class="note">' + icon('clock') + '<span>' + DAY_NAMES[day] + ' has plans after 5 pm, so quick meals are shown first.</span></div>';
+    h += '<div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between"><div class="chips" role="group" aria-label="Show meals by effort">';
+    [['all', 'All'], ['quick', 'Quick'], ['normal', 'Normal'], ['involved', 'Takes longer']].forEach(([k, label]) => {
       h += '<button class="chip" type="button" data-act="filter" data-effort="' + k + '" aria-pressed="' + (ui.effortFilter === k) + '">' + label + '</button>';
     });
-    h += '</div><button class="btn btn-sage btn-sm" type="button" data-act="surprise">' + icon('shuffle') + 'Suggest one</button></div>';
-    h += '<ul class="meals">';
+    h += '</div><button class="btn btn-text" type="button" data-act="surprise">' + icon('shuffle') + 'Suggest one</button></div><ul class="meals">';
     list.forEach((m) => {
       const isCurrent = current && current.libId === m.id;
       const isSug = ui.suggestedId === m.id;
-      h += '<li class="meal' + (isCurrent ? ' current' : '') + (isSug ? ' suggested' : '') + '"><div class="meal-text">' + (isSug ? '<span class="label" style="color:var(--amber-ink)">Suggested</span>' : '') + '<span class="meal-name">' + esc(m.name) + '</span><span class="meal-meta">' + esc(mealMeta(m)) + ' · ' + m.ing.length + ' ingredients</span></div>' +
-        (isCurrent ? '<span class="label">Chosen</span>' : '<button class="btn ' + (isSug ? 'btn-primary' : 'btn-quiet') + ' btn-sm" type="button" data-act="choose-meal" data-id="' + m.id + '">Choose</button>') + '</li>';
+      h += '<li><button class="meal' + (isCurrent ? ' current' : '') + (isSug ? ' suggested' : '') + '" type="button" data-act="choose-meal" data-id="' + m.id + '"' + (isCurrent ? ' aria-current="true"' : '') + '>' +
+        '<span class="meal-text">' + (isSug ? '<span class="label" style="color:var(--amber-ink)">Suggested</span>' : '') + (isCurrent ? '<span class="label">Planned now</span>' : '') +
+        '<span class="meal-name">' + esc(m.name) + '</span><span class="meal-meta">' + esc(mealMeta(m)) + '</span></span><span class="go">' + icon(isCurrent ? 'check' : 'plus') + '</span></button></li>';
     });
-    h += '</ul>';
-    h += '<details class="own"' + (current && !current.libId ? ' open' : '') + '><summary>Add your own meal</summary><form data-form="own-meal">' +
-      '<div class="field"><label for="ownName">Meal name</label><input class="input" id="ownName" name="name" required placeholder="Grandma’s chili" value="' + (current && !current.libId ? esc(current.name) : '') + '"></div>' +
-      '<div class="form-grid"><div class="field"><label for="ownMinutes">Minutes <span class="muted">(optional)</span></label><input class="input" id="ownMinutes" name="minutes" type="number" min="1" max="600" inputmode="numeric" value="' + (current && !current.libId && current.minutes ? current.minutes : '') + '"></div>' +
-      '<div class="field"><label for="ownEffort">Effort</label><select class="input" id="ownEffort" name="effort"><option value="quick">Quick</option><option value="normal" selected>Normal</option><option value="involved">Involved</option></select></div></div>' +
-      '<div class="field"><label for="ownIng">Ingredients</label><textarea class="input" id="ownIng" name="ing" placeholder="One per line, e.g.&#10;ground beef&#10;kidney beans&#10;chili powder">' + (current && !current.libId ? esc(current.ing.map((r) => r[0]).join('\n')) : '') + '</textarea><span class="hint">Each line becomes a grocery list item.</span></div>' +
-      '<button class="btn btn-primary" type="submit">Save this meal</button></form></details>';
-    h += '</div>';
+    h += '</ul></section></div>';
     dinnerDlg.innerHTML = h;
   }
 
@@ -914,7 +929,7 @@ details.own form { padding: 0 16px 16px; display: flex; flex-direction: column; 
       }
       case 'remove-dinner':
         delete state.dinners[ui.dinnerDay];
-        closeDialogs(); commit(); toast('Dinner removed. Its ingredients left the list.'); break;
+        closeDialogs(); commit(); toast('Dinner cleared. Its ingredients came off the list.'); break;
       case 'toggle-cooked': {
         const d = state.dinners[day];
         d.cooked = !d.cooked; commit(); break;
@@ -979,9 +994,8 @@ details.own form { padding: 0 16px 16px; display: flex; flex-direction: column; 
       const name = String(data.get('name')).trim();
       if (!name) return;
       const ing = String(data.get('ing') || '').split('\n').map((s) => s.trim()).filter(Boolean).map((n) => [n, null, '', 'Other']);
-      const minutes = Number(data.get('minutes')) || null;
       const d = ui.dinnerDay;
-      setDinner(d, { libId: null, name, minutes, effort: String(data.get('effort')), tags: ['Your recipe'], ing, cooked: false });
+      setDinner(d, { libId: null, name, minutes: null, effort: null, tags: ['Your meal'], ing, cooked: false });
       closeDialogs(); toast(name + ' added to ' + DAY_NAMES[d] + '.');
     }
     if (kind === 'add-extra') {
