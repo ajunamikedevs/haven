@@ -1,0 +1,1027 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<style>
+:root { color-scheme: light; padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px); }
+body { margin: 0; font: 14px/1.4 system-ui, -apple-system, "Segoe UI", sans-serif; }
+img { max-width: 100%; }
+[hidden] { display: none !important; }
+</style>
+</head>
+<body>
+<title>Haven</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Plus+Jakarta+Sans:wght@600;700&display=swap">
+<style>
+/* Layout: one calm column (landing) and a week of day cards that flows from 1 to 3 columns; nav sits on top on desktop and at the bottom on phones. */
+:root {
+  --bg: #FBF9F7; --sand: #F3EDE6; --surface: #FFFFFF;
+  --line: #E8E2DB; --line-soft: #F0EBE5;
+  --ink: #2C2A28; --muted: #6B6560;
+  --clay: #C47A5A; --clay-strong: #A65D40; --clay-ink: #8A4A31; --on-accent: #FFFFFF;
+  --sage: #8FA38A; --sage-ink: #4E6249; --sage-tint: #EEF2EC; --sage-line: #D5DED1; --on-sage: #1F2A1D;
+  --gold: #D4A574;
+  --amber-tint: #FBF1E4; --amber-line: #EED9BC; --amber-ink: #7A5424;
+  --danger: #B4533F;
+  --shadow: 0 1px 2px rgba(44,42,40,.05), 0 6px 20px rgba(44,42,40,.05);
+  --font-head: "Plus Jakarta Sans", "Segoe UI", system-ui, sans-serif;
+  --font-body: Inter, "Segoe UI", system-ui, -apple-system, sans-serif;
+  --r-lg: 22px; --r-md: 16px; --r-sm: 12px;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #1D1B19; --sand: #262320; --surface: #2A2724;
+  --line: #3A3632; --line-soft: #33302C;
+  --ink: #F1ECE6; --muted: #B3ABA3;
+  --clay: #D08A6B; --clay-strong: #D08A6B; --clay-ink: #E3A386; --on-accent: #1D1B19;
+  --sage: #8FA38A; --sage-ink: #A9BDA4; --sage-tint: #2B322A; --sage-line: #3E4A3C; --on-sage: #1F2A1D;
+  --amber-tint: #3A2E20; --amber-line: #5A4630; --amber-ink: #E8C08E;
+  --danger: #E08A78;
+  --shadow: 0 1px 2px rgba(0,0,0,.25);
+  color-scheme: dark;
+} }
+:root[data-theme="dark"] {
+  --bg: #1D1B19; --sand: #262320; --surface: #2A2724;
+  --line: #3A3632; --line-soft: #33302C;
+  --ink: #F1ECE6; --muted: #B3ABA3;
+  --clay: #D08A6B; --clay-strong: #D08A6B; --clay-ink: #E3A386; --on-accent: #1D1B19;
+  --sage: #8FA38A; --sage-ink: #A9BDA4; --sage-tint: #2B322A; --sage-line: #3E4A3C; --on-sage: #1F2A1D;
+  --amber-tint: #3A2E20; --amber-line: #5A4630; --amber-ink: #E8C08E;
+  --danger: #E08A78;
+  --shadow: 0 1px 2px rgba(0,0,0,.25);
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--ink); font-family: var(--font-body); font-size: 16px; line-height: 1.5; }
+h1, h2, h3 { font-family: var(--font-head); margin: 0; text-wrap: balance; letter-spacing: -0.01em; }
+p { margin: 0; }
+button, input, select, textarea { font: inherit; color: inherit; }
+button { cursor: pointer; }
+a { color: var(--clay-ink); }
+:focus-visible { outline: 3px solid var(--clay); outline-offset: 2px; border-radius: 8px; }
+.wrap { width: 100%; max-width: 1120px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+.muted { color: var(--muted); }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+svg.i { width: 20px; height: 20px; flex: none; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+
+/* Buttons */
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 48px; padding: 0 20px; border-radius: 14px; border: 1px solid transparent; font-weight: 600; font-size: 15px; text-decoration: none; transition: transform .12s ease, background-color .12s ease; }
+.btn:active { transform: translateY(1px); }
+.btn-primary { background: var(--clay-strong); color: var(--on-accent); box-shadow: 0 1px 2px rgba(44,42,40,.12); }
+.btn-primary:hover { filter: brightness(1.05); }
+.btn-sage { background: var(--sage); color: var(--on-sage); }
+.btn-quiet { background: var(--surface); border-color: var(--line); color: var(--ink); font-weight: 500; }
+.btn-quiet:hover { background: var(--sand); }
+.btn-text { background: none; border: 0; color: var(--clay-ink); font-weight: 600; min-height: 44px; padding: 0 8px; }
+.btn-danger { background: none; border: 1px solid var(--line); color: var(--danger); font-weight: 500; }
+.btn-sm { min-height: 40px; padding: 0 14px; font-size: 14px; border-radius: 12px; }
+.icon-btn { width: 44px; height: 44px; border-radius: 14px; border: 1px solid var(--line); background: var(--surface); display: inline-flex; align-items: center; justify-content: center; color: var(--ink); flex: none; }
+.icon-btn:hover { background: var(--sand); }
+
+/* ---------- Landing ---------- */
+.l-top { padding-block: 20px; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.brand { display: inline-flex; align-items: center; gap: 9px; font-family: var(--font-head); font-weight: 700; font-size: 20px; color: var(--ink); text-decoration: none; background: none; border: 0; padding: 0; }
+.brand-mark { width: 30px; height: 30px; border-radius: 10px; background: var(--clay-strong); color: var(--on-accent); display: grid; place-items: center; }
+.brand-mark svg { width: 18px; height: 18px; }
+.hero { padding-block: 28px 56px; display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, .9fr); gap: 48px; align-items: center; }
+.hero h1 { font-size: clamp(32px, 5vw, 50px); line-height: 1.08; font-weight: 700; letter-spacing: -0.025em; }
+.hero h1 em { font-style: normal; color: var(--clay-ink); }
+.hero-copy { display: flex; flex-direction: column; gap: 20px; max-width: 34rem; }
+.lede { font-size: 18px; color: var(--muted); max-width: 32rem; }
+.hero-ctas { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+.hero-ctas .btn-primary { min-height: 54px; padding: 0 26px; font-size: 16px; }
+.fineprint { font-size: 14px; color: var(--muted); }
+
+.preview { background: var(--sand); border: 1px solid var(--line); border-radius: 28px; padding: 18px; display: flex; flex-direction: column; gap: 12px; }
+.preview-head { display: flex; justify-content: space-between; align-items: baseline; padding: 4px 4px 2px; }
+.preview-head strong { font-family: var(--font-head); font-size: 17px; }
+.p-day { background: var(--surface); border: 1px solid var(--line); border-radius: 18px; padding: 12px 14px; display: flex; flex-direction: column; gap: 8px; }
+.p-day-name { font-weight: 600; font-size: 14px; display: flex; gap: 8px; align-items: center; }
+.p-row { display: flex; align-items: center; gap: 10px; font-size: 14px; }
+.p-row time { width: 62px; color: var(--muted); font-size: 13px; font-variant-numeric: tabular-nums; }
+.p-row span.t { flex: 1; min-width: 0; }
+.p-meal { background: var(--sage-tint); border: 1px solid var(--sage-line); border-radius: 12px; padding: 8px 10px; font-size: 14px; font-weight: 500; display: flex; gap: 8px; align-items: center; color: var(--ink); }
+.p-meal svg { color: var(--sage-ink); width: 18px; height: 18px; }
+.p-meal.open { background: transparent; border-style: dashed; border-color: var(--line); color: var(--muted); font-weight: 400; }
+
+.band { padding-block: 64px; }
+.band-sand { background: var(--sand); border-block: 1px solid var(--line); }
+.section-head { display: flex; flex-direction: column; gap: 10px; max-width: 40rem; margin-bottom: 32px; }
+.eyebrow { font-size: 13px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--sage-ink); }
+.section-head h2 { font-size: clamp(26px, 3.4vw, 34px); line-height: 1.15; }
+
+.texts { display: flex; flex-direction: column; gap: 10px; max-width: 30rem; }
+.bubble { align-self: flex-start; background: var(--surface); border: 1px solid var(--line); border-radius: 18px 18px 18px 6px; padding: 10px 14px; font-size: 15px; max-width: 100%; }
+.bubble small { display: block; font-size: 12px; color: var(--muted); }
+.bubble.me { align-self: flex-end; border-radius: 18px 18px 6px 18px; background: var(--clay-strong); color: var(--on-accent); border-color: transparent; }
+.bubble.me small { color: inherit; opacity: .85; }
+.problem { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 48px; align-items: center; }
+.problem p.body { font-size: 17px; color: var(--muted); max-width: 32rem; }
+.problem .stack { display: flex; flex-direction: column; gap: 16px; }
+
+.features { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
+.feature { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-lg); padding: 22px; display: flex; flex-direction: column; gap: 10px; }
+.feature-icon { width: 46px; height: 46px; border-radius: 14px; display: grid; place-items: center; background: var(--sage-tint); color: var(--sage-ink); }
+.feature-icon.clay { background: var(--amber-tint); color: var(--clay-ink); }
+.feature-icon svg { width: 24px; height: 24px; }
+.feature h3 { font-size: 17px; }
+.feature p { font-size: 15px; color: var(--muted); }
+
+.steps { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; list-style: none; margin: 0; padding: 0; counter-reset: step; }
+.steps li { display: flex; flex-direction: column; gap: 8px; padding: 22px; border-radius: var(--r-lg); background: var(--bg); border: 1px solid var(--line); }
+.steps li::before { counter-increment: step; content: counter(step); width: 34px; height: 34px; border-radius: 999px; display: grid; place-items: center; background: var(--clay-strong); color: var(--on-accent); font-weight: 600; font-size: 15px; }
+.steps h3 { font-size: 17px; }
+.steps p { font-size: 15px; color: var(--muted); }
+.loop-note { margin-top: 16px; font-size: 15px; color: var(--muted); }
+
+.cta-band { padding-block: 64px; }
+.cta-card { background: var(--surface); border: 1px solid var(--line); border-radius: 28px; padding: 40px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 24px; box-shadow: var(--shadow); }
+.cta-card h2 { font-size: clamp(24px, 3vw, 30px); }
+.l-foot { padding-block: 28px 40px; font-size: 14px; color: var(--muted); display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px; border-top: 1px solid var(--line); }
+
+/* ---------- App shell ---------- */
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--bg); }
+.app-top { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: color-mix(in srgb, var(--bg) 92%, transparent); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); }
+.app-top .wrap { display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 64px; }
+.tabs { display: flex; gap: 4px; }
+.tab { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 14px; border-radius: 12px; text-decoration: none; color: var(--muted); font-weight: 500; font-size: 15px; position: relative; }
+.tab:hover { background: var(--sand); color: var(--ink); }
+.tab[aria-current="page"] { color: var(--clay-ink); background: var(--sand); font-weight: 600; }
+.tab .count { font-size: 12px; font-weight: 600; background: var(--sage-tint); color: var(--sage-ink); border-radius: 999px; padding: 1px 7px; font-variant-numeric: tabular-nums; }
+.avatars { display: flex; }
+.avatar { width: 32px; height: 32px; border-radius: 999px; background: var(--c); color: #FFFFFF; font-size: 13px; font-weight: 600; display: grid; place-items: center; border: 2px solid var(--bg); flex: none; }
+.avatars .avatar + .avatar { margin-left: -9px; }
+.view { padding-block: 24px 48px; }
+
+/* ---------- This Week ---------- */
+.week-head { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 16px; margin-bottom: 18px; }
+.week-head h1 { font-size: clamp(28px, 4vw, 32px); line-height: 1.15; }
+.week-head .sub { color: var(--muted); font-size: 15px; }
+.example-note { font-size: 13px; color: var(--amber-ink); background: var(--amber-tint); border: 1px solid var(--amber-line); border-radius: 999px; padding: 4px 12px; }
+.summary { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 16px 24px; align-items: center; background: var(--sand); border: 1px solid var(--line); border-radius: var(--r-lg); padding: 18px 20px; margin-bottom: 18px; }
+.summary-text { display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+.summary-line { display: flex; flex-wrap: wrap; gap: 4px 12px; align-items: baseline; }
+.summary-line strong { font-family: var(--font-head); font-size: 17px; }
+.bar { height: 8px; border-radius: 999px; background: var(--line); overflow: hidden; }
+.bar > span { display: block; height: 100%; border-radius: inherit; background: var(--sage); transition: width .3s ease; }
+.summary-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+.strip { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 6px; margin-bottom: 14px; }
+.strip a { min-height: 62px; border-radius: 16px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1px; text-decoration: none; background: var(--surface); border: 1px solid var(--line); color: var(--ink); }
+.strip a .l { font-size: 12px; color: var(--muted); }
+.strip a .n { font-size: 16px; font-weight: 600; font-variant-numeric: tabular-nums; }
+.strip a .dot { width: 6px; height: 6px; border-radius: 999px; background: var(--sage); }
+.strip a .dot.open { background: transparent; border: 1.5px solid var(--gold); }
+.strip a.today { background: var(--clay-strong); border-color: var(--clay-strong); color: var(--on-accent); }
+.strip a.today .l { color: inherit; opacity: .85; }
+.strip a.today .dot { background: var(--on-accent); }
+.strip a.today .dot.open { background: transparent; border-color: var(--on-accent); }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: 13px; color: var(--muted); margin-bottom: 22px; }
+.legend span { display: inline-flex; align-items: center; gap: 6px; }
+.legend i { width: 10px; height: 10px; border-radius: 999px; background: var(--c); }
+
+.days { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 330px), 1fr)); gap: 24px 20px; align-items: start; }
+.day { display: flex; flex-direction: column; gap: 10px; scroll-margin-top: 84px; }
+.day-head { display: flex; align-items: center; gap: 8px; min-height: 44px; }
+.day-head h2 { font-size: 18px; }
+.day-head .date { color: var(--muted); font-size: 14px; }
+.day-head .spacer { flex: 1; }
+.badge { font-size: 12px; font-weight: 600; padding: 2px 9px; border-radius: 999px; background: var(--clay-strong); color: var(--on-accent); }
+.day-card { background: var(--surface); border: 1px solid var(--line); border-radius: 20px; box-shadow: var(--shadow); padding: 4px 14px 14px; display: flex; flex-direction: column; }
+.events { list-style: none; margin: 0; padding: 0; }
+.ev { display: flex; align-items: center; gap: 10px; padding: 8px 0; border-bottom: 1px solid var(--line-soft); }
+.ev-time { width: 60px; flex: none; font-size: 13px; color: var(--muted); font-variant-numeric: tabular-nums; }
+.ev-main { flex: 1; min-width: 0; text-align: left; background: none; border: 0; padding: 4px 0; display: flex; flex-direction: column; border-radius: 8px; }
+.ev-main:hover .ev-title { text-decoration: underline; text-decoration-color: var(--line); text-underline-offset: 3px; }
+.ev-title { font-size: 15px; font-weight: 500; overflow-wrap: anywhere; }
+.ev-note { font-size: 13px; color: var(--muted); overflow-wrap: anywhere; }
+.ev.done .ev-title { text-decoration: line-through; color: var(--muted); }
+.who { min-width: 28px; height: 28px; padding: 0 7px; border-radius: 999px; background: var(--c); color: #FFFFFF; font-size: 12px; font-weight: 600; display: inline-grid; place-items: center; flex: none; }
+.check { position: relative; width: 28px; height: 44px; display: grid; place-items: center; flex: none; cursor: pointer; }
+.check input { position: absolute; inset: 0; opacity: 0; margin: 0; cursor: pointer; }
+.check .box { width: 20px; height: 20px; border-radius: 7px; border: 1.5px solid var(--line); background: var(--surface); display: grid; place-items: center; color: transparent; }
+.check .box svg { width: 14px; height: 14px; stroke-width: 2.4; }
+.check input:checked + .box { background: var(--sage); border-color: var(--sage); color: var(--on-sage); }
+.check input:focus-visible + .box { outline: 3px solid var(--clay); outline-offset: 2px; }
+.quiet-row { padding: 12px 0; font-size: 14px; color: var(--muted); border-bottom: 1px solid var(--line-soft); }
+
+.dinner { margin-top: 12px; display: flex; align-items: stretch; gap: 8px; background: var(--sage-tint); border: 1px solid var(--sage-line); border-radius: var(--r-md); padding: 6px; }
+.dinner-main { flex: 1; min-width: 0; display: flex; align-items: center; gap: 12px; background: none; border: 0; text-align: left; padding: 6px; border-radius: 12px; }
+.dinner-main:hover { background: color-mix(in srgb, var(--surface) 50%, transparent); }
+.pot { width: 44px; height: 44px; border-radius: 12px; background: var(--surface); border: 1px solid var(--sage-line); display: grid; place-items: center; color: var(--sage-ink); flex: none; }
+.pot svg { width: 22px; height: 22px; }
+.dinner-text { display: flex; flex-direction: column; gap: 1px; min-width: 0; }
+.label { font-size: 12px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--sage-ink); }
+.dinner-name { font-size: 16px; font-weight: 600; overflow-wrap: anywhere; }
+.dinner-meta { font-size: 13px; color: var(--muted); }
+.dinner.cooked .dinner-name { color: var(--muted); }
+.cook-btn { align-self: center; min-height: 40px; padding: 0 10px; border-radius: 10px; border: 1px solid var(--sage-line); background: var(--surface); color: var(--sage-ink); font-size: 13px; font-weight: 600; display: inline-flex; align-items: center; gap: 4px; flex: none; }
+.cook-btn[aria-pressed="true"] { background: var(--sage); border-color: var(--sage); color: var(--on-sage); }
+.cook-btn svg { width: 16px; height: 16px; }
+.dinner-empty { margin-top: 12px; border: 1.5px dashed var(--line); border-radius: var(--r-md); padding: 14px; display: flex; flex-direction: column; gap: 12px; }
+.dinner-empty p { font-size: 14px; }
+.dinner-empty .row { display: flex; gap: 8px; flex-wrap: wrap; }
+.dinner-empty .row .btn { flex: 1 1 140px; }
+
+/* ---------- Grocery ---------- */
+.page-head { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 16px; margin-bottom: 20px; }
+.page-head h1 { font-size: clamp(28px, 4vw, 32px); line-height: 1.15; }
+.page-head .sub { color: var(--muted); font-size: 15px; }
+.page-head .actions { display: flex; flex-wrap: wrap; gap: 10px; }
+.grocery-layout { display: grid; grid-template-columns: minmax(0, 1fr) 300px; gap: 24px; align-items: start; }
+.panel { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-lg); padding: 6px 18px 12px; box-shadow: var(--shadow); }
+.aisle { padding-block: 12px 4px; }
+.aisle + .aisle { border-top: 1px solid var(--line-soft); }
+.aisle h2 { font-size: 13px; font-family: var(--font-body); font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--sage-ink); padding-block: 4px; }
+.items { list-style: none; margin: 0; padding: 0; }
+.item { display: flex; align-items: center; gap: 10px; min-height: 48px; }
+.item label.text { flex: 1; min-width: 0; display: flex; flex-direction: column; cursor: pointer; padding-block: 4px; }
+.item .name { font-size: 16px; overflow-wrap: anywhere; }
+.item .from { font-size: 13px; color: var(--muted); }
+.item.got .name { text-decoration: line-through; color: var(--muted); }
+.side { display: flex; flex-direction: column; gap: 16px; }
+.side-card { background: var(--sand); border: 1px solid var(--line); border-radius: var(--r-lg); padding: 18px; display: flex; flex-direction: column; gap: 12px; }
+.side-card h2 { font-size: 16px; }
+.field { display: flex; flex-direction: column; gap: 6px; }
+.field label { font-size: 14px; font-weight: 500; }
+.field .hint { font-size: 13px; color: var(--muted); }
+.input { width: 100%; min-height: 48px; padding: 10px 14px; border-radius: 12px; border: 1px solid var(--line); background: var(--surface); font-size: 16px; }
+.input:focus { outline: 3px solid color-mix(in srgb, var(--clay) 45%, transparent); outline-offset: 0; border-color: var(--clay); }
+textarea.input { min-height: 120px; resize: vertical; line-height: 1.5; }
+.inline-form { display: flex; gap: 8px; }
+.inline-form .input { flex: 1; min-width: 0; }
+.empty { text-align: center; padding: 48px 20px; display: flex; flex-direction: column; align-items: center; gap: 12px; }
+.empty .pot { width: 56px; height: 56px; }
+
+/* ---------- Household ---------- */
+.house { display: grid; grid-template-columns: minmax(0, 1fr) 320px; gap: 24px; align-items: start; }
+.members { list-style: none; margin: 0; padding: 0; }
+.member { display: flex; align-items: center; gap: 12px; padding-block: 12px; }
+.member + .member { border-top: 1px solid var(--line-soft); }
+.member .avatar { width: 40px; height: 40px; font-size: 15px; border: 0; }
+.member .fields { flex: 1; min-width: 0; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 150px); gap: 8px; }
+.member .input { min-height: 44px; }
+.panel h2 { font-size: 17px; padding-block: 12px 4px; }
+
+/* ---------- Dialogs ---------- */
+dialog { border: 1px solid var(--line); border-radius: 24px; padding: 0; width: min(560px, calc(100% - 32px)); max-height: min(86vh, 860px); background: var(--bg); color: var(--ink); box-shadow: 0 20px 60px rgba(30,25,20,.25); }
+dialog::backdrop { background: rgba(35,30,26,.45); }
+.dlg-head { position: sticky; top: 0; z-index: 1; display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 16px 20px; background: var(--bg); border-bottom: 1px solid var(--line); }
+.dlg-head h2 { font-size: 19px; }
+.dlg-body { padding: 18px 20px 22px; display: flex; flex-direction: column; gap: 16px; }
+.dlg-foot { display: flex; flex-wrap: wrap; gap: 10px; justify-content: flex-end; }
+.dlg-foot .left { margin-right: auto; }
+.note { display: flex; gap: 10px; align-items: flex-start; background: var(--amber-tint); border: 1px solid var(--amber-line); border-radius: 14px; padding: 10px 12px; font-size: 14px; color: var(--amber-ink); }
+.note svg { width: 18px; height: 18px; margin-top: 1px; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip { min-height: 40px; padding: 0 14px; border-radius: 999px; border: 1px solid var(--line); background: var(--surface); font-size: 14px; font-weight: 500; }
+.chip[aria-pressed="true"] { background: var(--ink); border-color: var(--ink); color: var(--bg); }
+.meals { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+.meal { display: flex; align-items: center; gap: 12px; padding: 12px 14px; border-radius: 16px; background: var(--surface); border: 1px solid var(--line); }
+.meal.current { border-color: var(--sage); background: var(--sage-tint); }
+.meal.suggested { border-color: var(--gold); }
+.meal-text { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+.meal-name { font-weight: 600; font-size: 15px; }
+.meal-meta { font-size: 13px; color: var(--muted); }
+.current-card { display: flex; align-items: center; gap: 12px; background: var(--sage-tint); border: 1px solid var(--sage-line); border-radius: 16px; padding: 12px 14px; }
+details.own { border: 1px solid var(--line); border-radius: 16px; background: var(--surface); }
+details.own summary { cursor: pointer; padding: 14px 16px; font-weight: 600; font-size: 15px; min-height: 48px; }
+details.own form { padding: 0 16px 16px; display: flex; flex-direction: column; gap: 12px; }
+.form-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 12px; }
+
+.toast { position: fixed; left: 50%; bottom: calc(24px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%) translateY(20px); opacity: 0; background: var(--ink); color: var(--bg); padding: 12px 18px; border-radius: 14px; font-size: 15px; font-weight: 500; pointer-events: none; transition: opacity .2s ease, transform .2s ease; z-index: 30; max-width: calc(100% - 32px); }
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+/* ---------- Responsive ---------- */
+@media (max-width: 900px) {
+  .hero, .problem { grid-template-columns: minmax(0, 1fr); gap: 32px; }
+  .features { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .grocery-layout, .house { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 720px) {
+  .tabs { position: fixed; left: 0; right: 0; bottom: 0; z-index: 6; justify-content: space-around; gap: 0; background: var(--bg); border-top: 1px solid var(--line); padding: 6px max(8px, env(safe-area-inset-right, 0px)) calc(8px + env(safe-area-inset-bottom, 0px)) max(8px, env(safe-area-inset-left, 0px)); }
+  .tab { flex: 1; flex-direction: column; gap: 2px; font-size: 12px; min-height: 54px; padding: 0 4px; justify-content: center; }
+  .tab[aria-current="page"] { background: none; }
+  .tab .count { position: absolute; top: 2px; left: calc(50% + 6px); }
+  .view { padding-bottom: calc(110px + env(safe-area-inset-bottom, 0px)); }
+  .toast { bottom: calc(96px + env(safe-area-inset-bottom, 0px)); }
+  .steps { grid-template-columns: minmax(0, 1fr); }
+  .summary { grid-template-columns: minmax(0, 1fr); }
+  .summary-actions .btn-primary { flex: 1; }
+  .cta-card { padding: 28px 22px; }
+  dialog { width: 100%; max-width: 100%; margin: auto 0 0; border-radius: 24px 24px 0 0; border-bottom: 0; max-height: 90vh; padding-bottom: env(safe-area-inset-bottom, 0px); }
+}
+@media (max-width: 480px) {
+  .features { grid-template-columns: minmax(0, 1fr); }
+  .member .fields, .form-grid { grid-template-columns: minmax(0, 1fr); }
+  .band, .cta-band { padding-block: 48px; }
+}
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; scroll-behavior: auto !important; } }
+</style>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-home" viewBox="0 0 24 24"><path d="M5 11.5 12 5.5l7 6V19a1 1 0 0 1-1 1h-4v-5h-4v5H6a1 1 0 0 1-1-1v-7.5Z"/></symbol>
+  <symbol id="i-cal" viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="15" rx="3"/><path d="M3.5 10h17M8 3v4M16 3v4"/></symbol>
+  <symbol id="i-list" viewBox="0 0 24 24"><path d="M9 6h11M9 12h11M9 18h11"/><path d="m3.5 6 1 1 2-2M3.5 12l1 1 2-2"/><circle cx="5" cy="18" r="1.2"/></symbol>
+  <symbol id="i-people" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.2"/><path d="M3.5 19c.6-3.2 2.8-5 5.5-5s4.9 1.8 5.5 5"/><circle cx="17" cy="9" r="2.4"/><path d="M16 14.2c2.4-.3 4.1 1.2 4.6 4"/></symbol>
+  <symbol id="i-pot" viewBox="0 0 24 24"><path d="M4 11h16v3a6 6 0 0 1-6 6h-4a6 6 0 0 1-6-6v-3Z"/><path d="M2 11h20"/><path d="M9 7c0-1 1-1.5 1-2.5M13 7c0-1 1-1.5 1-2.5"/></symbol>
+  <symbol id="i-bag" viewBox="0 0 24 24"><path d="M5 8h14l-1.3 10.2a2 2 0 0 1-2 1.8H8.3a2 2 0 0 1-2-1.8L5 8Z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/></symbol>
+  <symbol id="i-share" viewBox="0 0 24 24"><path d="M12 15V4"/><path d="m8 8 4-4 4 4"/><path d="M6 12v6a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-6"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+  <symbol id="i-shuffle" viewBox="0 0 24 24"><path d="M16 4h4v4M4 20 20 4M20 16v4h-4M15 15l5 5M4 4l5 5"/></symbol>
+  <symbol id="i-trash" viewBox="0 0 24 24"><path d="M5 7h14M10 7V5h4v2M7 7l1 12h8l1-12"/></symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+</svg>
+
+<!-- ================= LANDING ================= -->
+<div id="landing">
+  <header class="wrap l-top">
+    <a class="brand" href="#top" aria-label="Haven home"><span class="brand-mark"><svg class="i"><use href="#i-home"/></svg></span>Haven</a>
+    <a class="btn btn-quiet btn-sm" href="#week" data-route="week">Open my week</a>
+  </header>
+
+  <section class="wrap hero">
+    <div class="hero-copy">
+      <h1>Your family’s week and <em>what’s for dinner</em>, in one calm place.</h1>
+      <p class="lede">Haven puts everyone’s plans on one shared week, gives every night a dinner slot, and writes the grocery list from the meals you pick.</p>
+      <div class="hero-ctas">
+        <a class="btn btn-primary" href="#week" data-route="week">Start your week <svg class="i"><use href="#i-arrow"/></svg></a>
+        <button class="btn btn-text" type="button" data-act="scroll-how">See how it works</button>
+      </div>
+      <p class="fineprint">Free to try. No sign-up. Opens with an example week you can change.</p>
+    </div>
+
+    <div class="preview" aria-label="Example of a week in Haven">
+      <div class="preview-head"><strong>This week</strong><span class="muted" style="font-size:14px">5 of 6 dinners planned</span></div>
+      <div class="p-day">
+        <div class="p-day-name">Tuesday <span class="muted" style="font-weight:400">· busy evening</span></div>
+        <div class="p-row"><time>9:00 am</time><span class="t">Dentist</span><span class="who" style="--c:#A65D40">S</span></div>
+        <div class="p-row"><time>5:00 pm</time><span class="t">Working late</span><span class="who" style="--c:#4F6A85">D</span></div>
+        <div class="p-meal"><svg class="i"><use href="#i-pot"/></svg>Black bean tacos · 20 min</div>
+      </div>
+      <div class="p-day">
+        <div class="p-day-name">Wednesday</div>
+        <div class="p-row"><time>4:00 pm</time><span class="t">Swim class</span><span class="who" style="--c:#5C7356">L</span></div>
+        <div class="p-row"><time>6:00 pm</time><span class="t">Soccer practice</span><span class="who" style="--c:#8A5A7A">M</span></div>
+        <div class="p-meal"><svg class="i"><use href="#i-pot"/></svg>Slow-cooker beef ragu</div>
+      </div>
+      <div class="p-day">
+        <div class="p-day-name">Thursday</div>
+        <div class="p-meal open"><svg class="i"><use href="#i-plus"/></svg>Dinner not planned yet</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band band-sand">
+    <div class="wrap problem">
+      <div class="stack">
+        <span class="eyebrow">Sound familiar?</span>
+        <h2 style="font-size:clamp(26px,3.4vw,34px);line-height:1.15">The week lives in five calendars, three group chats and one tired person’s head.</h2>
+        <p class="body">Someone always knows who has practice and who’s working late. Usually that same person also decides dinner at 5:45 and finds out there’s no rice. Haven takes that load off.</p>
+      </div>
+      <div class="texts" aria-label="Example messages">
+        <div class="bubble"><small>Dan · 4:12 pm</small>Can you get Leo from piano? I’m stuck till 7</div>
+        <div class="bubble"><small>Maya · 5:31 pm</small>whats for dinner</div>
+        <div class="bubble me"><small>You · 5:46 pm</small>Checking the fridge. Again.</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">What Haven does</span>
+        <h2>Everything you need for the week, and nothing extra.</h2>
+      </div>
+      <div class="features">
+        <article class="feature">
+          <span class="feature-icon clay"><svg class="i"><use href="#i-cal"/></svg></span>
+          <h3>One shared week</h3>
+          <p>Practices, appointments and late shifts for the whole family, on one page, colored by person.</p>
+        </article>
+        <article class="feature">
+          <span class="feature-icon"><svg class="i"><use href="#i-pot"/></svg></span>
+          <h3>A dinner slot for every night</h3>
+          <p>Pick from easy family meals or add your own. Busy nights get quick ideas first.</p>
+        </article>
+        <article class="feature">
+          <span class="feature-icon"><svg class="i"><use href="#i-bag"/></svg></span>
+          <h3>A grocery list that writes itself</h3>
+          <p>Ingredients from the week’s dinners are added up and sorted by aisle, ready to share.</p>
+        </article>
+        <article class="feature">
+          <span class="feature-icon clay"><svg class="i"><use href="#i-people"/></svg></span>
+          <h3>Made for the whole household</h3>
+          <p>Add everyone who lives with you so each event shows whose it is at a glance.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="band band-sand" id="how">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">How it works</span>
+        <h2>One short loop, once a week.</h2>
+      </div>
+      <ol class="steps">
+        <li><h3>See the week</h3><p>Everyone’s plans for Monday to Sunday, in one scroll.</p></li>
+        <li><h3>Plan the dinners</h3><p>Tap an open night and choose a meal that fits how busy it is.</p></li>
+        <li><h3>Get the list</h3><p>Haven builds the grocery list. Check items off in the store or send it to whoever is shopping.</p></li>
+      </ol>
+      <p class="loop-note">Most families finish this in about ten minutes on Sunday evening.</p>
+    </div>
+  </section>
+
+  <section class="wrap cta-band">
+    <div class="cta-card">
+      <div style="display:flex;flex-direction:column;gap:6px;max-width:34rem">
+        <h2>Ready for a calmer week?</h2>
+        <p class="muted">Start with our example family, then make it yours.</p>
+      </div>
+      <a class="btn btn-primary" href="#week" data-route="week" style="min-height:54px;padding:0 26px">Try Haven <svg class="i"><use href="#i-arrow"/></svg></a>
+    </div>
+  </section>
+
+  <footer class="wrap l-foot">
+    <span>Haven · household scheduling and meal planning</span>
+    <span>This version keeps everything in your browser.</span>
+  </footer>
+</div>
+
+<!-- ================= APP ================= -->
+<div id="app" hidden>
+  <header class="app-top">
+    <div class="wrap">
+      <a class="brand" href="#top" aria-label="Back to the Haven home page"><span class="brand-mark"><svg class="i"><use href="#i-home"/></svg></span>Haven</a>
+      <nav class="tabs" aria-label="Main">
+        <a class="tab" href="#week" data-route="week"><svg class="i"><use href="#i-cal"/></svg>This Week</a>
+        <a class="tab" href="#grocery" data-route="grocery"><svg class="i"><use href="#i-list"/></svg>Grocery <span class="count" id="groceryCount"></span></a>
+        <a class="tab" href="#household" data-route="household"><svg class="i"><use href="#i-people"/></svg>Household</a>
+      </nav>
+      <div class="avatars" id="topAvatars" aria-hidden="true"></div>
+    </div>
+  </header>
+  <main class="wrap view" id="view"></main>
+</div>
+
+<dialog id="dinnerDialog" aria-labelledby="dinnerTitle"></dialog>
+<dialog id="eventDialog" aria-labelledby="eventTitle"></dialog>
+<dialog id="confirmDialog" aria-labelledby="confirmTitle"></dialog>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+(function () {
+  'use strict';
+
+  /* ---------- Constants ---------- */
+  const STORE_KEY = 'haven.v1';
+  const COLORS = ['#A65D40', '#4F6A85', '#8A5A7A', '#5C7356', '#8A6428', '#5B6B8C', '#7A5C4A'];
+  const AISLES = ['Produce', 'Meat & fish', 'Dairy & eggs', 'Bakery', 'Pantry', 'Frozen', 'Other'];
+  const DAY_NAMES = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+  const EFFORT = { quick: 'Quick', normal: 'Normal', involved: 'Involved' };
+  const EVERYONE = { id: 'all', name: 'Everyone', initial: 'All', color: '#6B6560' };
+
+  // Ingredients: [name, quantity, unit, aisle]
+  const LIBRARY = [
+    { id: 'lemon-chicken', name: 'Sheet-pan lemon chicken & potatoes', minutes: 35, effort: 'normal', tags: [],
+      ing: [['chicken thighs', 2, 'lb', 'Meat & fish'], ['baby potatoes', 1.5, 'lb', 'Produce'], ['lemons', 2, '', 'Produce'], ['garlic', 1, 'head', 'Produce'], ['green beans', 1, 'lb', 'Produce'], ['olive oil', null, '', 'Pantry']] },
+    { id: 'bean-tacos', name: 'Black bean tacos', minutes: 20, effort: 'quick', tags: ['Vegetarian'],
+      ing: [['black beans', 2, 'cans', 'Pantry'], ['corn tortillas', 1, 'pack', 'Bakery'], ['avocados', 2, '', 'Produce'], ['limes', 2, '', 'Produce'], ['shredded cheddar', 1, 'bag', 'Dairy & eggs'], ['salsa', 1, 'jar', 'Pantry']] },
+    { id: 'beef-ragu', name: 'Slow-cooker beef ragu', minutes: 15, effort: 'normal', tags: ['Makes leftovers'],
+      ing: [['ground beef', 1.5, 'lb', 'Meat & fish'], ['crushed tomatoes', 2, 'cans', 'Pantry'], ['onion', 1, '', 'Produce'], ['carrots', 2, '', 'Produce'], ['garlic', 1, 'head', 'Produce'], ['pasta', 1, 'box', 'Pantry']] },
+    { id: 'pizza-night', name: 'Homemade pizza night', minutes: 45, effort: 'involved', tags: ['Family favorite'],
+      ing: [['pizza dough', 2, 'balls', 'Bakery'], ['mozzarella', 1, 'lb', 'Dairy & eggs'], ['pizza sauce', 1, 'jar', 'Pantry'], ['bell peppers', 2, '', 'Produce'], ['mushrooms', 8, 'oz', 'Produce']] },
+    { id: 'salmon-rice', name: 'Salmon, rice & greens', minutes: 30, effort: 'normal', tags: [],
+      ing: [['salmon fillets', 4, '', 'Meat & fish'], ['rice', 1, 'bag', 'Pantry'], ['spinach', 1, 'bag', 'Produce'], ['lemons', 1, '', 'Produce'], ['soy sauce', null, '', 'Pantry']] },
+    { id: 'ragu-bake', name: 'Leftover ragu pasta bake', minutes: 25, effort: 'quick', tags: ['Uses leftovers'],
+      ing: [['pasta', 1, 'box', 'Pantry'], ['mozzarella', 0.5, 'lb', 'Dairy & eggs'], ['spinach', 1, 'bag', 'Produce']] },
+    { id: 'fried-rice', name: 'Veggie fried rice', minutes: 15, effort: 'quick', tags: ['Vegetarian'],
+      ing: [['eggs', 6, '', 'Dairy & eggs'], ['frozen peas & carrots', 1, 'bag', 'Frozen'], ['green onions', 1, 'bunch', 'Produce'], ['rice', 1, 'bag', 'Pantry'], ['soy sauce', null, '', 'Pantry']] },
+    { id: 'chickpea-curry', name: 'Chickpea & spinach curry', minutes: 25, effort: 'quick', tags: ['Vegetarian'],
+      ing: [['chickpeas', 2, 'cans', 'Pantry'], ['coconut milk', 1, 'can', 'Pantry'], ['spinach', 1, 'bag', 'Produce'], ['onion', 1, '', 'Produce'], ['curry paste', 1, 'jar', 'Pantry'], ['naan', 1, 'pack', 'Bakery']] },
+    { id: 'turkey-burgers', name: 'Turkey burgers & sweet potato fries', minutes: 35, effort: 'normal', tags: [],
+      ing: [['ground turkey', 1.5, 'lb', 'Meat & fish'], ['burger buns', 1, 'pack', 'Bakery'], ['sweet potatoes', 3, '', 'Produce'], ['lettuce', 1, 'head', 'Produce'], ['tomatoes', 2, '', 'Produce']] },
+    { id: 'chicken-soup', name: 'Chicken noodle soup', minutes: 40, effort: 'normal', tags: ['Makes leftovers'],
+      ing: [['chicken breasts', 1, 'lb', 'Meat & fish'], ['egg noodles', 1, 'bag', 'Pantry'], ['chicken broth', 2, 'cartons', 'Pantry'], ['carrots', 3, '', 'Produce'], ['celery', 1, 'bunch', 'Produce'], ['onion', 1, '', 'Produce']] },
+    { id: 'pancakes', name: 'Breakfast for dinner', minutes: 20, effort: 'quick', tags: ['Kids love it'],
+      ing: [['eggs', 6, '', 'Dairy & eggs'], ['milk', 1, 'gallon', 'Dairy & eggs'], ['pancake mix', 1, 'box', 'Pantry'], ['berries', 2, 'boxes', 'Produce'], ['bacon', 1, 'pack', 'Meat & fish']] },
+    { id: 'lasagna', name: 'Weekend lasagna', minutes: 75, effort: 'involved', tags: ['Makes leftovers'],
+      ing: [['lasagna noodles', 1, 'box', 'Pantry'], ['ricotta', 1, 'tub', 'Dairy & eggs'], ['mozzarella', 1, 'lb', 'Dairy & eggs'], ['ground beef', 1, 'lb', 'Meat & fish'], ['marinara', 2, 'jars', 'Pantry']] }
+  ];
+
+  /* ---------- State ---------- */
+  function mealCopy(id) {
+    const m = LIBRARY.find((x) => x.id === id);
+    return { libId: m.id, name: m.name, minutes: m.minutes, effort: m.effort, tags: m.tags.slice(), ing: m.ing.map((r) => r.slice()), cooked: false };
+  }
+  function sampleState() {
+    return {
+      members: [
+        { id: 'm1', name: 'Sarah', role: 'Parent', color: COLORS[0] },
+        { id: 'm2', name: 'Dan', role: 'Parent', color: COLORS[1] },
+        { id: 'm3', name: 'Maya', role: 'Age 12', color: COLORS[2] },
+        { id: 'm4', name: 'Leo', role: 'Age 8', color: COLORS[3] }
+      ],
+      events: [
+        { id: 'e1', day: 0, time: '07:45', title: 'School drop-off', note: 'Lincoln Elementary', who: 'm2', done: false },
+        { id: 'e2', day: 0, time: '15:30', title: 'Soccer practice', note: 'Riverside Park, until 5:00', who: 'm3', done: false },
+        { id: 'e3', day: 0, time: '17:00', title: 'Piano lesson', note: '', who: 'm4', done: false },
+        { id: 'e4', day: 1, time: '09:00', title: 'Dentist', note: 'Bright Smile Dental', who: 'm1', done: false },
+        { id: 'e5', day: 1, time: '17:00', title: 'Working late', note: 'Home around 7:30', who: 'm2', done: false },
+        { id: 'e6', day: 2, time: '16:00', title: 'Swim class', note: 'Community pool', who: 'm4', done: false },
+        { id: 'e7', day: 2, time: '18:00', title: 'Soccer practice', note: 'Riverside Park', who: 'm3', done: false },
+        { id: 'e8', day: 3, time: '18:00', title: 'Parent–teacher evening', note: 'Lincoln Elementary, until 7:30', who: 'all', done: false },
+        { id: 'e9', day: 5, time: '09:00', title: 'Soccer match', note: 'Away game at Oak Hill', who: 'm3', done: false },
+        { id: 'e10', day: 5, time: '11:00', title: 'Grocery shop', note: '', who: 'm1', done: false },
+        { id: 'e11', day: 6, time: '13:00', title: 'Lunch at Grandma’s', note: '', who: 'all', done: false }
+      ],
+      dinners: { 0: mealCopy('lemon-chicken'), 1: mealCopy('bean-tacos'), 2: mealCopy('beef-ragu'), 4: mealCopy('pizza-night'), 5: mealCopy('salmon-rice'), 6: mealCopy('ragu-bake') },
+      got: {},
+      extras: [],
+      isExample: true,
+      nextId: 100
+    };
+  }
+  function load() {
+    try {
+      const raw = localStorage.getItem(STORE_KEY);
+      if (!raw) return null;
+      const s = JSON.parse(raw);
+      return s && Array.isArray(s.members) ? s : null;
+    } catch (e) { return null; }
+  }
+  function save() {
+    try { localStorage.setItem(STORE_KEY, JSON.stringify(state)); } catch (e) { /* storage unavailable: keep working in memory */ }
+  }
+  let state = load() || sampleState();
+  const ui = { dinnerDay: null, effortFilter: 'all', suggestedId: null, editingEvent: null, confirmFn: null };
+  function uid(prefix) { state.nextId += 1; return prefix + state.nextId; }
+  function commit() { save(); render(); }
+
+  /* ---------- Dates & formatting ---------- */
+  const today = new Date();
+  const todayIndex = (today.getDay() + 6) % 7;
+  const monday = new Date(today.getFullYear(), today.getMonth(), today.getDate() - todayIndex);
+  function dayDate(i) { return new Date(monday.getFullYear(), monday.getMonth(), monday.getDate() + i); }
+  function fmtShort(d) { return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }); }
+  function fmtDay(i) { return DAY_NAMES[i] + ', ' + fmtShort(dayDate(i)); }
+  function fmtTime(t) {
+    if (!t) return 'Any time';
+    const [h, m] = t.split(':').map(Number);
+    const suffix = h >= 12 ? 'pm' : 'am';
+    return ((h % 12) || 12) + ':' + String(m).padStart(2, '0') + ' ' + suffix;
+  }
+  function fmtQty(q) {
+    if (q == null) return '';
+    const whole = Math.floor(q), frac = q - whole;
+    const f = Math.abs(frac - 0.5) < 0.01 ? '½' : Math.abs(frac - 0.25) < 0.01 ? '¼' : Math.abs(frac - 0.75) < 0.01 ? '¾' : '';
+    if (f) return (whole || '') + f;
+    return String(Math.round(q * 100) / 100);
+  }
+  function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c])); }
+  function icon(name) { return '<svg class="i" aria-hidden="true"><use href="#i-' + name + '"/></svg>'; }
+  function initialOf(name) { return (name.trim()[0] || '?').toUpperCase(); }
+  function memberById(id) {
+    if (id === 'all') return EVERYONE;
+    const m = state.members.find((x) => x.id === id);
+    return m ? { id: m.id, name: m.name, initial: initialOf(m.name), color: m.color } : EVERYONE;
+  }
+  function mealMeta(d) {
+    const parts = [d.minutes ? d.minutes + ' min' : null, EFFORT[d.effort] || null].concat(d.tags || []);
+    return parts.filter(Boolean).join(' · ');
+  }
+
+  /* ---------- Derived data ---------- */
+  function eventsFor(day) { return state.events.filter((e) => e.day === day).sort((a, b) => (a.time || '99').localeCompare(b.time || '99')); }
+  function isBusyEvening(day) { return eventsFor(day).some((e) => e.time && e.time >= '17:00'); }
+  function plannedCount() { return Object.keys(state.dinners).length; }
+
+  function groceryItems() {
+    const map = new Map();
+    Object.keys(state.dinners).map(Number).sort((a, b) => a - b).forEach((day) => {
+      state.dinners[day].ing.forEach(([name, qty, unit, aisle]) => {
+        const key = name.toLowerCase() + '|' + unit;
+        if (!map.has(key)) map.set(key, { key, name, qty: null, unit, aisle: AISLES.includes(aisle) ? aisle : 'Other', days: [] });
+        const item = map.get(key);
+        if (qty != null) item.qty = (item.qty || 0) + qty;
+        const short = DAY_NAMES[day].slice(0, 3);
+        if (!item.days.includes(short)) item.days.push(short);
+      });
+    });
+    return Array.from(map.values());
+  }
+  function itemLabel(it) { return [fmtQty(it.qty), it.unit, it.name].filter(Boolean).join(' '); }
+  function groceryTotal() { return groceryItems().length + state.extras.length; }
+  function groceryRemaining() {
+    return groceryItems().filter((it) => !state.got[it.key]).length + state.extras.filter((x) => !x.got).length;
+  }
+
+  /* ---------- Rendering ---------- */
+  const viewEl = document.getElementById('view');
+  const ROUTES = ['week', 'grocery', 'household'];
+  function currentRoute() { const h = location.hash.replace('#', ''); return ROUTES.includes(h) ? h : null; }
+
+  function render() {
+    const route = currentRoute();
+    document.getElementById('landing').hidden = !!route;
+    document.getElementById('app').hidden = !route;
+    if (!route) { document.title = 'Haven'; return; }
+    document.querySelectorAll('.tab').forEach((t) => {
+      if (t.dataset.route === route) t.setAttribute('aria-current', 'page'); else t.removeAttribute('aria-current');
+    });
+    const remaining = groceryRemaining();
+    const countEl = document.getElementById('groceryCount');
+    countEl.textContent = remaining ? remaining : '';
+    countEl.hidden = !remaining;
+    document.getElementById('topAvatars').innerHTML = state.members.slice(0, 5).map((m) => '<span class="avatar" style="--c:' + m.color + '">' + esc(initialOf(m.name)) + '</span>').join('');
+    if (route === 'week') viewEl.innerHTML = renderWeek();
+    if (route === 'grocery') viewEl.innerHTML = renderGrocery();
+    if (route === 'household') viewEl.innerHTML = renderHousehold();
+  }
+
+  function renderWeek() {
+    const planned = plannedCount();
+    const total = groceryTotal();
+    const openDays = DAY_NAMES.map((n, i) => i).filter((i) => !state.dinners[i]);
+    const firstOpen = openDays.length ? openDays[0] : null;
+    const greeting = today.getHours() < 12 ? 'Good morning' : today.getHours() < 18 ? 'Good afternoon' : 'Good evening';
+    const organizer = state.members[0] ? ', ' + esc(state.members[0].name) : '';
+
+    let html = '<div class="week-head"><div><p class="sub">' + greeting + organizer + '</p><h1>This week</h1><p class="sub">' + esc(fmtDay(0)) + ' – ' + esc(fmtDay(6)) + '</p></div>';
+    if (state.isExample) html += '<span class="example-note">Example week. Change anything you like.</span>';
+    html += '</div>';
+
+    html += '<section class="summary" aria-label="Week summary"><div class="summary-text"><div class="summary-line"><strong>' + planned + ' of 7 dinners planned</strong>';
+    if (firstOpen != null) html += '<a href="#day-' + firstOpen + '" data-act="jump" data-day="' + firstOpen + '">' + (openDays.length === 1 ? DAY_NAMES[firstOpen] + ' is still open' : openDays.length + ' nights still open') + '</a>';
+    else html += '<span class="muted">Every night is covered.</span>';
+    html += '</div><div class="bar" role="img" aria-label="' + planned + ' of 7 dinners planned"><span style="width:' + Math.round(planned / 7 * 100) + '%"></span></div></div>';
+    html += '<div class="summary-actions"><a class="btn btn-primary" href="#grocery" data-route="grocery">' + icon('bag') + 'Grocery list · ' + total + ' items</a><button class="icon-btn" type="button" data-act="copy-list" aria-label="Copy grocery list to share" style="width:48px;height:48px">' + icon('share') + '</button></div></section>';
+
+    html += '<nav class="strip" aria-label="Jump to a day">';
+    for (let i = 0; i < 7; i++) {
+      const d = dayDate(i);
+      html += '<a href="#day-' + i + '" data-act="jump" data-day="' + i + '" class="' + (i === todayIndex ? 'today' : '') + '" aria-label="' + esc(fmtDay(i)) + (state.dinners[i] ? ', dinner planned' : ', dinner not planned') + '"><span class="l">' + DAY_NAMES[i][0] + '</span><span class="n">' + d.getDate() + '</span><span class="dot' + (state.dinners[i] ? '' : ' open') + '"></span></a>';
+    }
+    html += '</nav>';
+
+    html += '<div class="legend">' + state.members.map((m) => '<span><i style="--c:' + m.color + '"></i>' + esc(m.name) + (m.role && /age/i.test(m.role) ? ', ' + esc(m.role.replace(/age\s*/i, '')) : '') + '</span>').join('') + '<span><i style="--c:' + EVERYONE.color + '"></i>Everyone</span></div>';
+
+    html += '<div class="days">';
+    for (let i = 0; i < 7; i++) html += renderDay(i);
+    html += '</div>';
+    return html;
+  }
+
+  function renderDay(i) {
+    const evs = eventsFor(i);
+    const dinner = state.dinners[i];
+    let h = '<section class="day" id="day-' + i + '" aria-labelledby="dh-' + i + '"><div class="day-head"><h2 id="dh-' + i + '">' + DAY_NAMES[i] + '</h2><span class="date">' + esc(fmtShort(dayDate(i))) + '</span>';
+    if (i === todayIndex) h += '<span class="badge">Today</span>';
+    h += '<span class="spacer"></span><button class="icon-btn" type="button" data-act="add-event" data-day="' + i + '" aria-label="Add an event on ' + DAY_NAMES[i] + '">' + icon('plus') + '</button></div>';
+    h += '<div class="day-card">';
+    if (evs.length) {
+      h += '<ul class="events">';
+      evs.forEach((e) => {
+        const m = memberById(e.who);
+        h += '<li class="ev' + (e.done ? ' done' : '') + '">' +
+          '<label class="check"><input type="checkbox" id="done-' + e.id + '" data-act="toggle-event" data-id="' + e.id + '"' + (e.done ? ' checked' : '') + '><span class="box">' + icon('check') + '</span><span class="sr">Mark ' + esc(e.title) + ' as done</span></label>' +
+          '<span class="ev-time">' + esc(fmtTime(e.time)) + '</span>' +
+          '<button class="ev-main" type="button" data-act="edit-event" data-id="' + e.id + '" aria-label="Edit ' + esc(e.title) + '"><span class="ev-title">' + esc(e.title) + '</span>' + (e.note ? '<span class="ev-note">' + esc(e.note) + '</span>' : '') + '</button>' +
+          '<span class="who" style="--c:' + m.color + '" title="' + esc(m.name) + '"><span aria-hidden="true">' + esc(m.initial) + '</span><span class="sr">' + esc(m.name) + '</span></span></li>';
+      });
+      h += '</ul>';
+    } else {
+      h += '<p class="quiet-row">Nothing on the calendar. A slower evening.</p>';
+    }
+    if (dinner) {
+      h += '<div class="dinner' + (dinner.cooked ? ' cooked' : '') + '"><button class="dinner-main" type="button" data-act="open-dinner" data-day="' + i + '" aria-label="Change dinner for ' + DAY_NAMES[i] + ': ' + esc(dinner.name) + '"><span class="pot">' + icon('pot') + '</span><span class="dinner-text"><span class="label">Dinner</span><span class="dinner-name">' + esc(dinner.name) + '</span><span class="dinner-meta">' + esc(mealMeta(dinner)) + '</span></span></button>' +
+        '<button class="cook-btn" type="button" data-act="toggle-cooked" data-day="' + i + '" aria-pressed="' + (dinner.cooked ? 'true' : 'false') + '">' + (dinner.cooked ? icon('check') + 'Cooked' : 'Mark cooked') + '</button></div>';
+    } else {
+      const busy = isBusyEvening(i);
+      h += '<div class="dinner-empty"><div><span class="label" style="color:var(--muted)">Dinner · not planned</span><p>' + (busy ? 'Busy evening. A 15–25 minute meal could help.' : 'Pick a meal and its ingredients go on the grocery list.') + '</p></div>' +
+        '<div class="row"><button class="btn btn-sage btn-sm" type="button" data-act="suggest" data-day="' + i + '">' + icon('shuffle') + 'Suggest a meal</button><button class="btn btn-quiet btn-sm" type="button" data-act="open-dinner" data-day="' + i + '">Choose a meal</button></div></div>';
+    }
+    h += '</div></section>';
+    return h;
+  }
+
+  function renderGrocery() {
+    const items = groceryItems();
+    const planned = plannedCount();
+    let h = '<div class="page-head"><div><h1>Grocery list</h1><p class="sub">' + (planned ? 'From ' + planned + ' planned dinner' + (planned === 1 ? '' : 's') + ' · week of ' + esc(fmtShort(dayDate(0))) : 'Plan a dinner to start your list') + '</p></div>' +
+      '<div class="actions"><button class="btn btn-primary" type="button" data-act="copy-list">' + icon('share') + 'Copy list to share</button><button class="btn btn-quiet" type="button" data-act="clear-got">Clear checked items</button></div></div>';
+    h += '<div class="grocery-layout"><div class="panel">';
+    if (!items.length && !state.extras.length) {
+      h += '<div class="empty"><span class="pot">' + icon('bag') + '</span><h2 style="font-size:18px">Your list is empty</h2><p class="muted">Plan a dinner on This Week and its ingredients show up here, added up and sorted by aisle.</p><a class="btn btn-primary btn-sm" href="#week" data-route="week">Plan dinners</a></div>';
+    }
+    AISLES.forEach((aisle) => {
+      const group = items.filter((it) => it.aisle === aisle).sort((a, b) => a.name.localeCompare(b.name));
+      if (!group.length) return;
+      h += '<section class="aisle"><h2>' + esc(aisle) + '</h2><ul class="items">';
+      group.forEach((it, n) => {
+        const id = 'g-' + aisle.replace(/\W+/g, '') + '-' + n;
+        const got = !!state.got[it.key];
+        h += '<li class="item' + (got ? ' got' : '') + '"><label class="check"><input type="checkbox" id="' + id + '" data-act="toggle-got" data-key="' + esc(it.key) + '"' + (got ? ' checked' : '') + '><span class="box">' + icon('check') + '</span></label>' +
+          '<label class="text" for="' + id + '"><span class="name">' + esc(itemLabel(it)) + '</span><span class="from">For ' + esc(it.days.join(', ')) + '</span></label></li>';
+      });
+      h += '</ul></section>';
+    });
+    if (state.extras.length) {
+      h += '<section class="aisle"><h2>Added by you</h2><ul class="items">';
+      state.extras.forEach((x) => {
+        h += '<li class="item' + (x.got ? ' got' : '') + '"><label class="check"><input type="checkbox" id="x-' + x.id + '" data-act="toggle-extra" data-id="' + x.id + '"' + (x.got ? ' checked' : '') + '><span class="box">' + icon('check') + '</span></label>' +
+          '<label class="text" for="x-' + x.id + '"><span class="name">' + esc(x.name) + '</span></label>' +
+          '<button class="icon-btn" type="button" data-act="remove-extra" data-id="' + x.id + '" aria-label="Remove ' + esc(x.name) + '" style="border-color:transparent;background:none">' + icon('x') + '</button></li>';
+      });
+      h += '</ul></section>';
+    }
+    h += '</div><aside class="side">';
+    const total = groceryTotal(), left = groceryRemaining();
+    h += '<div class="side-card"><h2>' + (total - left) + ' of ' + total + ' in the cart</h2><div class="bar" role="img" aria-label="' + (total - left) + ' of ' + total + ' items checked"><span style="width:' + (total ? Math.round((total - left) / total * 100) : 0) + '%"></span></div><p class="muted" style="font-size:14px">Tick items as you shop. Changing a dinner updates the list.</p></div>';
+    h += '<form class="side-card" data-form="add-extra"><h2>Add something else</h2><div class="field"><label for="extraName">Item</label><div class="inline-form"><input class="input" id="extraName" name="name" placeholder="Paper towels" autocomplete="off" required><button class="btn btn-primary" type="submit" aria-label="Add item">' + icon('plus') + '</button></div><span class="hint">For things that aren’t part of a dinner.</span></div></form>';
+    h += '</aside></div>';
+    return h;
+  }
+
+  function renderHousehold() {
+    let h = '<div class="page-head"><div><h1>Your household</h1><p class="sub">The people who share this week. Each gets a color on the calendar.</p></div></div>';
+    h += '<div class="house"><div class="panel"><h2>Members</h2><ul class="members">';
+    state.members.forEach((m) => {
+      h += '<li class="member"><span class="avatar" style="--c:' + m.color + '" aria-hidden="true">' + esc(initialOf(m.name)) + '</span><div class="fields">' +
+        '<div><label class="sr" for="mn-' + m.id + '">Name</label><input class="input" id="mn-' + m.id + '" value="' + esc(m.name) + '" data-act="rename" data-id="' + m.id + '" autocomplete="off"></div>' +
+        '<div><label class="sr" for="mr-' + m.id + '">Role or age</label><input class="input" id="mr-' + m.id + '" value="' + esc(m.role || '') + '" placeholder="Role or age" data-act="rerole" data-id="' + m.id + '" autocomplete="off"></div></div>' +
+        '<button class="icon-btn" type="button" data-act="remove-member" data-id="' + m.id + '" aria-label="Remove ' + esc(m.name) + '">' + icon('trash') + '</button></li>';
+    });
+    if (!state.members.length) h += '<li class="member muted">No one yet. Add the people you live with.</li>';
+    h += '</ul></div><aside class="side">';
+    h += '<form class="side-card" data-form="add-member"><h2>Add someone</h2>' +
+      '<div class="field"><label for="newName">Name</label><input class="input" id="newName" name="name" placeholder="Grandma Rose" autocomplete="off" required></div>' +
+      '<div class="field"><label for="newRole">Role or age <span class="muted">(optional)</span></label><input class="input" id="newRole" name="role" placeholder="Age 6, Parent, Nanny…" autocomplete="off"></div>' +
+      '<button class="btn btn-primary" type="submit">' + icon('plus') + 'Add to household</button></form>';
+    h += '<div class="side-card"><h2>Start fresh</h2><p class="muted" style="font-size:14px">Clear the example events and dinners but keep your household, or bring the example week back.</p>' +
+      '<button class="btn btn-quiet" type="button" data-act="blank-week">Clear this week</button><button class="btn btn-text" type="button" data-act="reset-example">Restore the example week</button></div>';
+    h += '</aside></div>';
+    return h;
+  }
+
+  /* ---------- Dinner dialog ---------- */
+  const dinnerDlg = document.getElementById('dinnerDialog');
+  function openDinner(day, suggest) {
+    ui.dinnerDay = day;
+    ui.effortFilter = isBusyEvening(day) ? 'quick' : 'all';
+    ui.suggestedId = suggest ? pickSuggestion(day) : null;
+    renderDinnerDialog();
+    if (!dinnerDlg.open) dinnerDlg.showModal();
+  }
+  function pickSuggestion(day) {
+    const used = Object.values(state.dinners).map((d) => d.libId);
+    let pool = LIBRARY.filter((m) => !used.includes(m.id));
+    if (ui.effortFilter !== 'all') pool = pool.filter((m) => m.effort === ui.effortFilter);
+    if (!pool.length) pool = LIBRARY.filter((m) => ui.effortFilter === 'all' || m.effort === ui.effortFilter);
+    const others = pool.filter((m) => m.id !== ui.suggestedId);
+    const from = others.length ? others : pool;
+    return from[Math.floor(Math.random() * from.length)].id;
+  }
+  function renderDinnerDialog() {
+    const day = ui.dinnerDay, current = state.dinners[day];
+    let list = LIBRARY.filter((m) => ui.effortFilter === 'all' || m.effort === ui.effortFilter);
+    if (ui.suggestedId) list = list.slice().sort((a, b) => (b.id === ui.suggestedId) - (a.id === ui.suggestedId));
+    let h = '<div class="dlg-head"><h2 id="dinnerTitle">Dinner for ' + esc(fmtDay(day)) + '</h2><button class="icon-btn" type="button" data-act="close-dialog" aria-label="Close">' + icon('x') + '</button></div><div class="dlg-body">';
+    if (isBusyEvening(day)) h += '<div class="note">' + icon('clock') + '<span>' + DAY_NAMES[day] + ' has plans after 5 pm, so quick meals are shown first.</span></div>';
+    if (current) {
+      h += '<div class="current-card"><span class="pot">' + icon('pot') + '</span><div class="meal-text"><span class="label">Planned</span><span class="meal-name">' + esc(current.name) + '</span><span class="meal-meta">' + esc(mealMeta(current)) + '</span></div><button class="btn btn-danger btn-sm" type="button" data-act="remove-dinner">Remove</button></div>';
+    }
+    h += '<div style="display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between"><div class="chips" role="group" aria-label="Filter by effort">';
+    [['all', 'All meals'], ['quick', 'Quick'], ['normal', 'Normal'], ['involved', 'Involved']].forEach(([k, label]) => {
+      h += '<button class="chip" type="button" data-act="filter" data-effort="' + k + '" aria-pressed="' + (ui.effortFilter === k) + '">' + label + '</button>';
+    });
+    h += '</div><button class="btn btn-sage btn-sm" type="button" data-act="surprise">' + icon('shuffle') + 'Suggest one</button></div>';
+    h += '<ul class="meals">';
+    list.forEach((m) => {
+      const isCurrent = current && current.libId === m.id;
+      const isSug = ui.suggestedId === m.id;
+      h += '<li class="meal' + (isCurrent ? ' current' : '') + (isSug ? ' suggested' : '') + '"><div class="meal-text">' + (isSug ? '<span class="label" style="color:var(--amber-ink)">Suggested</span>' : '') + '<span class="meal-name">' + esc(m.name) + '</span><span class="meal-meta">' + esc(mealMeta(m)) + ' · ' + m.ing.length + ' ingredients</span></div>' +
+        (isCurrent ? '<span class="label">Chosen</span>' : '<button class="btn ' + (isSug ? 'btn-primary' : 'btn-quiet') + ' btn-sm" type="button" data-act="choose-meal" data-id="' + m.id + '">Choose</button>') + '</li>';
+    });
+    h += '</ul>';
+    h += '<details class="own"' + (current && !current.libId ? ' open' : '') + '><summary>Add your own meal</summary><form data-form="own-meal">' +
+      '<div class="field"><label for="ownName">Meal name</label><input class="input" id="ownName" name="name" required placeholder="Grandma’s chili" value="' + (current && !current.libId ? esc(current.name) : '') + '"></div>' +
+      '<div class="form-grid"><div class="field"><label for="ownMinutes">Minutes <span class="muted">(optional)</span></label><input class="input" id="ownMinutes" name="minutes" type="number" min="1" max="600" inputmode="numeric" value="' + (current && !current.libId && current.minutes ? current.minutes : '') + '"></div>' +
+      '<div class="field"><label for="ownEffort">Effort</label><select class="input" id="ownEffort" name="effort"><option value="quick">Quick</option><option value="normal" selected>Normal</option><option value="involved">Involved</option></select></div></div>' +
+      '<div class="field"><label for="ownIng">Ingredients</label><textarea class="input" id="ownIng" name="ing" placeholder="One per line, e.g.&#10;ground beef&#10;kidney beans&#10;chili powder">' + (current && !current.libId ? esc(current.ing.map((r) => r[0]).join('\n')) : '') + '</textarea><span class="hint">Each line becomes a grocery list item.</span></div>' +
+      '<button class="btn btn-primary" type="submit">Save this meal</button></form></details>';
+    h += '</div>';
+    dinnerDlg.innerHTML = h;
+  }
+
+  /* ---------- Event dialog ---------- */
+  const eventDlg = document.getElementById('eventDialog');
+  function openEvent(day, id) {
+    const ev = id ? state.events.find((e) => e.id === id) : null;
+    ui.editingEvent = ev ? ev.id : null;
+    const d = ev ? ev.day : day;
+    const options = [EVERYONE].concat(state.members);
+    let h = '<div class="dlg-head"><h2 id="eventTitle">' + (ev ? 'Edit event' : 'Add an event') + '</h2><button class="icon-btn" type="button" data-act="close-dialog" aria-label="Close">' + icon('x') + '</button></div>' +
+      '<form class="dlg-body" data-form="event">' +
+      '<div class="field"><label for="evTitle">What’s happening?</label><input class="input" id="evTitle" name="title" required placeholder="Soccer practice" value="' + (ev ? esc(ev.title) : '') + '" autocomplete="off"></div>' +
+      '<div class="form-grid"><div class="field"><label for="evDay">Day</label><select class="input" id="evDay" name="day">' + DAY_NAMES.map((n, i) => '<option value="' + i + '"' + (i === d ? ' selected' : '') + '>' + esc(fmtDay(i)) + '</option>').join('') + '</select></div>' +
+      '<div class="field"><label for="evTime">Time <span class="muted">(optional)</span></label><input class="input" id="evTime" name="time" type="time" value="' + (ev ? esc(ev.time) : '') + '"></div></div>' +
+      '<div class="field"><label for="evWho">Who is it for?</label><select class="input" id="evWho" name="who">' + options.map((m) => '<option value="' + m.id + '"' + (ev && ev.who === m.id ? ' selected' : '') + '>' + esc(m.name) + '</option>').join('') + '</select></div>' +
+      '<div class="field"><label for="evNote">Where or notes <span class="muted">(optional)</span></label><input class="input" id="evNote" name="note" placeholder="Riverside Park" value="' + (ev ? esc(ev.note) : '') + '" autocomplete="off"></div>' +
+      '<div class="dlg-foot">' + (ev ? '<button class="btn btn-danger left" type="button" data-act="delete-event">' + icon('trash') + 'Delete</button>' : '') + '<button class="btn btn-quiet" type="button" data-act="close-dialog">Cancel</button><button class="btn btn-primary" type="submit">' + (ev ? 'Save changes' : 'Add event') + '</button></div></form>';
+    eventDlg.innerHTML = h;
+    eventDlg.showModal();
+  }
+
+  /* ---------- Confirm dialog (window.confirm is unavailable) ---------- */
+  const confirmDlg = document.getElementById('confirmDialog');
+  function askConfirm(title, body, label, fn) {
+    ui.confirmFn = fn;
+    confirmDlg.innerHTML = '<div class="dlg-head"><h2 id="confirmTitle">' + esc(title) + '</h2></div><div class="dlg-body"><p class="muted">' + esc(body) + '</p><div class="dlg-foot"><button class="btn btn-quiet" type="button" data-act="close-dialog">Keep it</button><button class="btn btn-primary" type="button" data-act="confirm-yes">' + esc(label) + '</button></div></div>';
+    confirmDlg.showModal();
+  }
+
+  /* ---------- Toast & clipboard ---------- */
+  let toastTimer;
+  function toast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => t.classList.remove('show'), 2600);
+  }
+  function listAsText() {
+    const items = groceryItems().filter((it) => !state.got[it.key]);
+    let out = 'Grocery list, week of ' + fmtShort(dayDate(0)) + '\n';
+    AISLES.forEach((aisle) => {
+      const group = items.filter((it) => it.aisle === aisle);
+      if (group.length) out += '\n' + aisle + '\n' + group.map((it) => '- ' + itemLabel(it)).join('\n') + '\n';
+    });
+    const extras = state.extras.filter((x) => !x.got);
+    if (extras.length) out += '\nAlso\n' + extras.map((x) => '- ' + x.name).join('\n') + '\n';
+    return out;
+  }
+  function copyList() {
+    const text = listAsText();
+    const done = () => toast('List copied. Paste it into a text or a note.');
+    const fallback = () => {
+      const ta = document.createElement('textarea');
+      ta.value = text; ta.setAttribute('readonly', ''); ta.style.position = 'fixed'; ta.style.opacity = '0';
+      document.body.appendChild(ta); ta.select();
+      let ok = false;
+      try { ok = document.execCommand('copy'); } catch (e) { ok = false; }
+      ta.remove();
+      toast(ok ? 'List copied. Paste it into a text or a note.' : 'Copying is blocked here. Select the list and copy it by hand.');
+    };
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(done, fallback);
+    else fallback();
+  }
+
+  /* ---------- Actions ---------- */
+  function closeDialogs() { [dinnerDlg, eventDlg, confirmDlg].forEach((d) => { if (d.open) d.close(); }); }
+  function setDinner(day, meal) {
+    state.dinners[day] = meal;
+    state.isExample = false;
+    save(); render();
+  }
+
+  document.addEventListener('click', (e) => {
+    const routeLink = e.target.closest('[data-route]');
+    if (routeLink) {
+      e.preventDefault();
+      if (location.hash === '#' + routeLink.dataset.route) render(); else location.hash = routeLink.dataset.route;
+      window.scrollTo(0, 0);
+      return;
+    }
+    const homeLink = e.target.closest('a[href="#top"]');
+    if (homeLink) { e.preventDefault(); history.replaceState(null, '', location.pathname + location.search); render(); window.scrollTo(0, 0); return; }
+
+    const el = e.target.closest('[data-act]');
+    if (!el || el.matches('input')) return;
+    const act = el.dataset.act;
+    const day = el.dataset.day != null ? Number(el.dataset.day) : null;
+    switch (act) {
+      case 'scroll-how': document.getElementById('how').scrollIntoView({ behavior: 'smooth' }); break;
+      case 'jump': e.preventDefault(); document.getElementById('day-' + day).scrollIntoView({ behavior: 'smooth', block: 'start' }); break;
+      case 'copy-list': copyList(); break;
+      case 'add-event': openEvent(day, null); break;
+      case 'edit-event': openEvent(null, el.dataset.id); break;
+      case 'delete-event':
+        state.events = state.events.filter((x) => x.id !== ui.editingEvent);
+        closeDialogs(); commit(); toast('Event deleted.'); break;
+      case 'open-dinner': openDinner(day, false); break;
+      case 'suggest': openDinner(day, true); break;
+      case 'surprise': ui.suggestedId = pickSuggestion(ui.dinnerDay); renderDinnerDialog(); break;
+      case 'filter': ui.effortFilter = el.dataset.effort; ui.suggestedId = null; renderDinnerDialog(); break;
+      case 'choose-meal': {
+        const d = ui.dinnerDay;
+        setDinner(d, mealCopy(el.dataset.id));
+        closeDialogs(); toast(state.dinners[d].name + ' added to ' + DAY_NAMES[d] + '.'); break;
+      }
+      case 'remove-dinner':
+        delete state.dinners[ui.dinnerDay];
+        closeDialogs(); commit(); toast('Dinner removed. Its ingredients left the list.'); break;
+      case 'toggle-cooked': {
+        const d = state.dinners[day];
+        d.cooked = !d.cooked; commit(); break;
+      }
+      case 'clear-got':
+        state.got = {}; state.extras.forEach((x) => { x.got = false; }); commit(); toast('All items unchecked.'); break;
+      case 'remove-extra': state.extras = state.extras.filter((x) => x.id !== el.dataset.id); commit(); break;
+      case 'remove-member': {
+        const m = state.members.find((x) => x.id === el.dataset.id);
+        askConfirm('Remove ' + m.name + '?', 'Their events stay on the week and move to Everyone.', 'Remove', () => {
+          state.members = state.members.filter((x) => x.id !== m.id);
+          state.events.forEach((ev) => { if (ev.who === m.id) ev.who = 'all'; });
+          commit(); toast(m.name + ' removed.');
+        });
+        break;
+      }
+      case 'blank-week':
+        askConfirm('Clear this week?', 'All events, dinners and grocery items go away. Your household stays.', 'Clear the week', () => {
+          state.events = []; state.dinners = {}; state.got = {}; state.extras = []; state.isExample = false;
+          commit(); location.hash = 'week'; toast('Fresh week ready.');
+        });
+        break;
+      case 'reset-example':
+        askConfirm('Restore the example week?', 'This replaces your household, events and dinners with the example family.', 'Restore example', () => {
+          state = sampleState(); commit(); location.hash = 'week'; toast('Example week restored.');
+        });
+        break;
+      case 'confirm-yes': { const fn = ui.confirmFn; ui.confirmFn = null; closeDialogs(); if (fn) fn(); break; }
+      case 'close-dialog': closeDialogs(); break;
+    }
+  });
+
+  document.addEventListener('change', (e) => {
+    const el = e.target;
+    const act = el.dataset && el.dataset.act;
+    if (act === 'toggle-event') { const ev = state.events.find((x) => x.id === el.dataset.id); ev.done = el.checked; commit(); }
+    if (act === 'toggle-got') { if (el.checked) state.got[el.dataset.key] = true; else delete state.got[el.dataset.key]; commit(); }
+    if (act === 'toggle-extra') { const x = state.extras.find((i) => i.id === el.dataset.id); x.got = el.checked; commit(); }
+    if (act === 'rename') {
+      const m = state.members.find((x) => x.id === el.dataset.id);
+      const v = el.value.trim();
+      if (v) { m.name = v; commit(); toast('Saved.'); } else el.value = m.name;
+    }
+    if (act === 'rerole') { const m = state.members.find((x) => x.id === el.dataset.id); m.role = el.value.trim(); save(); }
+  });
+
+  document.addEventListener('submit', (e) => {
+    const form = e.target.closest('[data-form]');
+    if (!form) return;
+    e.preventDefault();
+    const data = new FormData(form);
+    const kind = form.dataset.form;
+    if (kind === 'event') {
+      const fields = { title: String(data.get('title')).trim(), day: Number(data.get('day')), time: String(data.get('time') || ''), who: String(data.get('who')), note: String(data.get('note') || '').trim() };
+      if (!fields.title) return;
+      if (ui.editingEvent) Object.assign(state.events.find((x) => x.id === ui.editingEvent), fields);
+      else state.events.push(Object.assign({ id: uid('e'), done: false }, fields));
+      state.isExample = false;
+      closeDialogs(); commit(); toast(ui.editingEvent ? 'Event updated.' : 'Added to ' + DAY_NAMES[fields.day] + '.');
+    }
+    if (kind === 'own-meal') {
+      const name = String(data.get('name')).trim();
+      if (!name) return;
+      const ing = String(data.get('ing') || '').split('\n').map((s) => s.trim()).filter(Boolean).map((n) => [n, null, '', 'Other']);
+      const minutes = Number(data.get('minutes')) || null;
+      const d = ui.dinnerDay;
+      setDinner(d, { libId: null, name, minutes, effort: String(data.get('effort')), tags: ['Your recipe'], ing, cooked: false });
+      closeDialogs(); toast(name + ' added to ' + DAY_NAMES[d] + '.');
+    }
+    if (kind === 'add-extra') {
+      const name = String(data.get('name')).trim();
+      if (!name) return;
+      state.extras.push({ id: uid('x'), name, got: false });
+      commit();
+      const input = document.getElementById('extraName');
+      if (input) input.focus();
+    }
+    if (kind === 'add-member') {
+      const name = String(data.get('name')).trim();
+      if (!name) return;
+      const used = state.members.map((m) => m.color);
+      const color = COLORS.find((c) => !used.includes(c)) || COLORS[state.members.length % COLORS.length];
+      state.members.push({ id: uid('m'), name, role: String(data.get('role') || '').trim(), color });
+      commit(); toast(name + ' joined the household.');
+      const input = document.getElementById('newName');
+      if (input) input.focus();
+    }
+  });
+
+  [dinnerDlg, eventDlg, confirmDlg].forEach((d) => d.addEventListener('click', (e) => { if (e.target === d) d.close(); }));
+  window.addEventListener('hashchange', render);
+  render();
+})();
+</script>
+
+</body>
+</html>
