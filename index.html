@@ -324,7 +324,7 @@ details.more[open] summary { margin-bottom: 6px; }
 }
 @media (max-width: 600px) {
   .member { grid-template-columns: 44px minmax(0, 1fr) auto; grid-template-areas: "av name rm" ". role role" ". meta meta"; gap: 8px 12px; }
-  .member .m-remove { padding: 0 12px; }
+  .member .m-remove { width: 48px; padding: 0; gap: 0; font-size: 0; } /* icon only; the button keeps its spoken label */
   .list-summary .btn-primary, .add-person .btn-primary { align-self: stretch; }
 }
 @media (max-width: 720px) {
@@ -819,7 +819,7 @@ details.more[open] summary { margin-bottom: 6px; }
         h += '<li class="member"><span class="avatar" style="--c:' + m.color + '" data-avatar="' + m.id + '" aria-hidden="true">' + esc(initialOf(m.name)) + '</span>' +
           '<div class="field m-name"><label for="mn-' + m.id + '">Name</label><input class="input" id="mn-' + m.id + '" value="' + esc(m.name) + '" data-act="rename" data-id="' + m.id + '" autocomplete="off" enterkeyhint="done"></div>' +
           '<div class="field m-role"><label for="mr-' + m.id + '">Role or age <span class="muted">(optional)</span></label><input class="input" id="mr-' + m.id + '" value="' + esc(m.role || '') + '" placeholder="Parent, Age 8…" data-act="rerole" data-id="' + m.id + '" autocomplete="off" enterkeyhint="done"></div>' +
-          '<button class="btn btn-danger btn-sm m-remove" type="button" data-act="remove-member" data-id="' + m.id + '">' + icon('trash') + 'Remove<span class="sr"> ' + esc(m.name) + '</span></button>' +
+          '<button class="btn btn-danger btn-sm m-remove" type="button" data-act="remove-member" data-id="' + m.id + '" aria-label="Remove ' + esc(m.name) + '">' + icon('trash') + 'Remove</button>' +
           '<p class="m-meta">' + (n ? n + ' event' + (n === 1 ? '' : 's') + ' this week' : 'No events this week') + '</p></li>';
       });
       h += '</ul>';
