@@ -236,7 +236,15 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
 .page-head h1 { font-size: clamp(28px, 4vw, 32px); line-height: 1.15; }
 .page-head .sub { color: var(--muted); font-size: 15px; }
 .page-head .actions { display: flex; flex-wrap: wrap; gap: 10px; }
-.grocery-layout { display: grid; grid-template-columns: minmax(0, 1fr) 300px; gap: 24px; align-items: start; }
+.narrow { max-width: 720px; margin: 0 auto; display: flex; flex-direction: column; gap: 16px; }
+.narrow .page-head { margin-bottom: 4px; }
+.list-summary { background: var(--sand); border: 1px solid var(--line); border-radius: var(--r-lg); padding: 18px 20px; display: flex; flex-direction: column; gap: 12px; }
+.list-summary .summary-line { justify-content: space-between; align-items: center; }
+.list-summary .btn-primary { align-self: flex-start; min-width: 200px; }
+.add-item { display: flex; flex-direction: column; gap: 8px; border-top: 1px solid var(--line-soft); padding-block: 16px 6px; margin-top: 4px; }
+.add-item label { font-size: 15px; font-weight: 600; }
+.icon-btn.ghost { border-color: transparent; background: none; color: var(--muted); }
+.icon-btn.ghost:hover { background: var(--sand); color: var(--ink); }
 .panel { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-lg); padding: 6px 18px 12px; box-shadow: var(--shadow); }
 .aisle { padding-block: 12px 4px; }
 .aisle + .aisle { border-top: 1px solid var(--line-soft); }
@@ -247,9 +255,6 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
 .item .name { font-size: 16px; overflow-wrap: anywhere; }
 .item .from { font-size: 13px; color: var(--muted); }
 .item.got .name { text-decoration: line-through; color: var(--muted); }
-.side { display: flex; flex-direction: column; gap: 16px; }
-.side-card { background: var(--sand); border: 1px solid var(--line); border-radius: var(--r-lg); padding: 18px; display: flex; flex-direction: column; gap: 12px; }
-.side-card h2 { font-size: 16px; }
 .field { display: flex; flex-direction: column; gap: 6px; }
 .field label { font-size: 14px; font-weight: 500; }
 .field .hint { font-size: 13px; color: var(--muted); }
@@ -262,14 +267,22 @@ textarea.input { min-height: 120px; resize: vertical; line-height: 1.5; }
 .empty .pot { width: 56px; height: 56px; }
 
 /* ---------- Household ---------- */
-.house { display: grid; grid-template-columns: minmax(0, 1fr) 320px; gap: 24px; align-items: start; }
 .members { list-style: none; margin: 0; padding: 0; }
-.member { display: flex; align-items: center; gap: 12px; padding-block: 12px; }
+/* Avatar | name | role | remove on wide screens; avatar + name + remove, then role, on phones */
+.member { display: grid; grid-template-columns: 44px minmax(0, 1fr) minmax(0, 190px) auto; grid-template-areas: "av name role rm" ". meta meta meta"; gap: 4px 12px; align-items: end; padding-block: 14px; }
 .member + .member { border-top: 1px solid var(--line-soft); }
-.member .avatar { width: 40px; height: 40px; font-size: 15px; border: 0; }
-.member .fields { flex: 1; min-width: 0; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 150px); gap: 8px; }
-.member .input { min-height: 44px; }
+.member .avatar { grid-area: av; width: 44px; height: 44px; font-size: 16px; border: 0; align-self: end; margin-bottom: 2px; }
+.member .m-name { grid-area: name; }
+.member .m-role { grid-area: role; }
+.member .m-remove { grid-area: rm; min-height: 48px; }
+.member .m-meta { grid-area: meta; font-size: 13px; color: var(--muted); }
+.member .field label { font-size: 13px; color: var(--muted); font-weight: 500; }
+.member .m-name .input { font-weight: 600; }
 .panel h2 { font-size: 17px; padding-block: 12px 4px; }
+.add-person { display: flex; flex-direction: column; gap: 14px; padding-bottom: 18px; }
+.add-person .btn-primary { align-self: flex-start; }
+.quiet-panel { background: var(--sand); box-shadow: none; padding-bottom: 16px; display: flex; flex-direction: column; gap: 8px; }
+.quiet-panel .row { display: flex; flex-wrap: wrap; gap: 8px; }
 
 /* ---------- Dialogs ---------- */
 dialog { border: 1px solid var(--line); border-radius: 24px; padding: 0; width: min(560px, calc(100% - 32px)); max-height: min(86vh, 860px); background: var(--bg); color: var(--ink); box-shadow: 0 20px 60px rgba(30,25,20,.25); }
@@ -308,7 +321,11 @@ details.more[open] summary { margin-bottom: 6px; }
 @media (max-width: 900px) {
   .hero, .problem { grid-template-columns: minmax(0, 1fr); gap: 32px; }
   .features { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .grocery-layout, .house { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 600px) {
+  .member { grid-template-columns: 44px minmax(0, 1fr) auto; grid-template-areas: "av name rm" ". role role" ". meta meta"; gap: 8px 12px; }
+  .member .m-remove { padding: 0 12px; }
+  .list-summary .btn-primary, .add-person .btn-primary { align-self: stretch; }
 }
 @media (max-width: 720px) {
   .tabs { position: fixed; left: 0; right: 0; bottom: 0; z-index: 6; justify-content: space-around; gap: 0; background: var(--bg); border-top: 1px solid var(--line); padding: 6px max(8px, env(safe-area-inset-right, 0px)) calc(8px + env(safe-area-inset-bottom, 0px)) max(8px, env(safe-area-inset-left, 0px)); }
@@ -325,7 +342,7 @@ details.more[open] summary { margin-bottom: 6px; }
 }
 @media (max-width: 480px) {
   .features { grid-template-columns: minmax(0, 1fr); }
-  .member .fields, .form-grid { grid-template-columns: minmax(0, 1fr); }
+  .form-grid { grid-template-columns: minmax(0, 1fr); }
   .band, .cta-band { padding-block: 48px; }
 }
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; scroll-behavior: auto !important; } }
@@ -492,7 +509,7 @@ details.more[open] summary { margin-bottom: 6px; }
   /* ---------- Constants ---------- */
   const STORE_KEY = 'haven.v1';
   const COLORS = ['#A65D40', '#4F6A85', '#8A5A7A', '#5C7356', '#8A6428', '#5B6B8C', '#7A5C4A'];
-  const AISLES = ['Produce', 'Meat & fish', 'Dairy & eggs', 'Bakery', 'Pantry', 'Frozen', 'Other'];
+  const AISLES = ['Produce', 'Meat & Seafood', 'Dairy & Eggs', 'Bakery', 'Pantry', 'Frozen', 'Other'];
   const DAY_NAMES = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
   const EFFORT = { quick: 'Quick', normal: 'Normal', involved: 'Involved' };
   const EVERYONE = { id: 'all', name: 'Everyone', initial: 'All', color: '#6B6560' };
@@ -500,29 +517,29 @@ details.more[open] summary { margin-bottom: 6px; }
   // Ingredients: [name, quantity, unit, aisle]
   const LIBRARY = [
     { id: 'lemon-chicken', name: 'Sheet-pan lemon chicken & potatoes', minutes: 35, effort: 'normal', tags: [],
-      ing: [['chicken thighs', 2, 'lb', 'Meat & fish'], ['baby potatoes', 1.5, 'lb', 'Produce'], ['lemons', 2, '', 'Produce'], ['garlic', 1, 'head', 'Produce'], ['green beans', 1, 'lb', 'Produce'], ['olive oil', null, '', 'Pantry']] },
+      ing: [['chicken thighs', 2, 'lb', 'Meat & Seafood'], ['baby potatoes', 1.5, 'lb', 'Produce'], ['lemons', 2, '', 'Produce'], ['garlic', 1, 'head', 'Produce'], ['green beans', 1, 'lb', 'Produce'], ['olive oil', null, '', 'Pantry']] },
     { id: 'bean-tacos', name: 'Black bean tacos', minutes: 20, effort: 'quick', tags: ['Vegetarian'],
-      ing: [['black beans', 2, 'cans', 'Pantry'], ['corn tortillas', 1, 'pack', 'Bakery'], ['avocados', 2, '', 'Produce'], ['limes', 2, '', 'Produce'], ['shredded cheddar', 1, 'bag', 'Dairy & eggs'], ['salsa', 1, 'jar', 'Pantry']] },
+      ing: [['black beans', 2, 'cans', 'Pantry'], ['corn tortillas', 1, 'pack', 'Bakery'], ['avocados', 2, '', 'Produce'], ['limes', 2, '', 'Produce'], ['shredded cheddar', 1, 'bag', 'Dairy & Eggs'], ['salsa', 1, 'jar', 'Pantry']] },
     { id: 'beef-ragu', name: 'Slow-cooker beef ragu', minutes: 15, effort: 'normal', tags: ['Makes leftovers'],
-      ing: [['ground beef', 1.5, 'lb', 'Meat & fish'], ['crushed tomatoes', 2, 'cans', 'Pantry'], ['onion', 1, '', 'Produce'], ['carrots', 2, '', 'Produce'], ['garlic', 1, 'head', 'Produce'], ['pasta', 1, 'box', 'Pantry']] },
+      ing: [['ground beef', 1.5, 'lb', 'Meat & Seafood'], ['crushed tomatoes', 2, 'cans', 'Pantry'], ['onion', 1, '', 'Produce'], ['carrots', 2, '', 'Produce'], ['garlic', 1, 'head', 'Produce'], ['pasta', 1, 'box', 'Pantry']] },
     { id: 'pizza-night', name: 'Homemade pizza night', minutes: 45, effort: 'involved', tags: ['Family favorite'],
-      ing: [['pizza dough', 2, 'balls', 'Bakery'], ['mozzarella', 1, 'lb', 'Dairy & eggs'], ['pizza sauce', 1, 'jar', 'Pantry'], ['bell peppers', 2, '', 'Produce'], ['mushrooms', 8, 'oz', 'Produce']] },
+      ing: [['pizza dough', 2, 'balls', 'Bakery'], ['mozzarella', 1, 'lb', 'Dairy & Eggs'], ['pizza sauce', 1, 'jar', 'Pantry'], ['bell peppers', 2, '', 'Produce'], ['mushrooms', 8, 'oz', 'Produce']] },
     { id: 'salmon-rice', name: 'Salmon, rice & greens', minutes: 30, effort: 'normal', tags: [],
-      ing: [['salmon fillets', 4, '', 'Meat & fish'], ['rice', 1, 'bag', 'Pantry'], ['spinach', 1, 'bag', 'Produce'], ['lemons', 1, '', 'Produce'], ['soy sauce', null, '', 'Pantry']] },
+      ing: [['salmon fillets', 4, '', 'Meat & Seafood'], ['rice', 1, 'bag', 'Pantry'], ['spinach', 1, 'bag', 'Produce'], ['lemons', 1, '', 'Produce'], ['soy sauce', null, '', 'Pantry']] },
     { id: 'ragu-bake', name: 'Leftover ragu pasta bake', minutes: 25, effort: 'quick', tags: ['Uses leftovers'],
-      ing: [['pasta', 1, 'box', 'Pantry'], ['mozzarella', 0.5, 'lb', 'Dairy & eggs'], ['spinach', 1, 'bag', 'Produce']] },
+      ing: [['pasta', 1, 'box', 'Pantry'], ['mozzarella', 0.5, 'lb', 'Dairy & Eggs'], ['spinach', 1, 'bag', 'Produce']] },
     { id: 'fried-rice', name: 'Veggie fried rice', minutes: 15, effort: 'quick', tags: ['Vegetarian'],
-      ing: [['eggs', 6, '', 'Dairy & eggs'], ['frozen peas & carrots', 1, 'bag', 'Frozen'], ['green onions', 1, 'bunch', 'Produce'], ['rice', 1, 'bag', 'Pantry'], ['soy sauce', null, '', 'Pantry']] },
+      ing: [['eggs', 6, '', 'Dairy & Eggs'], ['frozen peas & carrots', 1, 'bag', 'Frozen'], ['green onions', 1, 'bunch', 'Produce'], ['rice', 1, 'bag', 'Pantry'], ['soy sauce', null, '', 'Pantry']] },
     { id: 'chickpea-curry', name: 'Chickpea & spinach curry', minutes: 25, effort: 'quick', tags: ['Vegetarian'],
       ing: [['chickpeas', 2, 'cans', 'Pantry'], ['coconut milk', 1, 'can', 'Pantry'], ['spinach', 1, 'bag', 'Produce'], ['onion', 1, '', 'Produce'], ['curry paste', 1, 'jar', 'Pantry'], ['naan', 1, 'pack', 'Bakery']] },
     { id: 'turkey-burgers', name: 'Turkey burgers & sweet potato fries', minutes: 35, effort: 'normal', tags: [],
-      ing: [['ground turkey', 1.5, 'lb', 'Meat & fish'], ['burger buns', 1, 'pack', 'Bakery'], ['sweet potatoes', 3, '', 'Produce'], ['lettuce', 1, 'head', 'Produce'], ['tomatoes', 2, '', 'Produce']] },
+      ing: [['ground turkey', 1.5, 'lb', 'Meat & Seafood'], ['burger buns', 1, 'pack', 'Bakery'], ['sweet potatoes', 3, '', 'Produce'], ['lettuce', 1, 'head', 'Produce'], ['tomatoes', 2, '', 'Produce']] },
     { id: 'chicken-soup', name: 'Chicken noodle soup', minutes: 40, effort: 'normal', tags: ['Makes leftovers'],
-      ing: [['chicken breasts', 1, 'lb', 'Meat & fish'], ['egg noodles', 1, 'bag', 'Pantry'], ['chicken broth', 2, 'cartons', 'Pantry'], ['carrots', 3, '', 'Produce'], ['celery', 1, 'bunch', 'Produce'], ['onion', 1, '', 'Produce']] },
+      ing: [['chicken breasts', 1, 'lb', 'Meat & Seafood'], ['egg noodles', 1, 'bag', 'Pantry'], ['chicken broth', 2, 'cartons', 'Pantry'], ['carrots', 3, '', 'Produce'], ['celery', 1, 'bunch', 'Produce'], ['onion', 1, '', 'Produce']] },
     { id: 'pancakes', name: 'Breakfast for dinner', minutes: 20, effort: 'quick', tags: ['Kids love it'],
-      ing: [['eggs', 6, '', 'Dairy & eggs'], ['milk', 1, 'gallon', 'Dairy & eggs'], ['pancake mix', 1, 'box', 'Pantry'], ['berries', 2, 'boxes', 'Produce'], ['bacon', 1, 'pack', 'Meat & fish']] },
+      ing: [['eggs', 6, '', 'Dairy & Eggs'], ['milk', 1, 'gallon', 'Dairy & Eggs'], ['pancake mix', 1, 'box', 'Pantry'], ['berries', 2, 'boxes', 'Produce'], ['bacon', 1, 'pack', 'Meat & Seafood']] },
     { id: 'lasagna', name: 'Weekend lasagna', minutes: 75, effort: 'involved', tags: ['Makes leftovers'],
-      ing: [['lasagna noodles', 1, 'box', 'Pantry'], ['ricotta', 1, 'tub', 'Dairy & eggs'], ['mozzarella', 1, 'lb', 'Dairy & eggs'], ['ground beef', 1, 'lb', 'Meat & fish'], ['marinara', 2, 'jars', 'Pantry']] }
+      ing: [['lasagna noodles', 1, 'box', 'Pantry'], ['ricotta', 1, 'tub', 'Dairy & Eggs'], ['mozzarella', 1, 'lb', 'Dairy & Eggs'], ['ground beef', 1, 'lb', 'Meat & Seafood'], ['marinara', 2, 'jars', 'Pantry']] }
   ];
 
   /* ---------- State ---------- */
@@ -570,7 +587,7 @@ details.more[open] summary { margin-bottom: 6px; }
     try { localStorage.setItem(STORE_KEY, JSON.stringify(state)); } catch (e) { /* storage unavailable: keep working in memory */ }
   }
   let state = load() || sampleState();
-  const ui = { dinnerDay: null, effortFilter: 'all', suggestedId: null, editingEvent: null, confirmFn: null };
+  const ui = { dinnerDay: null, effortFilter: 'all', suggestedId: null, editingEvent: null, confirmFn: null, copyText: null };
   function uid(prefix) { state.nextId += 1; return prefix + state.nextId; }
   function commit() { save(); render(); }
 
@@ -612,12 +629,28 @@ details.more[open] summary { margin-bottom: 6px; }
   function isBusyEvening(day) { return eventsFor(day).some((e) => e.time && e.time >= '17:00'); }
   function plannedCount() { return Object.keys(state.dinners).length; }
 
+  // Best-guess store section for things people type themselves. Checked in this order, first match wins.
+  const AISLE_WORDS = [
+    ['Pantry', ['peanut butter', 'coconut milk', 'tomato sauce', 'pasta sauce', 'chili powder', 'canned']],
+    ['Frozen', ['frozen', 'ice cream']],
+    ['Bakery', ['bread', 'bun', 'roll', 'tortilla', 'naan', 'bagel', 'pita', 'dough', 'croissant', 'wrap']],
+    ['Meat & Seafood', ['chicken', 'beef', 'pork', 'turkey', 'bacon', 'sausage', 'ham', 'lamb', 'steak', 'mince', 'fish', 'salmon', 'tuna', 'cod', 'shrimp', 'prawn']],
+    ['Dairy & Eggs', ['milk', 'cheese', 'cheddar', 'mozzarella', 'parmesan', 'feta', 'butter', 'yogurt', 'yoghurt', 'cream', 'egg', 'ricotta']],
+    ['Produce', ['apple', 'banana', 'berr', 'grape', 'orange', 'lemon', 'lime', 'avocado', 'lettuce', 'spinach', 'kale', 'salad', 'tomato', 'onion', 'garlic', 'potato', 'carrot', 'celery', 'pepper', 'mushroom', 'broccoli', 'cucumber', 'zucchini', 'squash', 'corn', 'green bean', 'herb', 'cilantro', 'parsley', 'basil', 'ginger', 'fruit', 'veg']],
+    ['Pantry', ['rice', 'pasta', 'spaghetti', 'noodle', 'bean', 'lentil', 'chickpea', 'flour', 'sugar', 'oil', 'sauce', 'salt', 'spice', 'powder', 'stock', 'broth', 'cereal', 'oat', 'honey', 'vinegar', 'salsa', 'coffee', 'tea', 'can ', 'jar']]
+  ];
+  function guessAisle(name) {
+    const n = ' ' + name.toLowerCase() + ' ';
+    const hit = AISLE_WORDS.find(([, words]) => words.some((w) => n.includes(w)));
+    return hit ? hit[0] : 'Other';
+  }
+
   function groceryItems() {
     const map = new Map();
     Object.keys(state.dinners).map(Number).sort((a, b) => a - b).forEach((day) => {
       state.dinners[day].ing.forEach(([name, qty, unit, aisle]) => {
         const key = name.toLowerCase() + '|' + unit;
-        if (!map.has(key)) map.set(key, { key, name, qty: null, unit, aisle: AISLES.includes(aisle) ? aisle : 'Other', days: [] });
+        if (!map.has(key)) map.set(key, { key, name, qty: null, unit, aisle: AISLES.includes(aisle) && aisle !== 'Other' ? aisle : guessAisle(name), days: [] });
         const item = map.get(key);
         if (qty != null) item.qty = (item.qty || 0) + qty;
         const short = DAY_NAMES[day].slice(0, 3);
@@ -627,10 +660,15 @@ details.more[open] summary { margin-bottom: 6px; }
     return Array.from(map.values());
   }
   function itemLabel(it) { return [fmtQty(it.qty), it.unit, it.name].filter(Boolean).join(' '); }
-  function groceryTotal() { return groceryItems().length + state.extras.length; }
-  function groceryRemaining() {
-    return groceryItems().filter((it) => !state.got[it.key]).length + state.extras.filter((x) => !x.got).length;
+  // Everything on the list: dinner ingredients plus things added by hand. Extras use keys starting "x:".
+  function listItems() {
+    const fromMeals = groceryItems().map((it) => ({ key: it.key, label: itemLabel(it), aisle: it.aisle, from: 'For ' + it.days.join(', '), got: !!state.got[it.key] }));
+    const extras = state.extras.map((x) => ({ key: 'x:' + x.id, extraId: x.id, label: x.name, aisle: guessAisle(x.name), from: 'Added by you', got: !!x.got }));
+    return fromMeals.concat(extras);
   }
+  function itemDomId(key) { return 'g-' + key.replace(/[^a-z0-9]+/gi, '-'); }
+  function groceryTotal() { return listItems().length; }
+  function groceryRemaining() { return listItems().filter((it) => !it.got).length; }
 
   /* ---------- Rendering ---------- */
   const viewEl = document.getElementById('view');
@@ -649,10 +687,14 @@ details.more[open] summary { margin-bottom: 6px; }
     const countEl = document.getElementById('groceryCount');
     countEl.textContent = remaining ? remaining : '';
     countEl.hidden = !remaining;
-    document.getElementById('topAvatars').innerHTML = state.members.slice(0, 5).map((m) => '<span class="avatar" style="--c:' + m.color + '">' + esc(initialOf(m.name)) + '</span>').join('');
+    renderTopAvatars();
     if (route === 'week') viewEl.innerHTML = renderWeek();
     if (route === 'grocery') viewEl.innerHTML = renderGrocery();
     if (route === 'household') viewEl.innerHTML = renderHousehold();
+  }
+
+  function renderTopAvatars() {
+    document.getElementById('topAvatars').innerHTML = state.members.slice(0, 5).map((m) => '<span class="avatar" style="--c:' + m.color + '">' + esc(initialOf(m.name)) + '</span>').join('');
   }
 
   function renderWeek() {
@@ -722,61 +764,77 @@ details.more[open] summary { margin-bottom: 6px; }
   }
 
   function renderGrocery() {
-    const items = groceryItems();
+    const items = listItems();
     const planned = plannedCount();
-    let h = '<div class="page-head"><div><h1>Grocery list</h1><p class="sub">' + (planned ? 'From ' + planned + ' planned dinner' + (planned === 1 ? '' : 's') + ' · week of ' + esc(fmtShort(dayDate(0))) : 'Plan a dinner to start your list') + '</p></div>' +
-      '<div class="actions"><button class="btn btn-primary" type="button" data-act="copy-list">' + icon('share') + 'Copy list to share</button><button class="btn btn-quiet" type="button" data-act="clear-got">Clear checked items</button></div></div>';
-    h += '<div class="grocery-layout"><div class="panel">';
-    if (!items.length && !state.extras.length) {
-      h += '<div class="empty"><span class="pot">' + icon('bag') + '</span><h2 style="font-size:18px">Your list is empty</h2><p class="muted">Plan a dinner on This Week and its ingredients show up here, added up and sorted by aisle.</p><a class="btn btn-primary btn-sm" href="#week" data-route="week">Plan dinners</a></div>';
+    const total = items.length;
+    const inCart = items.filter((it) => it.got).length;
+    let h = '<div class="narrow"><div class="page-head"><div><h1>Grocery list</h1><p class="sub">' + (planned ? 'Made from ' + planned + ' planned dinner' + (planned === 1 ? '' : 's') + ' this week' : 'Plan a dinner and its ingredients appear here') + '</p></div></div>';
+
+    if (!total) {
+      h += '<div class="panel"><div class="empty"><span class="pot">' + icon('bag') + '</span><h2 style="font-size:18px">Your list is empty</h2><p class="muted">Plan a dinner on This Week and everything you need shows up here, added up and sorted by store section.</p><a class="btn btn-primary" href="#week" data-route="week">Plan dinners</a></div>' + addItemForm() + '</div></div>';
+      return h;
     }
+
+    // Progress and the one main action: copy what's left to buy
+    h += '<section class="list-summary" aria-label="Shopping progress"><div class="summary-line"><strong>' + inCart + ' of ' + total + ' in the cart</strong>' + (inCart ? '<button class="btn btn-text btn-sm" type="button" data-act="clear-got">Uncheck all</button>' : '') + '</div>' +
+      '<div class="bar" role="img" aria-label="' + inCart + ' of ' + total + ' items checked off"><span style="width:' + Math.round(inCart / total * 100) + '%"></span></div>' +
+      '<button class="btn btn-primary" type="button" data-act="copy-list">' + icon('share') + 'Copy list</button>' +
+      '<p class="muted" style="font-size:13px">Copies what’s still left to buy, ready to paste into a text or note.</p>';
+    if (ui.copyText) {
+      h += '<div class="field"><label for="copyBox">Copying is blocked here. Press and hold, or select all, then copy this text:</label><textarea class="input" id="copyBox" readonly>' + esc(ui.copyText) + '</textarea></div>';
+    }
+    h += '</section>';
+
+    // The list, by store section; checked items sink to the bottom of their section
+    h += '<div class="panel">';
     AISLES.forEach((aisle) => {
-      const group = items.filter((it) => it.aisle === aisle).sort((a, b) => a.name.localeCompare(b.name));
+      const group = items.filter((it) => it.aisle === aisle).sort((a, b) => (a.got - b.got) || a.label.localeCompare(b.label));
       if (!group.length) return;
       h += '<section class="aisle"><h2>' + esc(aisle) + '</h2><ul class="items">';
-      group.forEach((it, n) => {
-        const id = 'g-' + aisle.replace(/\W+/g, '') + '-' + n;
-        const got = !!state.got[it.key];
-        h += '<li class="item' + (got ? ' got' : '') + '"><label class="check"><input type="checkbox" id="' + id + '" data-act="toggle-got" data-key="' + esc(it.key) + '"' + (got ? ' checked' : '') + '><span class="box">' + icon('check') + '</span></label>' +
-          '<label class="text" for="' + id + '"><span class="name">' + esc(itemLabel(it)) + '</span><span class="from">For ' + esc(it.days.join(', ')) + '</span></label></li>';
+      group.forEach((it) => {
+        const id = itemDomId(it.key);
+        h += '<li class="item' + (it.got ? ' got' : '') + '"><label class="check"><input type="checkbox" id="' + id + '" data-act="toggle-got" data-key="' + esc(it.key) + '"' + (it.got ? ' checked' : '') + '><span class="box">' + icon('check') + '</span></label>' +
+          '<label class="text" for="' + id + '"><span class="name">' + esc(it.label) + '</span><span class="from">' + esc(it.from) + '</span></label>' +
+          (it.extraId ? '<button class="icon-btn ghost" type="button" data-act="remove-extra" data-id="' + it.extraId + '" aria-label="Remove ' + esc(it.label) + ' from the list">' + icon('x') + '</button>' : '') + '</li>';
       });
       h += '</ul></section>';
     });
-    if (state.extras.length) {
-      h += '<section class="aisle"><h2>Added by you</h2><ul class="items">';
-      state.extras.forEach((x) => {
-        h += '<li class="item' + (x.got ? ' got' : '') + '"><label class="check"><input type="checkbox" id="x-' + x.id + '" data-act="toggle-extra" data-id="' + x.id + '"' + (x.got ? ' checked' : '') + '><span class="box">' + icon('check') + '</span></label>' +
-          '<label class="text" for="x-' + x.id + '"><span class="name">' + esc(x.name) + '</span></label>' +
-          '<button class="icon-btn" type="button" data-act="remove-extra" data-id="' + x.id + '" aria-label="Remove ' + esc(x.name) + '" style="border-color:transparent;background:none">' + icon('x') + '</button></li>';
-      });
-      h += '</ul></section>';
-    }
-    h += '</div><aside class="side">';
-    const total = groceryTotal(), left = groceryRemaining();
-    h += '<div class="side-card"><h2>' + (total - left) + ' of ' + total + ' in the cart</h2><div class="bar" role="img" aria-label="' + (total - left) + ' of ' + total + ' items checked"><span style="width:' + (total ? Math.round((total - left) / total * 100) : 0) + '%"></span></div><p class="muted" style="font-size:14px">Tick items as you shop. Changing a dinner updates the list.</p></div>';
-    h += '<form class="side-card" data-form="add-extra"><h2>Add something else</h2><div class="field"><label for="extraName">Item</label><div class="inline-form"><input class="input" id="extraName" name="name" placeholder="Paper towels" autocomplete="off" required><button class="btn btn-primary" type="submit" aria-label="Add item">' + icon('plus') + '</button></div><span class="hint">For things that aren’t part of a dinner.</span></div></form>';
-    h += '</aside></div>';
+    h += addItemForm() + '</div></div>';
     return h;
   }
+  function addItemForm() {
+    return '<form class="add-item" data-form="add-extra"><label for="extraName">Need something else?</label><div class="inline-form"><input class="input" id="extraName" name="name" placeholder="Paper towels, milk…" autocomplete="off" required><button class="btn btn-quiet" type="submit">' + icon('plus') + 'Add</button></div></form>';
+  }
+
+  function eventCount(memberId) { return state.events.filter((e) => e.who === memberId).length; }
 
   function renderHousehold() {
-    let h = '<div class="page-head"><div><h1>Your household</h1><p class="sub">The people who share this week. Each gets a color on the calendar.</p></div></div>';
-    h += '<div class="house"><div class="panel"><h2>Members</h2><ul class="members">';
-    state.members.forEach((m) => {
-      h += '<li class="member"><span class="avatar" style="--c:' + m.color + '" aria-hidden="true">' + esc(initialOf(m.name)) + '</span><div class="fields">' +
-        '<div><label class="sr" for="mn-' + m.id + '">Name</label><input class="input" id="mn-' + m.id + '" value="' + esc(m.name) + '" data-act="rename" data-id="' + m.id + '" autocomplete="off"></div>' +
-        '<div><label class="sr" for="mr-' + m.id + '">Role or age</label><input class="input" id="mr-' + m.id + '" value="' + esc(m.role || '') + '" placeholder="Role or age" data-act="rerole" data-id="' + m.id + '" autocomplete="off"></div></div>' +
-        '<button class="icon-btn" type="button" data-act="remove-member" data-id="' + m.id + '" aria-label="Remove ' + esc(m.name) + '">' + icon('trash') + '</button></li>';
-    });
-    if (!state.members.length) h += '<li class="member muted">No one yet. Add the people you live with.</li>';
-    h += '</ul></div><aside class="side">';
-    h += '<form class="side-card" data-form="add-member"><h2>Add someone</h2>' +
-      '<div class="field"><label for="newName">Name</label><input class="input" id="newName" name="name" placeholder="Grandma Rose" autocomplete="off" required></div>' +
-      '<div class="field"><label for="newRole">Role or age <span class="muted">(optional)</span></label><input class="input" id="newRole" name="role" placeholder="Age 6, Parent, Nanny…" autocomplete="off"></div>' +
+    let h = '<div class="narrow"><div class="page-head"><div><h1>Your household</h1><p class="sub">Everyone who shares this week. Tap a name to change it.</p></div></div>';
+
+    h += '<section class="panel" aria-labelledby="peopleTitle"><h2 id="peopleTitle">People</h2>';
+    if (state.members.length) {
+      h += '<ul class="members">';
+      state.members.forEach((m) => {
+        const n = eventCount(m.id);
+        h += '<li class="member"><span class="avatar" style="--c:' + m.color + '" data-avatar="' + m.id + '" aria-hidden="true">' + esc(initialOf(m.name)) + '</span>' +
+          '<div class="field m-name"><label for="mn-' + m.id + '">Name</label><input class="input" id="mn-' + m.id + '" value="' + esc(m.name) + '" data-act="rename" data-id="' + m.id + '" autocomplete="off" enterkeyhint="done"></div>' +
+          '<div class="field m-role"><label for="mr-' + m.id + '">Role or age <span class="muted">(optional)</span></label><input class="input" id="mr-' + m.id + '" value="' + esc(m.role || '') + '" placeholder="Parent, Age 8…" data-act="rerole" data-id="' + m.id + '" autocomplete="off" enterkeyhint="done"></div>' +
+          '<button class="btn btn-danger btn-sm m-remove" type="button" data-act="remove-member" data-id="' + m.id + '">' + icon('trash') + 'Remove<span class="sr"> ' + esc(m.name) + '</span></button>' +
+          '<p class="m-meta">' + (n ? n + ' event' + (n === 1 ? '' : 's') + ' this week' : 'No events this week') + '</p></li>';
+      });
+      h += '</ul>';
+    } else {
+      h += '<p class="muted" style="padding-block:12px">No one here yet. Add the people you live with below.</p>';
+    }
+    h += '</section>';
+
+    h += '<form class="panel add-person" data-form="add-member"><h2>Add someone</h2>' +
+      '<div class="form-grid"><div class="field"><label for="newName">Name</label><input class="input" id="newName" name="name" placeholder="Grandma Rose" autocomplete="off" required></div>' +
+      '<div class="field"><label for="newRole">Role or age <span class="muted">(optional)</span></label><input class="input" id="newRole" name="role" placeholder="Age 6, Nanny…" autocomplete="off"></div></div>' +
       '<button class="btn btn-primary" type="submit">' + icon('plus') + 'Add to household</button></form>';
-    h += '<div class="side-card"><h2>Start fresh</h2><p class="muted" style="font-size:14px">Clear the example events and dinners but keep your household, or bring the example week back.</p>' +
-      '<button class="btn btn-quiet" type="button" data-act="blank-week">Clear this week</button><button class="btn btn-text" type="button" data-act="reset-example">Restore the example week</button></div>';
-    h += '</aside></div>';
+
+    h += '<section class="panel quiet-panel"><h2>Start fresh</h2><p class="muted" style="font-size:14px">Clear this week’s events and dinners but keep everyone above, or bring back the example family.</p>' +
+      '<div class="row"><button class="btn btn-quiet btn-sm" type="button" data-act="blank-week">Clear this week</button><button class="btn btn-text btn-sm" type="button" data-act="reset-example">Restore the example</button></div></section></div>';
     return h;
   }
 
@@ -873,19 +931,22 @@ details.more[open] summary { margin-bottom: 6px; }
     toastTimer = setTimeout(() => t.classList.remove('show'), 2600);
   }
   function listAsText() {
-    const items = groceryItems().filter((it) => !state.got[it.key]);
+    const left = listItems().filter((it) => !it.got);
     let out = 'Grocery list, week of ' + fmtShort(dayDate(0)) + '\n';
     AISLES.forEach((aisle) => {
-      const group = items.filter((it) => it.aisle === aisle);
-      if (group.length) out += '\n' + aisle + '\n' + group.map((it) => '- ' + itemLabel(it)).join('\n') + '\n';
+      const group = left.filter((it) => it.aisle === aisle).sort((a, b) => a.label.localeCompare(b.label));
+      if (group.length) out += '\n' + aisle + '\n' + group.map((it) => '- ' + it.label).join('\n') + '\n';
     });
-    const extras = state.extras.filter((x) => !x.got);
-    if (extras.length) out += '\nAlso\n' + extras.map((x) => '- ' + x.name).join('\n') + '\n';
-    return out;
+    return { text: out, count: left.length };
   }
   function copyList() {
-    const text = listAsText();
-    const done = () => toast('List copied. Paste it into a text or a note.');
+    const { text, count } = listAsText();
+    if (!count) { toast('Everything is checked off. Nothing left to copy.'); return; }
+    const done = () => {
+      ui.copyText = null;
+      if (currentRoute() === 'grocery') render();
+      toast('Copied ' + count + ' item' + (count === 1 ? '' : 's') + '. Paste them into a text or note.');
+    };
     const fallback = () => {
       const ta = document.createElement('textarea');
       ta.value = text; ta.setAttribute('readonly', ''); ta.style.position = 'fixed'; ta.style.opacity = '0';
@@ -893,7 +954,12 @@ details.more[open] summary { margin-bottom: 6px; }
       let ok = false;
       try { ok = document.execCommand('copy'); } catch (e) { ok = false; }
       ta.remove();
-      toast(ok ? 'List copied. Paste it into a text or a note.' : 'Copying is blocked here. Select the list and copy it by hand.');
+      if (ok) { done(); return; }
+      // Show the text so it can be copied by hand
+      ui.copyText = text;
+      if (currentRoute() !== 'grocery') location.hash = 'grocery'; else render();
+      const box = document.getElementById('copyBox');
+      if (box) { box.focus(); box.select(); }
     };
     if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(done, fallback);
     else fallback();
@@ -948,11 +1014,12 @@ details.more[open] summary { margin-bottom: 6px; }
         d.cooked = !d.cooked; commit(); break;
       }
       case 'clear-got':
-        state.got = {}; state.extras.forEach((x) => { x.got = false; }); commit(); toast('All items unchecked.'); break;
+        state.got = {}; state.extras.forEach((x) => { x.got = false; }); commit(); toast('Everything is back on the list.'); break;
       case 'remove-extra': state.extras = state.extras.filter((x) => x.id !== el.dataset.id); commit(); break;
       case 'remove-member': {
         const m = state.members.find((x) => x.id === el.dataset.id);
-        askConfirm('Remove ' + m.name + '?', 'Their events stay on the week and move to Everyone.', 'Remove', () => {
+        const n = eventCount(m.id);
+        askConfirm('Remove ' + m.name + '?', n ? 'Their ' + (n === 1 ? 'event stays' : n + ' events stay') + ' on the week, marked as Everyone.' : 'They have no events this week, so nothing else changes.', 'Remove ' + m.name, () => {
           state.members = state.members.filter((x) => x.id !== m.id);
           state.events.forEach((ev) => { if (ev.who === m.id) ev.who = 'all'; });
           commit(); toast(m.name + ' removed.');
@@ -979,14 +1046,43 @@ details.more[open] summary { margin-bottom: 6px; }
     const el = e.target;
     const act = el.dataset && el.dataset.act;
     if (act === 'toggle-event') { const ev = state.events.find((x) => x.id === el.dataset.id); ev.done = el.checked; commit(); }
-    if (act === 'toggle-got') { if (el.checked) state.got[el.dataset.key] = true; else delete state.got[el.dataset.key]; commit(); }
-    if (act === 'toggle-extra') { const x = state.extras.find((i) => i.id === el.dataset.id); x.got = el.checked; commit(); }
+    if (act === 'toggle-got') {
+      const key = el.dataset.key;
+      if (key.startsWith('x:')) state.extras.find((x) => 'x:' + x.id === key).got = el.checked;
+      else if (el.checked) state.got[key] = true;
+      else delete state.got[key];
+      commit();
+      const again = document.getElementById(itemDomId(key)); // the item may have moved; keep keyboard focus on it
+      if (again) again.focus({ preventScroll: true });
+    }
+    // Names save in place (no full redraw) so the person keeps their spot while editing
     if (act === 'rename') {
       const m = state.members.find((x) => x.id === el.dataset.id);
       const v = el.value.trim();
-      if (v) { m.name = v; commit(); toast('Saved.'); } else el.value = m.name;
+      if (v) {
+        m.name = v; el.value = v; save(); renderTopAvatars();
+        toast('Saved. The week now shows ' + v + '.');
+      } else {
+        el.value = m.name;
+        toast('A name can’t be empty, so it stays ' + m.name + '.');
+      }
+      const avatar = document.querySelector('[data-avatar="' + m.id + '"]');
+      if (avatar) avatar.textContent = initialOf(m.name);
     }
-    if (act === 'rerole') { const m = state.members.find((x) => x.id === el.dataset.id); m.role = el.value.trim(); save(); }
+    if (act === 'rerole') { const m = state.members.find((x) => x.id === el.dataset.id); m.role = el.value.trim(); save(); toast('Saved.'); }
+  });
+
+  // Live preview of the initial while typing a name; Enter finishes the edit
+  document.addEventListener('input', (e) => {
+    const el = e.target;
+    if (el.dataset && el.dataset.act === 'rename') {
+      const avatar = document.querySelector('[data-avatar="' + el.dataset.id + '"]');
+      if (avatar && el.value.trim()) avatar.textContent = initialOf(el.value);
+    }
+  });
+  document.addEventListener('keydown', (e) => {
+    const act = e.target.dataset && e.target.dataset.act;
+    if (e.key === 'Enter' && (act === 'rename' || act === 'rerole')) e.target.blur();
   });
 
   document.addEventListener('submit', (e) => {
