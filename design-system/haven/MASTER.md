@@ -61,3 +61,18 @@ Hero (value prop + product preview, primary CTA) → Problem → Features (4 car
 ## Anti-patterns to avoid
 Gradients, glassmorphism, emoji icons, muted low-contrast gray text, hover-only affordances,
 layout-shifting press states, placeholder-only labels, silent destructive actions.
+
+## Product principles (positioning, Nov 2026)
+Haven's job is to take on the *noticing*, not to track chores. Every feature is checked against these:
+- **Organizer first.** One person gets full value alone in week 1. Everyone else needs no account or install: they get read-only links.
+- **Haven notices, people don't nag.** Nudges come from Haven, never from one person to another. No streaks, scores or per-person tallies.
+- **Close loops quietly.** Past days count as done without anyone ticking them; the weekly wrap-up resets instead of auditing.
+- **One field to capture.** Adding to the list never asks for amounts, owners, dates or categories.
+- **Dinners first.** Onboarding asks for one thing, this week's dinners; calendar and household come later.
+
+## Components added for these
+- **Heads up:** warn-tinted strip at the top of This Week, at most 3 tappable items, most urgent first. When nothing needs attention it collapses to one sage line ("Nothing needs you right now").
+- **Fill open nights:** one tap plans every open night from tomorrow on (quick meals on busy evenings, no repeats), with Undo.
+- **Share links:** the view is encoded in the URL fragment (`#s=…`), so nothing is sent to a server. The shared grocery list is tickable; ticks are saved on the recipient's device only.
+- **Weekly wrap-up:** sheet with three stats, the repeating plans that carry over, and one primary "Start next week" (Undo available).
+- **Quick capture:** "Add to list" in the app header opens a one-field sheet that stays open for several items.

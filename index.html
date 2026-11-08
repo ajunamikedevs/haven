@@ -390,6 +390,46 @@ details.more[open] summary::before { content: "–"; }
 .toast button:hover { background: color-mix(in srgb, var(--bg) 26%, transparent); }
 .toast:not(:has(button:not([hidden]))) { padding-right: 18px; }
 
+/* ---------- Heads up, welcome, quick add ---------- */
+.p-heads { display: flex; gap: 8px; align-items: center; font-size: 13px; background: var(--warn-tint); border: 1px solid var(--warn-line); color: var(--warn-ink); border-radius: 12px; padding: 8px 10px; }
+.feature .stage { font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--text-muted); margin-top: 4px; }
+.top-right { display: flex; align-items: center; gap: 10px; }
+.summary-actions { flex-wrap: wrap; }
+.summary-line a { min-height: 44px; display: inline-flex; align-items: center; }
+.welcome { margin-top: 18px; padding: 22px; display: flex; flex-direction: column; gap: 10px; border-color: var(--secondary-line); }
+.welcome h2 { font-size: var(--fs-h2); line-height: 1.2; }
+.welcome .row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 4px; }
+.heads { margin-top: 18px; padding: 12px 14px 8px; background: var(--warn-tint); border: 1px solid var(--warn-line); border-radius: var(--r-lg); }
+.heads h2 { font-family: var(--font-body); color: var(--warn-ink); display: flex; align-items: center; gap: 6px; padding: 2px 4px 6px; }
+.heads ul { list-style: none; margin: 0; padding: 0; }
+.head-item { width: 100%; min-height: 48px; display: flex; align-items: center; gap: 12px; text-align: left; background: none; border: 0; border-top: 1px solid var(--warn-line); padding: 8px 6px; color: var(--text); font-size: 15px; transition: background-color var(--dur-fast) var(--ease); }
+.heads li:first-child .head-item { border-top: 0; }
+.head-item:hover { background: color-mix(in srgb, var(--warn-line) 40%, transparent); }
+.head-item .t { flex: 1; min-width: 0; }
+.head-item .act { font-size: var(--fs-small); font-weight: 600; color: var(--primary-ink); white-space: nowrap; display: inline-flex; align-items: center; gap: 2px; }
+.heads.calm { display: flex; align-items: center; gap: 8px; padding: 12px 16px; background: var(--secondary-tint); border-color: var(--secondary-line); color: var(--secondary-ink); font-size: var(--fs-small); }
+.just-added { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px; }
+.just-added li { font-size: 13px; background: var(--secondary-tint); border: 1px solid var(--secondary-line); color: var(--secondary-ink); border-radius: var(--r-full); padding: 4px 10px; }
+.toggle-row { display: flex; align-items: center; gap: 4px; cursor: pointer; }
+.toggle-row .check { margin-left: -10px; }
+.toggle-row .hint { display: block; }
+/* Weekly wrap-up */
+.stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+.stat { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-md); padding: 12px; display: flex; flex-direction: column; gap: 2px; }
+.stat strong { font-family: var(--font-head); font-size: 22px; font-variant-numeric: tabular-nums; }
+.stat span { font-size: var(--fs-caption); color: var(--text-muted); }
+.keeps { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px; }
+.keeps li { display: flex; align-items: center; gap: 10px; font-size: 14px; }
+.keeps .d { width: 36px; color: var(--text-muted); font-size: 13px; flex: none; }
+.keeps .t { flex: 1; min-width: 0; }
+/* Read-only shared view */
+.shared .ev-main:hover { background: none; }
+.shared-cta { padding: 16px 18px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 16px; font-size: var(--fs-small); }
+@media (max-width: 480px) {
+  .quick-btn { width: 44px; padding: 0; }
+  .quick-btn .ql { display: none; }
+}
+
 /* ---------- Responsive ---------- */
 @media (max-width: 960px) {
   .hero, .problem { grid-template-columns: minmax(0, 1fr); gap: 40px; }
@@ -452,6 +492,9 @@ details.more[open] summary::before { content: "–"; }
   <symbol id="i-pencil" viewBox="0 0 24 24"><path d="M4 20h4L19 9a2.8 2.8 0 0 0-4-4L4 16v4Z"/><path d="m13.5 6.5 4 4"/></symbol>
   <symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></symbol>
   <symbol id="i-phone" viewBox="0 0 24 24"><rect x="7" y="3" width="10" height="18" rx="2.5"/><path d="M11 18h2"/></symbol>
+  <symbol id="i-bell" viewBox="0 0 24 24"><path d="M6 16v-5a6 6 0 0 1 12 0v5l1.5 2h-15L6 16Z"/><path d="M10 20.5a2 2 0 0 0 4 0"/></symbol>
+  <symbol id="i-repeat" viewBox="0 0 24 24"><path d="M4 11V9a3 3 0 0 1 3-3h12"/><path d="m16 3 3 3-3 3"/><path d="M20 13v2a3 3 0 0 1-3 3H5"/><path d="m8 21-3-3 3-3"/></symbol>
+  <symbol id="i-link" viewBox="0 0 24 24"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1"/><path d="M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/></symbol>
 </svg>
 
 <!-- ================= LANDING ================= -->
@@ -469,9 +512,9 @@ details.more[open] summary::before { content: "–"; }
   <main>
     <section class="wrap hero" aria-labelledby="heroTitle">
       <div class="hero-copy">
-        <span class="eyebrow">For busy households</span>
-        <h1 id="heroTitle">Your family’s week and <em>what’s for dinner</em>, in one calm place.</h1>
-        <p class="lede">Haven puts everyone’s plans on one shared week, gives every night a dinner slot, and writes the grocery list from the meals you pick.</p>
+        <span class="eyebrow">For the one who keeps it all in their head</span>
+        <h1 id="heroTitle">Stop being the one who has to <em>remember</em>.</h1>
+        <p class="lede">Haven notices the open nights, the late shifts and the missing groceries before you do, so the week runs without anyone keeping score.</p>
         <div class="hero-ctas">
           <a class="btn btn-primary btn-lg" href="#week" data-route="week">Start your week <svg class="i"><use href="#i-arrow"/></svg></a>
           <a class="btn btn-text" href="#how">See how it works</a>
@@ -479,12 +522,13 @@ details.more[open] summary::before { content: "–"; }
         <div class="reassure">
           <span><svg class="i sm" aria-hidden="true"><use href="#i-check"/></svg>Free, no sign-up</span>
           <span><svg class="i sm" aria-hidden="true"><use href="#i-lock"/></svg>Stays on your device</span>
-          <span><svg class="i sm" aria-hidden="true"><use href="#i-phone"/></svg>Made for phones</span>
+          <span><svg class="i sm" aria-hidden="true"><use href="#i-link"/></svg>Everyone else just gets a link</span>
         </div>
       </div>
 
-      <div class="preview" role="img" aria-label="Preview of a week in Haven: Tuesday and Wednesday with events and dinners, Thursday's dinner still open, and a grocery list with items checked off">
+      <div class="preview" role="img" aria-label="Preview of a week in Haven: a heads-up that Thursday has no dinner, Tuesday and Wednesday with events and dinners, and a grocery list with items checked off">
         <div class="preview-head"><strong>This week</strong><span class="p-pill">6 of 7 dinners</span></div>
+        <div class="p-heads"><svg class="i sm"><use href="#i-bell"/></svg>Heads up: Thursday has no dinner and a 6 pm meeting.</div>
         <div class="p-day">
           <div class="p-day-name">Tuesday <span class="muted" style="font-weight:400">· busy evening</span></div>
           <div class="p-row"><time>9:00 am</time><span class="t">Dentist</span><span class="who" style="--c:#A65D40">S</span></div>
@@ -514,13 +558,13 @@ details.more[open] summary::before { content: "–"; }
       <div class="wrap problem">
         <div class="stack">
           <span class="eyebrow">Sound familiar?</span>
-          <h2 id="problemTitle" style="font-size:clamp(26px,3.4vw,36px);line-height:1.15;font-weight:800">The week lives in five calendars, three group chats and one tired person’s head.</h2>
-          <p>Someone always knows who has practice and who’s working late. Usually that same person also decides dinner at 5:45 and finds out there’s no rice. Haven takes that load off.</p>
+          <h2 id="problemTitle" style="font-size:clamp(26px,3.4vw,36px);line-height:1.15;font-weight:800">Doing the chores is the easy part. Remembering them is the job.</h2>
+          <p>In most homes one person notices the empty fridge, knows who has practice, and reminds everyone else. A shared to-do list doesn’t fix that. It just gives the reminding a new place to happen.</p>
         </div>
         <div class="texts" aria-label="Example messages">
-          <div class="bubble"><small>Dan · 4:12 pm</small>Can you get Leo from piano? I’m stuck till 7</div>
-          <div class="bubble"><small>Maya · 5:31 pm</small>whats for dinner</div>
-          <div class="bubble me"><small>You · 5:46 pm</small>Checking the fridge. Again.</div>
+          <div class="bubble"><small>Dan · 4:12 pm</small>Do we need anything from the store?</div>
+          <div class="bubble"><small>Maya · 5:31 pm</small>is there practice tomorrow</div>
+          <div class="bubble me"><small>You · 5:46 pm</small>Let me check. Again.</div>
         </div>
       </div>
     </section>
@@ -528,14 +572,15 @@ details.more[open] summary::before { content: "–"; }
     <section class="band" aria-labelledby="featTitle">
       <div class="wrap">
         <div class="section-head">
-          <span class="eyebrow">What Haven does</span>
-          <h2 id="featTitle">Everything for the week, and nothing extra.</h2>
+          <span class="eyebrow">The four parts of running a home</span>
+          <h2 id="featTitle">Haven takes on the parts nobody sees.</h2>
+          <p>Sociologist Allison Daminger describes the mental side of housework in four stages: anticipating what’s needed, finding options, deciding, and checking it got done. Most apps only help with the doing.</p>
         </div>
         <div class="features">
-          <article class="card feature"><span class="feature-icon clay"><svg class="i lg" aria-hidden="true"><use href="#i-cal"/></svg></span><h3>One shared week</h3><p>Practices, appointments and late shifts for the whole family on one page, colored by person.</p></article>
-          <article class="card feature"><span class="feature-icon"><svg class="i lg" aria-hidden="true"><use href="#i-pot"/></svg></span><h3>A dinner slot every night</h3><p>Pick from easy family meals or type your own. Busy nights get quick ideas first.</p></article>
-          <article class="card feature"><span class="feature-icon"><svg class="i lg" aria-hidden="true"><use href="#i-bag"/></svg></span><h3>A list that writes itself</h3><p>Ingredients are added up and sorted by aisle, ready to copy into a text.</p></article>
-          <article class="card feature"><span class="feature-icon clay"><svg class="i lg" aria-hidden="true"><use href="#i-people"/></svg></span><h3>Made for the household</h3><p>Add everyone you live with so each plan shows whose it is at a glance.</p></article>
+          <article class="card feature"><span class="feature-icon clay"><svg class="i lg" aria-hidden="true"><use href="#i-bell"/></svg></span><span class="stage">Anticipate</span><h3>Haven notices first</h3><p>Open nights, busy evenings and a shop day with half the list unbought show up as a short Heads up, three things at most.</p></article>
+          <article class="card feature"><span class="feature-icon"><svg class="i lg" aria-hidden="true"><use href="#i-shuffle"/></svg></span><span class="stage">Find options</span><h3>Ideas, not a blank page</h3><p>Quick meals come first on busy nights. One tap fills every open night, and you can swap any of them.</p></article>
+          <article class="card feature"><span class="feature-icon"><svg class="i lg" aria-hidden="true"><use href="#i-bag"/></svg></span><span class="stage">Decide</span><h3>One tap, list included</h3><p>Pick a dinner and its ingredients land on the grocery list, added up and sorted by aisle.</p></article>
+          <article class="card feature"><span class="feature-icon clay"><svg class="i lg" aria-hidden="true"><use href="#i-repeat"/></svg></span><span class="stage">Monitor</span><h3>Nobody checks up</h3><p>Ticks close things quietly. A one-minute Sunday wrap-up resets the week and carries repeating plans forward.</p></article>
         </div>
       </div>
     </section>
@@ -544,13 +589,13 @@ details.more[open] summary::before { content: "–"; }
       <div class="wrap">
         <div class="section-head">
           <span class="eyebrow">How it works</span>
-          <h2 id="howTitle">One short loop, once a week.</h2>
-          <p>Most families are done in about ten minutes on Sunday evening.</p>
+          <h2 id="howTitle">Built for the one who plans. Easy for everyone else.</h2>
+          <p>Only you need Haven. Your household just opens a link.</p>
         </div>
         <ol class="steps">
-          <li><h3>See the week</h3><p>Everyone’s plans for Monday to Sunday, in one scroll.</p></li>
-          <li><h3>Plan the dinners</h3><p>Tap an open night and choose a meal that fits how busy it is.</p></li>
-          <li><h3>Get the list</h3><p>Haven builds the grocery list. Tick items off in the store or send it to whoever’s shopping.</p></li>
+          <li><h3>Start with dinners</h3><p>Plan this week’s dinners first. The calendar and the household can wait.</p></li>
+          <li><h3>Let Haven notice</h3><p>Heads up flags what needs you, never more than three things at once.</p></li>
+          <li><h3>Send a link, not an app</h3><p>Share the grocery list or the week. It opens in any browser, with nothing to install.</p></li>
         </ol>
       </div>
     </section>
@@ -558,8 +603,8 @@ details.more[open] summary::before { content: "–"; }
     <section class="wrap cta-band" aria-labelledby="ctaTitle">
       <div class="card cta-card">
         <div style="display:flex;flex-direction:column;gap:6px;max-width:34rem">
-          <h2 id="ctaTitle">Ready for a calmer week?</h2>
-          <p class="muted">Start with our example family, then make it yours.</p>
+          <h2 id="ctaTitle">Hand off the remembering.</h2>
+          <p class="muted">Start with this week’s dinners. It takes about five minutes.</p>
         </div>
         <a class="btn btn-primary btn-lg" href="#week" data-route="week">Try Haven <svg class="i"><use href="#i-arrow"/></svg></a>
       </div>
@@ -582,15 +627,31 @@ details.more[open] summary::before { content: "–"; }
         <a class="tab" href="#grocery" data-route="grocery"><svg class="i" aria-hidden="true"><use href="#i-list"/></svg>Grocery <span class="count" id="groceryCount" aria-label=""></span></a>
         <a class="tab" href="#household" data-route="household"><svg class="i" aria-hidden="true"><use href="#i-people"/></svg>Household</a>
       </nav>
-      <div class="avatars" id="topAvatars" aria-hidden="true"></div>
+      <div class="top-right">
+        <button class="btn btn-quiet btn-sm quick-btn" type="button" data-act="quick-add" aria-label="Add something to the grocery list"><svg class="i" aria-hidden="true"><use href="#i-plus"/></svg><span class="ql">Add to list</span></button>
+        <div class="avatars" id="topAvatars" aria-hidden="true"></div>
+      </div>
     </div>
   </header>
   <main class="wrap view" id="view"></main>
 </div>
 
+<!-- Read-only view opened from a share link: no account, no install -->
+<div id="shared" class="shared" hidden>
+  <header class="app-top">
+    <div class="wrap">
+      <a class="brand" href="#top" aria-label="What is Haven?"><span class="brand-mark"><svg class="i"><use href="#i-home"/></svg></span>Haven</a>
+      <span class="p-pill">Shared with you</span>
+    </div>
+  </header>
+  <main class="wrap view" id="sharedView"></main>
+</div>
+
 <dialog id="dinnerDialog" aria-labelledby="dinnerTitle"></dialog>
 <dialog id="eventDialog" aria-labelledby="eventTitle"></dialog>
 <dialog id="confirmDialog" aria-labelledby="confirmTitle"></dialog>
+<dialog id="captureDialog" aria-labelledby="captureTitle"></dialog>
+<dialog id="weekDialog" aria-labelledby="weekTitle"></dialog>
 <div class="toast" id="toast" role="status" aria-live="polite"><span class="msg" id="toastMsg"></span><button type="button" id="toastAction" hidden></button></div>
 
 <script>
@@ -659,13 +720,13 @@ details.more[open] summary::before { content: "–"; }
         { id: 'm4', name: 'Leo', role: 'Age 8', color: COLORS[3] }
       ],
       events: [
-        { id: 'e1', day: 0, time: '07:45', title: 'School drop-off', note: 'Lincoln Elementary', who: 'm2', done: false },
-        { id: 'e2', day: 0, time: '15:30', title: 'Soccer practice', note: 'Riverside Park, until 5:00', who: 'm3', done: false },
-        { id: 'e3', day: 0, time: '17:00', title: 'Piano lesson', note: '', who: 'm4', done: false },
+        { id: 'e1', day: 0, time: '07:45', title: 'School drop-off', note: 'Lincoln Elementary', who: 'm2', done: false, repeat: true },
+        { id: 'e2', day: 0, time: '15:30', title: 'Soccer practice', note: 'Riverside Park, until 5:00', who: 'm3', done: false, repeat: true },
+        { id: 'e3', day: 0, time: '17:00', title: 'Piano lesson', note: '', who: 'm4', done: false, repeat: true },
         { id: 'e4', day: 1, time: '09:00', title: 'Dentist', note: 'Bright Smile Dental', who: 'm1', done: false },
         { id: 'e5', day: 1, time: '17:00', title: 'Working late', note: 'Home around 7:30', who: 'm2', done: false },
-        { id: 'e6', day: 2, time: '16:00', title: 'Swim class', note: 'Community pool', who: 'm4', done: false },
-        { id: 'e7', day: 2, time: '18:00', title: 'Soccer practice', note: 'Riverside Park', who: 'm3', done: false },
+        { id: 'e6', day: 2, time: '16:00', title: 'Swim class', note: 'Community pool', who: 'm4', done: false, repeat: true },
+        { id: 'e7', day: 2, time: '18:00', title: 'Soccer practice', note: 'Riverside Park', who: 'm3', done: false, repeat: true },
         { id: 'e8', day: 3, time: '18:00', title: 'Parent–teacher evening', note: 'Lincoln Elementary, until 7:30', who: 'all', done: false },
         { id: 'e9', day: 5, time: '09:00', title: 'Soccer match', note: 'Away game at Oak Hill', who: 'm3', done: false },
         { id: 'e10', day: 5, time: '11:00', title: 'Grocery shop', note: '', who: 'm1', done: false },
@@ -688,7 +749,7 @@ details.more[open] summary::before { content: "–"; }
     try { localStorage.setItem(STORE_KEY, JSON.stringify(state)); } catch (e) { /* storage unavailable: keep working in memory */ }
   }
   let state = load() || sampleState();
-  const ui = { dinnerDay: null, effortFilter: 'all', suggestedId: null, openIng: null, editingEvent: null, confirmFn: null, copyText: null, opener: null };
+  const ui = { dinnerDay: null, effortFilter: 'all', suggestedId: null, openIng: null, editingEvent: null, confirmFn: null, opener: null, sharedKey: null, sharedGot: {} };
   function uid(prefix) { state.nextId += 1; return prefix + state.nextId; }
   function commit() { save(); render(); }
 
@@ -699,6 +760,12 @@ details.more[open] summary::before { content: "–"; }
   const dayDate = (i) => new Date(monday.getFullYear(), monday.getMonth(), monday.getDate() + i);
   const fmtShort = (d) => d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
   const fmtDay = (i) => DAY_NAMES[i] + ', ' + fmtShort(dayDate(i));
+  const isoDate = (d) => d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+  const THIS_WEEK = isoDate(monday);
+  // Older saves have no week anchor or welcome flag; fill them in without disturbing anything else
+  if (!state.weekOf) state.weekOf = THIS_WEEK;
+  if (state.welcomed == null) state.welcomed = !state.isExample;
+  const weekRolled = () => state.weekOf < THIS_WEEK;
   function fmtTime(t) {
     if (!t) return 'Any time';
     const [h, m] = t.split(':').map(Number);
@@ -764,9 +831,12 @@ details.more[open] summary::before { content: "–"; }
   const currentRoute = () => { const h = location.hash.replace('#', ''); return ROUTES.includes(h) ? h : null; };
 
   function render() {
-    const route = currentRoute();
-    document.getElementById('landing').hidden = !!route;
+    const shared = location.hash.startsWith('#s=');
+    const route = shared ? null : currentRoute();
+    document.getElementById('shared').hidden = !shared;
+    document.getElementById('landing').hidden = shared || !!route;
     document.getElementById('app').hidden = !route;
+    if (shared) { renderShared(); return; }
     if (!route) { document.title = 'Haven'; return; }
     document.title = { week: 'This Week', grocery: 'Grocery list', household: 'Household' }[route] + ' · Haven';
     document.querySelectorAll('.tab').forEach((t) => {
@@ -796,12 +866,13 @@ details.more[open] summary::before { content: "–"; }
       '<div style="display:flex;flex-direction:column;align-items:flex-start;gap:6px">' + (state.isExample ? '<span class="example">Example week. Change anything you like.</span>' : '') +
       '<span class="saved">' + icon('check', 'sm') + 'Saved on this device</span></div></div>';
 
+    h += renderWelcome() + renderHeads();
     h += '<div class="week-top">' + renderTonight();
     h += '<section class="panel summary" aria-label="Week summary"><div style="display:flex;flex-direction:column;gap:10px"><div class="summary-line"><strong>' + planned + ' of 7 dinners planned</strong>' +
       (openDays.length ? '<a href="#day-' + openDays[0] + '" data-act="jump" data-day="' + openDays[0] + '">' + (openDays.length === 1 ? DAY_NAMES[openDays[0]] + ' is open' : openDays.length + ' nights open') + '</a>' : '<span class="muted">Every night covered</span>') + '</div>' +
       '<div class="bar" role="img" aria-label="' + planned + ' of 7 dinners planned"><span style="width:' + Math.round(planned / 7 * 100) + '%"></span></div></div>' +
       '<div class="summary-actions"><a class="btn btn-primary" href="#grocery" data-route="grocery">' + icon('bag') + 'Grocery list · ' + plural(total, 'item') + '</a>' +
-      '<button class="icon-btn" type="button" data-act="copy-list" aria-label="Copy grocery list to share" style="width:48px;height:48px">' + icon('share') + '</button></div></section></div>';
+      '<button class="icon-btn" type="button" data-act="share-week" aria-label="Send this week to your household as a link" style="width:48px;height:48px">' + icon('share') + '</button></div></section></div>';
 
     h += '<div class="strip-wrap"><nav class="strip" aria-label="Jump to a day">';
     for (let i = 0; i < 7; i++) {
@@ -810,7 +881,7 @@ details.more[open] summary::before { content: "–"; }
     }
     h += '</nav></div>';
 
-    h += '<div class="legend" aria-label="Color key">' + state.members.map((m) => '<span><i style="--c:' + m.color + '"></i>' + esc(m.name) + (m.role && /age/i.test(m.role) ? ', ' + esc(m.role.replace(/age\s*/i, '')) : '') + '</span>').join('') + '<span><i style="--c:' + EVERYONE.color + '"></i>Everyone</span></div>';
+    if (state.members.length) h += '<div class="legend" aria-label="Color key">' + state.members.map((m) => '<span><i style="--c:' + m.color + '"></i>' + esc(m.name) + (m.role && /age/i.test(m.role) ? ', ' + esc(m.role.replace(/age\s*/i, '')) : '') + '</span>').join('') + '<span><i style="--c:' + EVERYONE.color + '"></i>Everyone</span></div>';
 
     h += '<div class="days">';
     for (let i = 0; i < 7; i++) h += renderDay(i);
@@ -847,7 +918,7 @@ details.more[open] summary::before { content: "–"; }
       evs.forEach((e) => {
         h += '<li class="ev' + (e.done ? ' done' : '') + '"><label class="check"><input type="checkbox" id="done-' + e.id + '" data-act="toggle-event" data-id="' + e.id + '"' + (e.done ? ' checked' : '') + '><span class="box">' + icon('check') + '</span><span class="sr">Mark ' + esc(e.title) + ' as done</span></label>' +
           '<span class="ev-time">' + esc(fmtTime(e.time)) + '</span>' +
-          '<button class="ev-main" type="button" data-act="edit-event" data-id="' + e.id + '" aria-label="Edit ' + esc(e.title) + '"><span class="ev-title">' + esc(e.title) + '</span>' + (e.note ? '<span class="ev-note">' + esc(e.note) + '</span>' : '') + '</button>' +
+          '<button class="ev-main" type="button" data-act="edit-event" data-id="' + e.id + '" aria-label="Edit ' + esc(e.title) + '"><span class="ev-title">' + esc(e.title) + '</span>' + ((e.note || e.repeat) ? '<span class="ev-note">' + esc([e.note, e.repeat ? 'Every week' : ''].filter(Boolean).join(' · ')) + '</span>' : '') + '</button>' +
           whoChip(memberById(e.who)) + '</li>';
       });
       h += '</ul>';
@@ -875,9 +946,8 @@ details.more[open] summary::before { content: "–"; }
     }
     h += '<section class="panel list-summary" aria-label="Shopping progress"><div class="summary-line"><strong>' + inCart + ' of ' + total + ' in the cart</strong>' + (inCart ? '<button class="btn btn-text btn-sm" type="button" data-act="clear-got">Uncheck all</button>' : '') + '</div>' +
       '<div class="bar" role="img" aria-label="' + inCart + ' of ' + total + ' items checked off"><span style="width:' + Math.round(inCart / total * 100) + '%"></span></div>' +
-      '<button class="btn btn-primary" type="button" data-act="copy-list">' + icon('share') + 'Copy list</button>' +
-      '<p class="hint">Copies what’s still left to buy, ready to paste into a text or note.</p>';
-    if (ui.copyText) h += '<div class="field"><label for="copyBox">Copying is blocked here. Press and hold, or select all, then copy this text:</label><textarea class="input" id="copyBox" readonly>' + esc(ui.copyText) + '</textarea></div>';
+      '<div class="summary-actions"><button class="btn btn-primary" type="button" data-act="share-list">' + icon('link') + 'Send list link</button><button class="btn btn-quiet" type="button" data-act="copy-list">Copy as text</button></div>' +
+      '<p class="hint">The link shows what’s still left to buy. It opens in any browser, with no app or account needed.</p>';
     h += '</section><div class="card list">';
     AISLES.forEach((aisle) => {
       const group = items.filter((it) => it.aisle === aisle).sort((a, b) => (a.got - b.got) || a.label.localeCompare(b.label));
@@ -921,8 +991,8 @@ details.more[open] summary::before { content: "–"; }
       '<div class="form-grid"><div class="field"><label for="newName">Name</label><input class="input" id="newName" name="name" placeholder="Grandma Rose" autocomplete="off" required></div>' +
       '<div class="field"><label for="newRole">Role or age <span class="muted">(optional)</span></label><input class="input" id="newRole" name="role" placeholder="Age 6, Nanny…" autocomplete="off"></div></div>' +
       '<button class="btn btn-primary" type="submit">' + icon('plus') + 'Add to household</button></form>';
-    h += '<section class="panel reset-panel" aria-labelledby="resetTitle"><h2 id="resetTitle" style="font-size:16px">Start fresh</h2><p class="muted" style="font-size:14px">Clear this week’s events and dinners but keep everyone above, or bring back the example family.</p>' +
-      '<div class="row"><button class="btn btn-quiet btn-sm" type="button" data-act="blank-week">Clear this week</button><button class="btn btn-text btn-sm" type="button" data-act="reset-example">Restore the example</button></div></section></div>';
+    h += '<section class="panel reset-panel" aria-labelledby="resetTitle"><h2 id="resetTitle" style="font-size:16px">Start fresh</h2><p class="muted" style="font-size:14px">Wrap up the week to carry repeating plans forward, clear everything but keep everyone above, or bring back the example family.</p>' +
+      '<div class="row"><button class="btn btn-quiet btn-sm" type="button" data-act="wrap-week">' + icon('repeat', 'sm') + 'Wrap up the week</button><button class="btn btn-quiet btn-sm" type="button" data-act="blank-week">Clear this week</button><button class="btn btn-text btn-sm" type="button" data-act="reset-example">Restore the example</button></div></section></div>';
     return h;
   }
 
@@ -930,7 +1000,9 @@ details.more[open] summary::before { content: "–"; }
   const dinnerDlg = document.getElementById('dinnerDialog');
   const eventDlg = document.getElementById('eventDialog');
   const confirmDlg = document.getElementById('confirmDialog');
-  const DIALOGS = [dinnerDlg, eventDlg, confirmDlg];
+  const captureDlg = document.getElementById('captureDialog');
+  const weekDlg = document.getElementById('weekDialog');
+  const DIALOGS = [dinnerDlg, eventDlg, confirmDlg, captureDlg, weekDlg];
 
   // Remember what opened a sheet so focus can return there (or to its day) when it closes
   function rememberOpener(el) {
@@ -1037,6 +1109,7 @@ details.more[open] summary::before { content: "–"; }
       '<div class="field"><label for="evTime">Time <span class="muted">(optional)</span></label><input class="input" id="evTime" name="time" type="time" value="' + (ev ? esc(ev.time) : '') + '"></div></div>' +
       '<div class="field"><label for="evWho">Who is it for?</label><select class="input" id="evWho" name="who">' + options.map((m) => '<option value="' + m.id + '"' + (ev && ev.who === m.id ? ' selected' : '') + '>' + esc(m.name) + '</option>').join('') + '</select></div>' +
       '<div class="field"><label for="evNote">Where or notes <span class="muted">(optional)</span></label><input class="input" id="evNote" name="note" placeholder="Riverside Park" value="' + (ev ? esc(ev.note) : '') + '" autocomplete="off"></div>' +
+      '<label class="toggle-row"><span class="check"><input type="checkbox" name="repeat"' + (ev && ev.repeat ? ' checked' : '') + '><span class="box">' + icon('check') + '</span></span><span><strong>Repeats every week</strong><span class="hint">Carried into next week when you wrap up.</span></span></label>' +
       '<div class="sheet-foot">' + (ev ? '<button class="btn btn-danger left" type="button" data-act="delete-event">' + icon('trash', 'sm') + 'Delete</button>' : '') +
       '<button class="btn btn-quiet" type="button" data-act="close-dialog">Cancel</button><button class="btn btn-primary" type="submit">' + (ev ? 'Save changes' : 'Add event') + '</button></div></form>';
     eventDlg.showModal();
@@ -1048,6 +1121,197 @@ details.more[open] summary::before { content: "–"; }
     ui.confirmFn = fn;
     confirmDlg.innerHTML = '<div class="sheet-head"><h2 id="confirmTitle">' + esc(title) + '</h2></div><div class="sheet-body"><p class="muted">' + esc(body) + '</p><div class="sheet-foot"><button class="btn btn-quiet" type="button" data-act="close-dialog">Keep it</button><button class="btn btn-primary" type="button" data-act="confirm-yes">' + esc(label) + '</button></div></div>';
     confirmDlg.showModal();
+  }
+
+  /* ================= Onboarding & Heads up ================= */
+  // First visit asks for one thing only: this week's dinners
+  function renderWelcome() {
+    if (state.welcomed) return '';
+    return '<section class="card welcome" aria-labelledby="welcomeTitle"><span class="eyebrow">Welcome to Haven</span><h2 id="welcomeTitle">Start with one thing: this week’s dinners.</h2>' +
+      '<p class="muted">Calendars and the household can wait. Plan the dinners and Haven writes the grocery list for you.</p>' +
+      '<div class="row"><button class="btn btn-secondary" type="button" data-act="start-blank">' + icon('pot') + 'Plan my dinners</button><button class="btn btn-text" type="button" data-act="dismiss-welcome">Look around the example first</button></div></section>';
+  }
+
+  // What Haven noticed, most urgent first; never more than three things
+  function headsUp() {
+    const out = [];
+    if (weekRolled()) out.push({ text: 'A new week has started. Close out last week in about a minute.', label: 'Wrap up', act: 'wrap-week' });
+    else if (todayIndex === 6 && state.weekOf === THIS_WEEK) out.push({ text: 'It’s Sunday. Wrap up this week and carry repeating plans forward.', label: 'Wrap up', act: 'wrap-week' });
+    const lateOn = (day) => eventsFor(day).find((e) => !e.done && e.time && e.time >= '17:00');
+    if (!state.dinners[todayIndex]) {
+      const late = lateOn(todayIndex);
+      out.push({ text: 'Tonight has no dinner yet' + (late ? ', and ' + late.title + ' is at ' + fmtTime(late.time) + '.' : '.'), label: 'Plan it', act: 'open-dinner', day: todayIndex });
+    }
+    const open = [];
+    for (let i = todayIndex + 1; i < 7; i++) if (!state.dinners[i]) open.push(i);
+    if (open.length === 1) {
+      const late = lateOn(open[0]);
+      out.push({ text: DAY_NAMES[open[0]] + ' has no dinner yet' + (late ? ', and ' + late.title + ' is at ' + fmtTime(late.time) + '.' : '.'), label: 'Plan it', act: 'open-dinner', day: open[0] });
+    } else if (open.length > 1) {
+      out.push({ text: plural(open.length, 'night') + ' still open this week.', label: 'Fill them', act: 'fill-week' });
+    }
+    const shop = state.events.filter((e) => e.day >= todayIndex && !e.done && /grocer|shop/i.test(e.title)).sort((a, b) => a.day - b.day)[0];
+    const left = groceryRemaining();
+    if (shop && left) out.push({ text: shop.title + ' is ' + (shop.day === todayIndex ? 'today' : DAY_NAMES[shop.day]) + ', and ' + plural(left, 'item') + (left === 1 ? ' is' : ' are') + ' still to buy.', label: 'See list', route: 'grocery' });
+    const busy = [];
+    for (let i = todayIndex; i < 7; i++) if (isBusyEvening(i)) busy.push(i);
+    if (busy.length >= 3) out.push({ text: plural(busy.length, 'busy evening') + ' ahead, so quick meals come first on those nights.', label: 'See ' + DAY_NAMES[busy[0]].slice(0, 3), act: 'jump', day: busy[0] });
+    return out.slice(0, 3);
+  }
+  function renderHeads() {
+    const items = headsUp();
+    if (!items.length) return '<p class="heads calm">' + icon('check', 'sm') + 'Nothing needs you right now. The week is covered.</p>';
+    return '<section class="heads" aria-labelledby="headsTitle"><h2 class="eyebrow" id="headsTitle">' + icon('bell', 'sm') + 'Heads up</h2><ul>' +
+      items.map((it) => '<li><button class="head-item" type="button" ' + (it.route ? 'data-route="' + it.route + '"' : 'data-act="' + it.act + '"') + (it.day != null ? ' data-day="' + it.day + '"' : '') + '>' +
+        '<span class="t">' + esc(it.text) + '</span><span class="act">' + esc(it.label) + icon('chev', 'sm') + '</span></button></li>').join('') + '</ul></section>';
+  }
+
+  // One tap plans every open night from tomorrow on: quick meals on busy evenings, no repeats
+  function fillOpenNights() {
+    const days = [];
+    for (let i = todayIndex + 1; i < 7; i++) if (!state.dinners[i]) days.push(i);
+    if (!days.length) return;
+    withUndo('Planned ' + plural(days.length, 'night') + '. Tap any dinner to swap it.', () => {
+      const used = Object.values(state.dinners).map((d) => d.libId);
+      days.forEach((i) => {
+        const fresh = LIBRARY.filter((m) => !used.includes(m.id));
+        let pool = isBusyEvening(i) ? fresh.filter((m) => m.effort === 'quick') : fresh;
+        if (!pool.length) pool = fresh.length ? fresh : LIBRARY;
+        const m = pool[Math.floor(Math.random() * pool.length)];
+        used.push(m.id);
+        state.dinners[i] = mealCopy(m.id);
+      });
+      state.isExample = false;
+    });
+  }
+
+  /* ================= Weekly wrap-up ================= */
+  function openWrap(opener) {
+    rememberOpener(opener);
+    const rolled = weekRolled();
+    const past = (day) => rolled || day < todayIndex; // past days count as done without anyone ticking them
+    const planned = plannedCount();
+    const eaten = Object.keys(state.dinners).filter((d) => state.dinners[d].cooked || past(Number(d))).length;
+    const items = listItems();
+    const bought = items.filter((it) => it.got).length;
+    const done = state.events.filter((e) => e.done || past(e.day)).length;
+    const reps = state.events.filter((e) => e.repeat).sort((a, b) => a.day - b.day || (a.time || '').localeCompare(b.time || ''));
+    const stat = (n, of, label) => '<div class="stat"><strong>' + n + '<span style="font-size:15px;font-weight:600;color:var(--text-muted)"> / ' + of + '</span></strong><span>' + label + '</span></div>';
+    weekDlg.innerHTML = sheetHead('weekTitle', rolled ? 'Last week, wrapped up' : 'Wrap up the week') + '<div class="sheet-body">' +
+      '<div class="stats">' + stat(eaten, planned, 'dinners eaten') + stat(bought, items.length, 'groceries bought') + stat(done, state.events.length, 'plans done') + '</div>' +
+      '<section class="sheet-section"><h3>Next week keeps</h3>' + (reps.length
+        ? '<ul class="keeps">' + reps.map((e) => '<li><span class="d">' + DAY_NAMES[e.day].slice(0, 3) + '</span><span class="t">' + esc(e.title) + '</span>' + whoChip(memberById(e.who)) + '</li>').join('') + '</ul>'
+        : '<p class="muted" style="font-size:14px">No repeating plans yet. Tick “Repeats every week” on an event to carry it forward.</p>') + '</section>' +
+      '<p class="muted" style="font-size:14px">Dinners, ticks and one-off plans are cleared. Anything you added to the grocery list and haven’t bought stays on it.</p>' +
+      '<div class="sheet-foot"><button class="btn btn-quiet" type="button" data-act="close-dialog">Not yet</button><button class="btn btn-primary" type="button" data-act="start-week">Start next week</button></div></div>';
+    weekDlg.showModal();
+  }
+  function startNextWeek() {
+    const rolled = weekRolled();
+    const kept = state.events.filter((e) => e.repeat).length;
+    withUndo('Next week is ready' + (kept ? ', with ' + plural(kept, 'repeating plan') + ' carried over.' : '.'), () => {
+      state.events = state.events.filter((e) => e.repeat).map((e) => Object.assign(e, { done: false }));
+      state.dinners = {};
+      state.got = {};
+      state.extras = state.extras.filter((x) => !x.got);
+      state.weekOf = rolled ? THIS_WEEK : isoDate(dayDate(7));
+      state.isExample = false;
+      state.welcomed = true;
+    });
+  }
+
+  /* ================= Quick capture ================= */
+  function openCapture(opener) {
+    rememberOpener(opener);
+    captureDlg.innerHTML = sheetHead('captureTitle', 'Add to the grocery list') + '<form class="sheet-body" data-form="capture">' +
+      '<div class="field"><label for="captureName">What do you need?</label><div class="inline-form"><input class="input" id="captureName" name="name" required autocomplete="off" enterkeyhint="send" placeholder="Milk, dish soap…"><button class="btn btn-primary" type="submit">Add</button></div>' +
+      '<p class="hint">No amounts or dates needed. Haven puts it in the right aisle.</p></div>' +
+      '<ul class="just-added" id="justAdded" aria-live="polite" aria-label="Just added"></ul>' +
+      '<div class="sheet-foot"><button class="btn btn-quiet" type="button" data-act="close-dialog">Done</button></div></form>';
+    captureDlg.showModal();
+    document.getElementById('captureName').focus();
+  }
+
+  /* ================= Share links (read-only, no account) ================= */
+  // The whole view travels in the link's #fragment, which browsers never send to a server
+  function toLink(obj) {
+    let bin = '';
+    new TextEncoder().encode(JSON.stringify(obj)).forEach((b) => { bin += String.fromCharCode(b); });
+    return btoa(bin).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+  }
+  function fromLink(s) {
+    try {
+      const bin = atob(s.replace(/-/g, '+').replace(/_/g, '/'));
+      return JSON.parse(new TextDecoder().decode(Uint8Array.from(bin, (c) => c.charCodeAt(0))));
+    } catch (e) { return null; }
+  }
+  function sharePayload(kind) {
+    if (kind === 'list') {
+      const left = listItems().filter((it) => !it.got);
+      return { k: 'list', w: fmtShort(dayDate(0)), a: AISLES.map((a) => [a, left.filter((it) => it.aisle === a).map((it) => it.label).sort()]).filter((g) => g[1].length) };
+    }
+    return { k: 'week', w: fmtShort(dayDate(0)), d: DAY_NAMES.map((n, i) => [fmtDay(i), eventsFor(i).map((e) => { const m = memberById(e.who); return [e.time, e.title, m.name, m.color]; }), state.dinners[i] ? state.dinners[i].name : ''] ) };
+  }
+  function shareLink(kind) {
+    if (kind === 'list' && !groceryRemaining()) { toast('Everything is checked off. Nothing left to send.'); return; }
+    const url = location.href.split('#')[0] + '#s=' + toLink(sharePayload(kind));
+    const what = kind === 'list' ? 'the list' : 'the week';
+    const copied = 'Link copied. Anyone with it can open ' + what + ', no app needed.';
+    if (navigator.share) {
+      navigator.share({ title: (kind === 'list' ? 'Grocery list' : 'Our week') + ' · Haven', url }).catch((e) => { if (!e || e.name !== 'AbortError') copyText(url, copied); });
+    } else copyText(url, copied);
+  }
+  const validColor = (c) => (/^#[0-9a-f]{6}$/i.test(c) ? c : 'var(--everyone)');
+  function renderShared() {
+    const el = document.getElementById('sharedView');
+    const p = fromLink(location.hash.slice(3));
+    const cta = '<div class="panel shared-cta"><p><strong>Shared from Haven.</strong> One person plans the week; everyone else just opens a link.</p><a class="btn btn-text btn-sm" href="#top">What’s Haven?</a></div>';
+    try {
+      if (p && p.k === 'list' && Array.isArray(p.a)) {
+        document.title = 'Grocery list · Haven';
+        ui.sharedKey = 'haven.shared.' + location.hash.slice(-32);
+        try { ui.sharedGot = JSON.parse(localStorage.getItem(ui.sharedKey) || '{}') || {}; } catch (e) { ui.sharedGot = {}; }
+        let h = '<div class="narrow"><div class="page-head"><div><h1>Grocery list</h1><p class="sub">Week of ' + esc(p.w) + ' · <span id="sharedLeft"></span></p></div></div><div class="card list">';
+        p.a.forEach((g, gi) => {
+          const aisle = AISLES.includes(g[0]) ? g[0] : 'Other';
+          h += '<section class="aisle" aria-label="' + esc(aisle) + '"><h2><i style="--c:var(--aisle-' + AISLE_COLOR[aisle] + ')"></i>' + esc(aisle) + '</h2><ul class="items">';
+          g[1].forEach((label, ii) => {
+            const key = gi + '-' + ii, got = !!ui.sharedGot[key];
+            h += '<li class="item' + (got ? ' got' : '') + '"><label class="check"><input type="checkbox" id="s-' + key + '" data-act="toggle-shared" data-key="' + key + '"' + (got ? ' checked' : '') + '><span class="box">' + icon('check') + '</span></label>' +
+              '<label class="text" for="s-' + key + '"><span class="name">' + esc(label) + '</span></label></li>';
+          });
+          h += '</ul></section>';
+        });
+        el.innerHTML = h + '</div><p class="hint" style="text-align:center">Ticks are saved on this phone only.</p>' + cta + '</div>';
+        updateSharedLeft();
+        return;
+      }
+      if (p && p.k === 'week' && Array.isArray(p.d)) {
+        document.title = 'This week · Haven';
+        let h = '<div class="page-head"><div><h1>This week</h1><p class="sub">Week of ' + esc(p.w) + '. Read-only, shared from Haven.</p></div></div><div class="days" style="margin-top:20px">';
+        p.d.forEach(([label, evs, dinner]) => {
+          h += '<section class="day"><div class="day-head"><h2>' + esc(label) + '</h2></div><div class="card day-card">';
+          h += evs.length ? '<ul class="events">' + evs.map(([time, title, who, color]) => {
+            const name = String(who || 'Everyone');
+            return '<li class="ev"><span class="ev-time">' + esc(/^\d\d:\d\d$/.test(time) ? fmtTime(time) : 'Any time') + '</span><div class="ev-main"><span class="ev-title">' + esc(title) + '</span></div>' +
+              whoChip({ name, initial: name === 'Everyone' ? 'All' : initialOf(name), color: validColor(color) }) + '</li>';
+          }).join('') + '</ul>' : '<p class="quiet-row">Nothing on the calendar.</p>';
+          h += dinner ? '<div class="dinner"><div class="dinner-main"><span class="pot">' + icon('pot') + '</span><span class="dinner-text"><span class="tag">Dinner</span><span class="dinner-name">' + esc(dinner) + '</span></span></div></div>'
+            : '<p class="quiet-row" style="border:0">No dinner planned yet.</p>';
+          h += '</div></section>';
+        });
+        el.innerHTML = h + '</div><div style="margin-top:28px">' + cta + '</div>';
+        return;
+      }
+    } catch (e) { /* a damaged link falls through to the message below */ }
+    document.title = 'Haven';
+    el.innerHTML = '<div class="narrow"><div class="card empty"><span class="pot">' + icon('link', 'lg') + '</span><h1 style="font-size:22px">This link didn’t open</h1><p class="muted">It may have been cut off when it was copied. Ask for the link again.</p><a class="btn btn-quiet" href="#top">Go to Haven</a></div></div>';
+  }
+  function updateSharedLeft() {
+    const boxes = Array.from(document.querySelectorAll('#sharedView [data-act="toggle-shared"]'));
+    const left = boxes.filter((b) => !b.checked).length;
+    const out = document.getElementById('sharedLeft');
+    if (out) out.textContent = left ? left + ' left to buy' : 'All done';
   }
 
   /* ================= Toast & Undo ================= */
@@ -1092,11 +1356,9 @@ details.more[open] summary::before { content: "–"; }
   function copyList() {
     const { text, count } = listAsText();
     if (!count) { toast('Everything is checked off. Nothing left to copy.'); return; }
-    const done = () => {
-      ui.copyText = null;
-      if (currentRoute() === 'grocery') render();
-      toast('Copied ' + plural(count, 'item') + '. Paste them into a text or note.');
-    };
+    copyText(text, 'Copied ' + plural(count, 'item') + '. Paste them into a text or note.');
+  }
+  function copyText(text, doneMsg) {
     const fallback = () => {
       const ta = document.createElement('textarea');
       ta.value = text; ta.setAttribute('readonly', ''); ta.style.position = 'fixed'; ta.style.opacity = '0';
@@ -1104,14 +1366,18 @@ details.more[open] summary::before { content: "–"; }
       let ok = false;
       try { ok = document.execCommand('copy'); } catch (e) { ok = false; }
       ta.remove();
-      if (ok) { done(); return; }
-      ui.copyText = text; // show the text so it can be copied by hand
-      if (currentRoute() !== 'grocery') location.hash = 'grocery'; else render();
-      const box = document.getElementById('copyBox');
-      if (box) { box.focus(); box.select(); }
+      if (ok) toast(doneMsg); else showCopyBox(text);
     };
-    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(done, fallback);
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(() => toast(doneMsg), fallback);
     else fallback();
+  }
+  // Last resort when the browser blocks copying: show the text so it can be copied by hand
+  function showCopyBox(text) {
+    ui.confirmFn = null;
+    confirmDlg.innerHTML = sheetHead('confirmTitle', 'Copy this') + '<div class="sheet-body"><label class="muted" for="copyBox">Copying is blocked here. Press and hold, or select all, then copy:</label><textarea class="input" id="copyBox" readonly>' + esc(text) + '</textarea><div class="sheet-foot"><button class="btn btn-primary" type="button" data-act="close-dialog">Done</button></div></div>';
+    confirmDlg.showModal();
+    const box = document.getElementById('copyBox');
+    box.focus(); box.select();
   }
 
   /* ================= Events ================= */
@@ -1186,9 +1452,21 @@ details.more[open] summary::before { content: "–"; }
         break;
       case 'reset-example':
         askConfirm('Restore the example week?', 'This replaces your household, events and dinners with the example family.', 'Restore example', () => {
-          withUndo('Example week restored.', () => { state = sampleState(); });
+          withUndo('Example week restored.', () => { state = sampleState(); state.weekOf = THIS_WEEK; state.welcomed = true; });
           location.hash = 'week';
         }, el);
+        break;
+      case 'share-list': shareLink('list'); break;
+      case 'share-week': shareLink('week'); break;
+      case 'quick-add': openCapture(el); break;
+      case 'fill-week': fillOpenNights(); break;
+      case 'wrap-week': openWrap(el); break;
+      case 'start-week': closeSheets(); startNextWeek(); if (currentRoute() !== 'week') location.hash = 'week'; window.scrollTo(0, 0); break;
+      case 'dismiss-welcome': state.welcomed = true; commit(); break;
+      case 'start-blank':
+        withUndo('Blank week ready. Tap any night to plan its dinner.', () => {
+          state = { members: [], events: [], dinners: {}, got: {}, extras: [], isExample: false, welcomed: true, weekOf: THIS_WEEK, nextId: 100 };
+        });
         break;
       case 'confirm-yes': { const fn = ui.confirmFn; ui.confirmFn = null; ui.opener = null; closeSheets(); if (fn) fn(); break; }
       case 'close-dialog': closeSheets(); break;
@@ -1203,6 +1481,12 @@ details.more[open] summary::before { content: "–"; }
       commit();
       const again = document.getElementById(el.id);
       if (again) again.focus({ preventScroll: true });
+    }
+    if (act === 'toggle-shared') {
+      if (el.checked) { ui.sharedGot[el.dataset.key] = true; buzz(); } else delete ui.sharedGot[el.dataset.key];
+      try { localStorage.setItem(ui.sharedKey, JSON.stringify(ui.sharedGot)); } catch (err) { /* ticks stay for this visit only */ }
+      el.closest('.item').classList.toggle('got', el.checked);
+      updateSharedLeft();
     }
     if (act === 'toggle-got') {
       const key = el.dataset.key;
@@ -1249,7 +1533,7 @@ details.more[open] summary::before { content: "–"; }
     const val = (k) => String(data.get(k) || '').trim();
     switch (form.dataset.form) {
       case 'event': {
-        const fields = { title: val('title'), day: Number(data.get('day')), time: val('time'), who: val('who'), note: val('note') };
+        const fields = { title: val('title'), day: Number(data.get('day')), time: val('time'), who: val('who'), note: val('note'), repeat: data.get('repeat') === 'on' };
         if (!fields.title) return;
         const editing = ui.editingEvent;
         if (editing) Object.assign(state.events.find((x) => x.id === editing), fields);
@@ -1278,6 +1562,19 @@ details.more[open] summary::before { content: "–"; }
         toast(name + ' added to ' + guessAisle(name) + '.');
         const input = document.getElementById('extraName');
         if (input) input.focus();
+        break;
+      }
+      case 'capture': {
+        // Stays open so several things can go in quickly; each one is confirmed in the sheet
+        const name = val('name');
+        if (!name) return;
+        state.extras.push({ id: uid('x'), name, got: false });
+        commit();
+        const input = document.getElementById('captureName');
+        input.value = ''; input.focus();
+        const li = document.createElement('li');
+        li.textContent = name + ' · ' + guessAisle(name);
+        document.getElementById('justAdded').appendChild(li);
         break;
       }
       case 'add-member': {
