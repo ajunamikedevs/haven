@@ -14,6 +14,8 @@ export const metadata: Metadata = {
   appleWebApp: { capable: true, title: 'Haven', statusBarStyle: 'default' },
   icons: { icon: '/favicon.ico', apple: '/icons/apple-touch-icon.png' },
   description: 'Haven notices the open nights, the late shifts and the missing groceries before you do, so the week runs without anyone keeping score.',
+  // Proves to Google Search Console that this site is ours, which Google sign-in branding requires
+  ...(process.env.GOOGLE_SITE_VERIFICATION ? { verification: { google: process.env.GOOGLE_SITE_VERIFICATION } } : {}),
 };
 
 export const viewport: Viewport = {
