@@ -1,0 +1,43 @@
+<!doctype html>
+<!--
+  Replacement for the GitHub Pages index.html at launch. NOT live yet: the owner approves
+  swapping it in (see app/PLAN.md, milestone 8). Set APP_URL below first.
+
+  It sends visitors to the new app and keeps old links working:
+    - whatever was after "#" (old #s= share links, #week, …) is carried across;
+    - a week saved in this browser by the old Haven is handed over in the "#", which browsers
+      never send to a server, so the new app can offer to import it after sign-in.
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Haven has moved</title>
+<style>
+  body { margin: 0; min-height: 100vh; display: grid; place-items: center; background: #FBF9F7; color: #2C2A28; font: 16px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif; text-align: center; padding: 24px; }
+  a { color: #8A4A31; font-weight: 600; }
+</style>
+</head>
+<body>
+<p>Haven has a new home. <a id="go" href="#">Continue to Haven</a></p>
+<script>
+(function () {
+  var APP_URL = 'https://REPLACE-WITH-APP-URL';
+  var target = APP_URL + '/' + location.hash;
+  try {
+    var saved = localStorage.getItem('haven.v1');
+    var mine = saved && JSON.parse(saved);
+    // Only hand over a week the person planned themselves, and only when the link wasn't for something else
+    if (mine && Array.isArray(mine.members) && mine.isExample !== true && !location.hash) {
+      var bytes = new TextEncoder().encode(saved), bin = '';
+      for (var i = 0; i < bytes.length; i++) bin += String.fromCharCode(bytes[i]);
+      target = APP_URL + '/#w=' + btoa(bin).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+    }
+  } catch (e) { /* storage blocked: just redirect */ }
+  document.getElementById('go').href = target;
+  location.replace(target);
+})();
+</script>
+</body>
+</html>

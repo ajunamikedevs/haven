@@ -1,0 +1,43 @@
+{
+  "name": "haven",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "node scripts/ensure-data-dir.mjs && drizzle-kit migrate",
+    "test:e2e": "playwright test",
+    "vercel-build": "drizzle-kit migrate && next build"
+  },
+  "dependencies": {
+    "@agentaos/pay": "^2.6.0",
+    "@electric-sql/pglite": "^0.5.16",
+    "@neondatabase/serverless": "^1.2.1",
+    "@vercel/analytics": "^2.0.1",
+    "better-auth": "^1.7.25",
+    "drizzle-orm": "^0.45.4",
+    "next": "16.4.6",
+    "react": "19.3.0",
+    "react-dom": "19.3.0",
+    "server-only": "^0.0.1"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.65.1",
+    "@types/node": "^24.19.2",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "drizzle-kit": "^0.31.11",
+    "eslint": "^9",
+    "eslint-config-next": "16.4.6",
+    "typescript": "^5",
+    "vitest": "^5.1.0"
+  },
+  "engines": {
+    "node": ">=24"
+  }
+}
