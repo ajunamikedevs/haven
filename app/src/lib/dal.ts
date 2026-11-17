@@ -7,6 +7,7 @@ import { db } from '@/db';
 import { dinners, events, extras, groceryChecks, households, members, subscriptions } from '@/db/schema';
 import { getAccess, type Access } from './access';
 import { auth } from './auth';
+import { now } from './clock';
 import type { Week } from './types';
 
 // The data access layer. Everything that reads or writes household data goes through here,
@@ -58,6 +59,7 @@ const accessFor = cache(async (household: Household): Promise<Access> => {
   const [sub] = await db.select().from(subscriptions).where(eq(subscriptions.householdId, household.id)).limit(1);
   return getAccess({
     trialEndsAt: household.trialEndsAt,
+    now: now(),
     subscription: sub ? { status: sub.status, currentPeriodEnd: sub.currentPeriodEnd, cancelAtPeriodEnd: sub.cancelAtPeriodEnd } : null,
   });
 });

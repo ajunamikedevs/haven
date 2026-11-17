@@ -23,7 +23,7 @@ test('a new organizer signs in by email link, sets up a household and sees the w
   await page.goto('/signin');
   await page.getByLabel('Email').fill(email);
   await page.getByRole('button', { name: 'Email me a sign-in link' }).click();
-  await expect(page.getByText('Check your email.')).toBeVisible();
+  await expect(page.getByText('Check your email.')).toBeVisible({ timeout: 30_000 }); // first request compiles the route
 
   const link = await magicLinkFor(email);
   await page.goto(link);
@@ -35,13 +35,14 @@ test('a new organizer signs in by email link, sets up a household and sees the w
   await expect(page.locator('.day')).toHaveCount(7);
   await expect(page.locator('#day-0 .dinner-name')).toHaveText('Sheet-pan lemon chicken & potatoes');
   await expect(page.locator('.avatars .avatar')).toHaveCount(4);
-  await expect(page.getByText(/Free trial: 14 days left/)).toBeVisible();
+  await expect(page.getByText(/free trial, 14 days left/)).toBeVisible();
   expect(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth)).toBe(false);
 
   // Already set up: the welcome step is skipped
   await page.goto('/welcome');
   await expect(page).toHaveURL(/\/week$/);
 
+  await page.goto('/household');
   await page.getByRole('button', { name: 'Sign out' }).click();
   await page.waitForURL((url) => url.pathname === '/');
   await page.goto('/week');

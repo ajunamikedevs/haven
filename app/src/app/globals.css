@@ -469,3 +469,8 @@ details.more[open] summary::before { content: "–"; }
 .auth-sent { display: flex; flex-direction: column; align-items: flex-start; gap: 12px; }
 .field-error { font-size: var(--fs-small); color: var(--danger); }
 .btn:disabled { opacity: .6; cursor: default; }
+
+/* ---------- Read-only banner and account panel (new for the app) ---------- */
+.readonly-banner { background: var(--warn-tint); border-bottom: 1px solid var(--warn-line); color: var(--warn-ink); font-size: var(--fs-small); }
+.readonly-banner .wrap { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 16px; padding-block: 10px; }
+.account-panel { margin-top: 16px; }

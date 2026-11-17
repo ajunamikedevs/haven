@@ -19,7 +19,7 @@ export async function signUp(page: Page): Promise<string> {
   await page.goto('/signin');
   await page.getByLabel('Email').fill(email);
   await page.getByRole('button', { name: 'Email me a sign-in link' }).click();
-  await expect(page.getByText('Check your email.')).toBeVisible();
+  await expect(page.getByText('Check your email.')).toBeVisible({ timeout: 30_000 }); // first request compiles the route
   await page.goto(await magicLinkFor(email));
   await page.waitForURL('**/welcome');
   await page.getByRole('button', { name: 'Start my free 14 days' }).click();
