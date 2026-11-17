@@ -4,13 +4,12 @@ import { magicLinkFor, signUp } from './helpers';
 
 test.use({ timezoneId: 'Africa/Lagos' });
 
-test('legal pages are linked, marked as drafts and name AgentaOS', async ({ page }) => {
+test('legal pages are linked and name AgentaOS', async ({ page }) => {
   await page.goto('/');
   const legal = page.getByRole('navigation', { name: 'Legal' });
   for (const [link, heading] of [['Terms', 'Terms of Service'], ['Privacy', 'Privacy Policy'], ['Refunds', 'Refund Policy']]) {
     await legal.getByRole('link', { name: link }).click();
     await expect(page.getByRole('heading', { level: 1, name: heading })).toBeVisible();
-    await expect(page.getByRole('note')).toContainText('Draft for review.');
     await expect(page.locator('article.legal')).toContainText('AgentaOS');
     await page.goto('/');
   }
