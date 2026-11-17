@@ -1,5 +1,7 @@
 import type { CSSProperties } from 'react';
 import Link from 'next/link';
+import { LegalFooter } from '@/components/legal-footer';
+import { DeletedNotice } from './deleted-notice';
 import { Icon } from '@/components/icon';
 import { LegacyLinks } from './legacy-links';
 
@@ -8,6 +10,7 @@ export default function LandingPage() {
   return (
     <div id="landing">
       <LegacyLinks />
+      <DeletedNotice />
       <header className="l-nav">
         <div className="wrap">
           <Link className="brand" href="/" aria-label="Haven home"><span className="brand-mark"><Icon name="home" /></span>Haven</Link>
@@ -120,10 +123,7 @@ export default function LandingPage() {
         </section>
       </main>
     
-      <footer className="wrap l-foot">
-        <span>Haven · household scheduling and meal planning</span>
-        <span>One plan covers everyone you live with.</span>
-      </footer>
+      <LegalFooter />
     </div>
   );
 }

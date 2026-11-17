@@ -86,7 +86,7 @@ async function Billing({ searchParams }: { searchParams: Search }) {
               <button className="btn btn-primary" type="submit">Choose yearly</button>
             </form>
           </div>
-          <p className="muted fine">Prices in US dollars. Sales tax or VAT is added at checkout where it applies.</p>
+          <p className="muted fine">Prices in US dollars. Sales tax or VAT is added at checkout where it applies. By subscribing you agree to the <Link href="/terms">Terms</Link> and <Link href="/refunds">Refund Policy</Link>.</p>
         </section>
       )}
 

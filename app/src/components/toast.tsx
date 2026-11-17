@@ -58,7 +58,14 @@ export function useAct() {
   const [pending, start] = useTransition();
   const act = useCallback((fn: () => Promise<ActionResult>, onDone?: (result: ActionResult) => void) => {
     start(async () => {
-      const result = await fn();
+      let result: ActionResult;
+      try {
+        result = await fn();
+      } catch (e) {
+        // A change needs the server: say so plainly when the phone is offline
+        if (typeof navigator !== 'undefined' && !navigator.onLine) { toast('You’re offline. This will work again when you’re connected.'); return; }
+        throw e;
+      }
       if (!result.ok) toast(result.message);
       else if (result.message) {
         const undoId = result.undoId;

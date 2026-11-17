@@ -495,3 +495,12 @@ details.more[open] summary::before { content: "–"; }
 .receipts { list-style: none; padding: 0; margin: 8px 0 0; display: grid; }
 .receipts li { display: flex; gap: 12px; justify-content: space-between; padding: 10px 0; border-top: 1px solid var(--line); font-size: var(--fs-small); }
 .receipts li:first-child { border-top: 0; }
+
+/* ---------- Legal pages ---------- */
+.legal { display: grid; gap: 4px; padding-bottom: 32px; }
+.legal h1 { margin: 16px 0 0; }
+.legal h2 { font-size: 18px; margin: 24px 0 4px; }
+.legal p, .legal li { line-height: 1.6; }
+.legal ul { padding-left: 20px; margin: 4px 0; display: grid; gap: 6px; }
+.legal-links { display: flex; gap: 16px; }
+.legal-links a, .hint a, .fine a { color: inherit; text-decoration: underline; text-underline-offset: 2px; }

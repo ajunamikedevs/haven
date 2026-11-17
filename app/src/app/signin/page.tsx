@@ -18,6 +18,7 @@ export default function SignInPage() {
         <SignInForm googleEnabled={googleEnabled} />
       </section>
       <p className="hint">Only the person who plans the week needs an account. Everyone else just gets a link.</p>
+      <p className="hint">By continuing you agree to the <Link href="/terms">Terms</Link> and <Link href="/privacy">Privacy Policy</Link>.</p>
     </main>
   );
 }
