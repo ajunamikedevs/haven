@@ -1,5 +1,5 @@
 import { relations } from 'drizzle-orm';
-import { boolean, date, index, integer, jsonb, pgTable, smallint, text, timestamp, uniqueIndex, uuid } from 'drizzle-orm/pg-core';
+import { bigint, boolean, date, index, integer, jsonb, pgTable, smallint, text, timestamp, uniqueIndex, uuid } from 'drizzle-orm/pg-core';
 import type { Ingredient } from '../lib/types';
 
 /* ---------- Sign-in (Better Auth's tables; names and columns follow its core schema) ---------- */
@@ -49,6 +49,14 @@ export const verification = pgTable('verification', {
   createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
   updatedAt: timestamp('updated_at', { withTimezone: true }).notNull().defaultNow(),
 }, (t) => [index('verification_identifier_idx').on(t.identifier)]);
+
+/** Sign-in rate limits, kept in the database so every server instance shares them. */
+export const rateLimit = pgTable('rate_limit', {
+  id: text('id').primaryKey(),
+  key: text('key').notNull().unique(),
+  count: integer('count').notNull(),
+  lastRequest: bigint('last_request', { mode: 'number' }).notNull(),
+});
 
 /* ---------- Haven ---------- */
 

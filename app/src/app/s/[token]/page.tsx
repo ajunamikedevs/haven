@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import { connection } from 'next/server';
 import { Suspense } from 'react';
 import { Icon } from '@/components/icon';
 import { WhoChip } from '@/components/who-chip';
@@ -34,6 +35,8 @@ export default function SharedPage({ params }: { params: Promise<{ token: string
 }
 
 async function Shared({ params }: { params: Promise<{ token: string }> }) {
+  // Every visit is live: the link can be switched off and access can change at any moment
+  await connection();
   const { token } = await params;
   const open = await openLink(token);
   if (!open) return <DeadLink />;
