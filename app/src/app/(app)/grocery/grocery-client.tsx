@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { useRef, useState } from 'react';
 import { copyText } from '@/components/confirm-sheet';
 import { Icon } from '@/components/icon';
+import { sendLink } from '@/components/send-link';
 import { Sheet } from '@/components/sheet';
 import { buzz, useAct, useToast } from '@/components/toast';
 import { groupByAisle, listAsText, listItems } from '@/lib/grocery';
@@ -79,8 +80,11 @@ export function GroceryClient({ week, weekOf }: { week: Week; weekOf: string }) 
               {inCart > 0 && <button className="btn btn-text btn-sm" type="button" disabled={pending} onClick={() => { setLocal({}); act(() => uncheckAll(), () => setLocal({})); }}>Uncheck all</button>}
             </div>
             <div className="bar" role="img" aria-label={`${inCart} of ${total} items checked off`}><span style={{ width: Math.round((inCart / total) * 100) + '%' }} /></div>
-            <button className="btn btn-primary" type="button" onClick={copyList}><Icon name="share" />Copy list</button>
-            <p className="hint">Copies what’s still left to buy, ready to paste into a text or note.</p>
+            <div className="summary-actions">
+              <button className="btn btn-primary" type="button" onClick={async () => { const message = await sendLink('list'); if (message) toast(message); }}><Icon name="link" />Send list link</button>
+              <button className="btn btn-quiet" type="button" onClick={copyList}>Copy as text</button>
+            </div>
+            <p className="hint">The link always shows the current list and opens in any browser, with no app or account needed. Whoever has it can tick things off.</p>
           </section>
 
           <div className="card list">

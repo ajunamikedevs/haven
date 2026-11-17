@@ -4,15 +4,18 @@ import { and, eq, max } from 'drizzle-orm';
 import { refresh } from 'next/cache';
 import { db } from '@/db';
 import { dinners, events, extras, groceryChecks, households, members } from '@/db/schema';
-import { loadWeek, ReadOnlyError, requireWriteAccess, type Household } from '@/lib/dal';
+import { now } from '@/lib/clock';
+import { loadWeek, ReadOnlyError, requireHousehold, requireWriteAccess, type Household } from '@/lib/dal';
 import { fillOpenNights } from '@/lib/fill';
 import { guessAisle } from '@/lib/grocery';
+import { importPrototypeWeek } from '@/lib/import';
 import { COLORS, DAY_NAMES, mealCopy, mealById } from '@/lib/meals';
+import { recordEvent } from '@/lib/product-events';
 import { sampleWeek } from '@/lib/sample';
+import { getOrCreateLink, revokeLink, tokenFor, type ShareKind } from '@/lib/share';
 import { clearWeek, insertWeek, restoreSnapshot, takeSnapshot, type Tx } from '@/lib/store';
+import { isValidTimeZone, plural, zonedToday } from '@/lib/week';
 import { nextWeek } from '@/lib/wrap-up';
-import { plural, zonedToday } from '@/lib/week';
-import { now } from '@/lib/clock';
 
 // Every change to a household's week. Each action:
 //  1. gets the household from the signed-in session (never from the browser) and refuses if it is read-only,
@@ -51,6 +54,13 @@ async function putDinner(householdId: string, day: number, dinner: ReturnType<ty
     await tx.insert(dinners).values({ householdId, day, libId: dinner.libId, name: dinner.name, minutes: dinner.minutes, effort: dinner.effort, tags: dinner.tags, ingredients: dinner.ing, cooked: false });
     await notExample(tx, householdId);
   });
+  await notePlanned(householdId);
+}
+
+/** Records the moment all seven dinners are set. */
+async function notePlanned(householdId: string) {
+  const rows = await db.select({ day: dinners.day }).from(dinners).where(eq(dinners.householdId, householdId));
+  if (rows.length === 7) await recordEvent(householdId, 'week_planned');
 }
 
 export async function chooseMeal(day: number, mealId: string): Promise<ActionResult> {
@@ -109,6 +119,8 @@ export async function fillWeek(): Promise<ActionResult> {
       await notExample(tx, h.id);
       return id;
     });
+    await recordEvent(h.id, 'fill_open_nights');
+    await notePlanned(h.id);
     return { ok: true, undoId, message: `Planned ${plural(days.length, 'night')}. Tap any dinner to swap it.` };
   });
 }
@@ -329,6 +341,7 @@ export async function startNextWeek(): Promise<ActionResult> {
       await tx.update(households).set({ weekOf: next.weekOf, isExample: false, welcomed: true }).where(eq(households.id, h.id));
       return snap;
     });
+    await recordEvent(h.id, 'wrap_up_completed');
     return { ok: true, undoId, message: 'Next week is ready' + (kept ? `, with ${plural(kept, 'repeating plan')} carried over.` : '.') };
   });
 }
@@ -340,5 +353,63 @@ export async function undo(undoId: string): Promise<ActionResult> {
     if (!isUuid(undoId)) return invalid();
     const restored = await db.transaction((tx) => restoreSnapshot(tx, h.id, undoId));
     return restored ? { ok: true, message: 'Undone.' } : { ok: false, error: 'expired', message: 'That can’t be undone any more.' };
+  });
+}
+
+/* ---------- Share links ---------- */
+
+export type ShareLinkResult = { ok: true; path: string } | { ok: false; message: string };
+
+/**
+ * The household's link for its grocery list or its week, made on first use. Allowed even when
+ * the household is read-only: the link only shows what is already there.
+ */
+export async function shareLink(kind: ShareKind): Promise<ShareLinkResult> {
+  if (kind !== 'list' && kind !== 'week') return { ok: false, message: 'That didn’t look right.' };
+  const { household } = await requireHousehold();
+  const before = Date.now();
+  const link = await getOrCreateLink(household.id, kind);
+  if (link.createdAt.getTime() >= before - 1000) await recordEvent(household.id, 'share_link_created');
+  return { ok: true, path: '/s/' + tokenFor(link.id) };
+}
+
+/** Switches a link off for good. Sharing again makes a new one with a new address. */
+export async function revokeShareLink(id: string): Promise<ActionResult> {
+  if (!isUuid(id)) return invalid();
+  const { household } = await requireHousehold();
+  await revokeLink(household.id, id);
+  refresh();
+  return { ok: true, message: 'Link switched off. Anyone who had it can no longer open it.' };
+}
+
+/* ---------- Settings ---------- */
+
+export async function setTimeZone(timeZone: string): Promise<ActionResult> {
+  return run(async (h) => {
+    if (typeof timeZone !== 'string' || !isValidTimeZone(timeZone)) return invalid('That time zone isn’t one Haven knows.');
+    await db.update(households).set({ timeZone }).where(eq(households.id, h.id));
+    return { ok: true, message: 'Time zone saved.' };
+  });
+}
+
+/* ---------- Import from the prototype ---------- */
+
+/**
+ * Brings over a week saved by the old single-page Haven (localStorage "haven.v1").
+ * The data comes from the browser, so importPrototypeWeek checks and caps every field first.
+ */
+export async function importWeek(raw: unknown): Promise<ActionResult> {
+  return run(async (h) => {
+    const imported = importPrototypeWeek(raw);
+    if (!imported) return invalid('That saved week couldn’t be read, so nothing was changed.');
+    const undoId = await db.transaction(async (tx) => {
+      const snap = await takeSnapshot(tx, h.id);
+      await clearWeek(tx, h.id, { members: true });
+      await insertWeek(tx, h.id, imported.week);
+      await tx.update(households).set({ isExample: imported.isExample, welcomed: true }).where(eq(households.id, h.id));
+      return snap;
+    });
+    await recordEvent(h.id, 'imported_prototype_week');
+    return { ok: true, undoId, message: 'Your week from this device is here now.' };
   });
 }

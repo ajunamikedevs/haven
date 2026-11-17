@@ -1,11 +1,13 @@
 import type { CSSProperties } from 'react';
 import Link from 'next/link';
 import { Icon } from '@/components/icon';
+import { LegacyLinks } from './legacy-links';
 
 // The public landing page, carried over from the prototype (haven.html).
 export default function LandingPage() {
   return (
     <div id="landing">
+      <LegacyLinks />
       <header className="l-nav">
         <div className="wrap">
           <Link className="brand" href="/" aria-label="Haven home"><span className="brand-mark"><Icon name="home" /></span>Haven</Link>

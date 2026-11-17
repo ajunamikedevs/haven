@@ -3,11 +3,11 @@
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
-import { copyText } from '@/components/confirm-sheet';
 import { Icon } from '@/components/icon';
+import { sendLink } from '@/components/send-link';
 import { buzz, useAct, useToast } from '@/components/toast';
 import { WhoChip } from '@/components/who-chip';
-import { listAsText, listItems } from '@/lib/grocery';
+import { listItems } from '@/lib/grocery';
 import type { HeadsUpItem } from '@/lib/heads-up';
 import { DAY_NAMES, mealMeta } from '@/lib/meals';
 import type { Week } from '@/lib/types';
@@ -17,6 +17,7 @@ import { dismissWelcome, fillWeek, setCooked, setEventDone, startBlank } from '.
 import { WrapSheet } from '../wrap-sheet';
 import { DinnerSheet } from './dinner-sheet';
 import { EventSheet, type EventTarget } from './event-sheet';
+import { ImportPrompt } from './import-prompt';
 
 export type WeekProps = {
   week: Week; weekOf: string; today: Today; heads: HeadsUpItem[]; stats: WrapStats;
@@ -47,10 +48,9 @@ export function WeekClient(p: WeekProps) {
     else if (h.action === 'see-list') router.push('/grocery');
     else jump(h.day!);
   }
-  async function copyList() {
-    const { text, count } = listAsText(items, weekOf);
-    if (!count) { toast('Everything is checked off. Nothing left to copy.'); return; }
-    toast((await copyText(text)) ? `Copied ${plural(count, 'item')}. Paste them into a text or note.` : 'Copying is blocked here. Open the grocery list to copy it by hand.');
+  async function shareWeek() {
+    const message = await sendLink('week');
+    if (message) toast(message);
   }
 
   const tonight = week.dinners[t];
@@ -81,6 +81,8 @@ export function WeekClient(p: WeekProps) {
           </div>
         </section>
       )}
+
+      <ImportPrompt />
 
       {p.heads.length ? (
         <section className="heads" aria-labelledby="headsTitle">
@@ -148,7 +150,7 @@ export function WeekClient(p: WeekProps) {
           </div>
           <div className="summary-actions">
             <Link className="btn btn-primary" href="/grocery"><Icon name="bag" />Grocery list · {plural(items.length, 'item')}</Link>
-            <button className="icon-btn" type="button" onClick={copyList} aria-label="Copy the grocery list to share" style={{ width: 48, height: 48 }}><Icon name="share" /></button>
+            <button className="icon-btn" type="button" onClick={shareWeek} aria-label="Send this week to your household as a link" style={{ width: 48, height: 48 }}><Icon name="share" /></button>
           </div>
         </section>
       </div>

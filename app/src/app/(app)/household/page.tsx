@@ -1,10 +1,10 @@
 import type { Metadata } from 'next';
+import Link from 'next/link';
 import { Suspense } from 'react';
 import { now } from '@/lib/clock';
 import { loadWeek, requireHousehold } from '@/lib/dal';
 import { weekRolled, zonedToday } from '@/lib/week';
 import { wrapStats } from '@/lib/wrap-up';
-import { SignOutButton } from '../sign-out-button';
 import { HouseholdClient } from './household-client';
 
 export const metadata: Metadata = { title: 'Household' };
@@ -28,7 +28,7 @@ async function HouseholdData() {
         <div className="panel reset-panel">
           <h2 id="accountTitle" style={{ fontSize: 16 }}>Account</h2>
           <p className="muted" style={{ fontSize: 14 }}>Signed in as {user.email}</p>
-          <div className="row"><SignOutButton /></div>
+          <div className="row"><Link className="btn btn-quiet btn-sm" href="/settings">Settings and shared links</Link></div>
         </div>
       </section>
     </>

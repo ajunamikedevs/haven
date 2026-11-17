@@ -163,6 +163,9 @@ export const shareLinks = pgTable('share_links', {
   tokenHash: text('token_hash').notNull().unique(),
   revokedAt: timestamp('revoked_at', { withTimezone: true }),
   lastOpenedAt: timestamp('last_opened_at', { withTimezone: true }),
+  /** Ticks made through the link in the current minute, to rate-limit signed-out writes. */
+  writeCount: integer('write_count').notNull().default(0),
+  writeWindowStart: timestamp('write_window_start', { withTimezone: true }),
   createdAt: createdAt(),
 }, (t) => [index('share_links_household_idx').on(t.householdId)]);
 

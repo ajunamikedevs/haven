@@ -8,6 +8,13 @@
       "when": 1794899409678,
       "tag": "0000_keen_whiplash",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1794901394352,
+      "tag": "0001_wild_pretty_boy",
+      "breakpoints": true
     }
   ]
 }

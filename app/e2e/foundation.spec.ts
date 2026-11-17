@@ -42,7 +42,7 @@ test('a new organizer signs in by email link, sets up a household and sees the w
   await page.goto('/welcome');
   await expect(page).toHaveURL(/\/week$/);
 
-  await page.goto('/household');
+  await page.goto('/settings');
   await page.getByRole('button', { name: 'Sign out' }).click();
   await page.waitForURL((url) => url.pathname === '/');
   await page.goto('/week');

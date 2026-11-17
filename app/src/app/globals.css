@@ -474,3 +474,7 @@ details.more[open] summary::before { content: "–"; }
 .readonly-banner { background: var(--warn-tint); border-bottom: 1px solid var(--warn-line); color: var(--warn-ink); font-size: var(--fs-small); }
 .readonly-banner .wrap { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 16px; padding-block: 10px; }
 .account-panel { margin-top: 16px; }
+.link-row { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 12px; padding-block: 12px; }
+.link-row + .link-row { border-top: 1px solid var(--line-soft); }
+.link-row .feature-icon { width: 44px; height: 44px; }
+.link-row .link-text { flex: 1; min-width: 140px; display: flex; flex-direction: column; }

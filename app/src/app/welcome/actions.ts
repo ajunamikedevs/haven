@@ -6,6 +6,7 @@ import { households } from '@/db/schema';
 import { trialEndsAt } from '@/lib/access';
 import { now } from '@/lib/clock';
 import { getHousehold, requireUser } from '@/lib/dal';
+import { recordEvent } from '@/lib/product-events';
 import { sampleWeek } from '@/lib/sample';
 import { insertWeek } from '@/lib/store';
 import { isValidTimeZone, zonedToday } from '@/lib/week';
@@ -22,12 +23,14 @@ export async function createHousehold(formData: FormData): Promise<void> {
   const timeZone = isValidTimeZone(raw) ? raw : 'UTC';
   const at = now();
 
-  await db.transaction(async (tx) => {
+  const householdId = await db.transaction(async (tx) => {
     const [household] = await tx.insert(households).values({
       ownerUserId: user.id, timeZone, weekOf: zonedToday(timeZone, at).weekOf, trialEndsAt: trialEndsAt(at),
     }).returning({ id: households.id });
     await insertWeek(tx, household.id, sampleWeek());
+    return household.id;
   });
+  await recordEvent(householdId, 'signup');
 
   redirect('/week');
 }
