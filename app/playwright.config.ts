@@ -6,7 +6,9 @@ const channel = process.env.CI ? undefined : process.env.PW_CHANNEL ?? 'msedge';
 
 export default defineConfig({
   testDir: './e2e',
-  timeout: 60_000,
+  timeout: 90_000,
+  // The dev server compiles each page on first visit, which can take several seconds on a busy machine
+  expect: { timeout: 10_000 },
   fullyParallel: false,
   workers: 1,
   reporter: process.env.CI ? 'github' : 'list',

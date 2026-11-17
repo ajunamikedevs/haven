@@ -27,7 +27,7 @@ Not a change, but worth knowing: the folder is `app/` as decided, and Next.js al
 - **Auth: Better Auth** with the Drizzle adapter: email magic link plugin + Google provider, sessions in our Postgres. Google is switched on once the owner adds the OAuth client; until then magic link works alone.
 - **Email: Resend** (transactional only), provisioned through the Marketplace if available there. Templates are plain React email components in the repo.
 - **Payments: `@agentaos/pay`** on the server, Pattern B from the AgentaOS skill (server-created checkout carrying our household id).
-- **Errors: Sentry** (Marketplace). Chosen over Vercel's built-in observability because it covers browser errors as well as server ones, and lets us scrub payloads. `beforeSend` strips request bodies, emails and household content.
+- **Errors: Vercel runtime logs.** Sentry was tried and dropped on the owner's instruction (the Marketplace install failed, then the SDK slowed every request even when disabled). `src/instrumentation.ts` logs server errors as one scrubbed JSON line: no emails, tokens or request bodies.
 - **Scheduled work:** one daily Vercel scheduled function for trial emails.
 - **Tests:** Vitest (logic), Playwright (flows), GitHub Actions for CI.
 - **Styling:** the prototype's CSS custom properties and component rules moved into `src/styles/` (tokens.css + component stylesheets, CSS modules where a component owns its styles). No utility framework. Fonts via `next/font` (Plus Jakarta Sans, Inter).

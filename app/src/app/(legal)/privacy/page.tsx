@@ -17,7 +17,7 @@ export default function PrivacyPage() {
         <li><strong>Your household’s plan:</strong> the names and roles you enter for people, events, dinners, grocery items and what’s been ticked off. People you share links with don’t need an account and we don’t collect anything about them beyond what they tick.</li>
         <li><strong>Billing status:</strong> your plan, its status and renewal date, from AgentaOS. We never see or store card details.</li>
         <li><strong>Usage:</strong> anonymous page views (Vercel Web Analytics, which uses no cookies) and a small set of product events such as “signed up” or “planned all seven dinners”. These record that something happened, never what you wrote.</li>
-        <li><strong>Errors:</strong> when something breaks, a report of the error and the page it happened on, with emails and household content removed.</li>
+        <li><strong>Errors:</strong> when something breaks on our servers, a log of the error and the page it happened on, with emails and household content removed. These logs stay with our host, Vercel.</li>
         <li><strong>Security:</strong> session cookies to keep you signed in, and short-lived records such as sign-in links and rate limits.</li>
       </ul>
 
@@ -28,7 +28,6 @@ export default function PrivacyPage() {
         <li><strong>Vercel</strong> (hosting and analytics) and <strong>Neon</strong> (database), which store and serve Haven.</li>
         <li><strong>Resend</strong>, which delivers sign-in and billing emails.</li>
         <li><strong>Google</strong>, only if you choose to sign in with Google.</li>
-        <li>An error-monitoring service, which receives error reports with personal details removed.</li>
       </ul>
       <p>We share data with authorities only when the law requires it.</p>
 
