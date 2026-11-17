@@ -15,6 +15,13 @@
       "when": 1794901394352,
       "tag": "0001_wild_pretty_boy",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1794904238909,
+      "tag": "0002_lonely_professor_monster",
+      "breakpoints": true
     }
   ]
 }

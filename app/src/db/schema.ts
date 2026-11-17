@@ -66,6 +66,8 @@ export const households = pgTable('households', {
   welcomed: boolean('welcomed').notNull().default(false),
   isExample: boolean('is_example').notNull().default(true),
   trialEndsAt: timestamp('trial_ends_at', { withTimezone: true }).notNull(),
+  /** When the "trial ends soon" email went out, so the daily job sends it once. */
+  trialReminderSentAt: timestamp('trial_reminder_sent_at', { withTimezone: true }),
   createdAt: createdAt(),
 });
 

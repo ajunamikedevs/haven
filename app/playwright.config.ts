@@ -20,7 +20,7 @@ export default defineConfig({
     url: 'http://localhost:3210',
     // Sign-in only accepts requests from its own address, so the test server must know its port
     // 11:00 on a Wednesday in Lagos, so Heads up and "tonight" are the same on every run
-    env: { HAVEN_FAKE_NOW: '2026-11-18T10:00:00Z', BETTER_AUTH_URL: 'http://localhost:3210', BETTER_AUTH_SECRET: process.env.BETTER_AUTH_SECRET ?? 'e2e-only-secret-not-used-anywhere-real' },
+    env: { HAVEN_E2E: '1', AGENTAOS_WEBHOOK_SECRET: 'e2e-webhook-secret', AGENTAOS_API_KEY: '', HAVEN_FAKE_NOW: '2026-11-18T10:00:00Z', BETTER_AUTH_URL: 'http://localhost:3210', BETTER_AUTH_SECRET: process.env.BETTER_AUTH_SECRET ?? 'e2e-only-secret-not-used-anywhere-real' },
     reuseExistingServer: false,
     timeout: 120_000,
   },

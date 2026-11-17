@@ -478,3 +478,20 @@ details.more[open] summary::before { content: "–"; }
 .link-row + .link-row { border-top: 1px solid var(--line-soft); }
 .link-row .feature-icon { width: 44px; height: 44px; }
 .link-row .link-text { flex: 1; min-width: 140px; display: flex; flex-direction: column; }
+
+/* ---------- Plan and billing ---------- */
+.billing { display: grid; gap: 20px; }
+.billing-status { padding: 20px; display: grid; gap: 12px; }
+.billing-status p { margin: 0; }
+.section-title { font-size: 16px; margin: 0 0 12px; }
+.plans { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+.plan { padding: 20px; display: grid; gap: 8px; align-content: start; }
+.plan h3 { margin: 0; font-size: 18px; display: flex; align-items: center; gap: 8px; }
+.plan .price { margin: 0; font-size: 15px; }
+.plan .price strong { font-size: 28px; }
+.plan p { margin: 0; }
+.plan .btn { margin-top: 8px; }
+.fine { font-size: 13px; margin: 10px 0 0; }
+.receipts { list-style: none; padding: 0; margin: 8px 0 0; display: grid; }
+.receipts li { display: flex; gap: 12px; justify-content: space-between; padding: 10px 0; border-top: 1px solid var(--line); font-size: var(--fs-small); }
+.receipts li:first-child { border-top: 0; }
