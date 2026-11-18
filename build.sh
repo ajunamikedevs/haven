@@ -1,5 +1,5 @@
 #!/bin/sh
-# Builds index.html (the GitHub Pages site) from haven.html, the source you edit.
+# Builds prototype.html from haven.html, the reference spec. index.html now redirects to the new app, so this never writes it.
 # haven.html has no document shell of its own, so this wraps it in one.
 set -e
 cd "$(dirname "$0")"
@@ -21,5 +21,5 @@ img { max-width: 100%; }
 EOF
 cat haven.html
 printf '\n</body>\n</html>\n'
-} > index.html
-echo "Built index.html"
+} > prototype.html
+echo "Built prototype.html"
