@@ -76,6 +76,10 @@ export const households = pgTable('households', {
   trialEndsAt: timestamp('trial_ends_at', { withTimezone: true }).notNull(),
   /** When the "trial ends soon" email went out, so the daily job sends it once. */
   trialReminderSentAt: timestamp('trial_reminder_sent_at', { withTimezone: true }),
+  /** When the one "plan your first week" nudge went out, a day or two after signing up. */
+  nudgeSentAt: timestamp('nudge_sent_at', { withTimezone: true }),
+  /** When the one "your trial has ended" email went out. */
+  trialEndedSentAt: timestamp('trial_ended_sent_at', { withTimezone: true }),
   createdAt: createdAt(),
 });
 
