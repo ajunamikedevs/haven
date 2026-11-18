@@ -61,6 +61,30 @@ export function trialEndingEmail(endsOn: string, url: string): Omit<Email, 'to'>
   );
 }
 
+export function firstWeekNudgeEmail(url: string): Omit<Email, 'to'> {
+  return simpleEmail(
+    'Plan your first week in Haven',
+    [
+      'You started Haven but haven’t planned a week yet. It takes about five minutes.',
+      'The quickest start: add your household, put in the evenings that are already busy, then tap “Fill them” and Haven suggests a dinner for every open night. The grocery list builds itself, and you can send it to whoever does the shop.',
+    ],
+    { label: 'Plan this week', url },
+    'You’re getting this because you started a Haven trial. We won’t send another one like it.',
+  );
+}
+
+export function trialEndedEmail(endedOn: string, url: string): Omit<Email, 'to'> {
+  return simpleEmail(
+    'Your Haven trial has ended',
+    [
+      `Your free trial of Haven ended ${endedOn}. Everything you planned is still there to read.`,
+      'To keep planning, pick a plan: $5 a month, or $48 a year. You pick up exactly where you left off.',
+    ],
+    { label: 'Pick a plan', url },
+    'You’re getting this because your Haven trial ended. It’s the only email we’ll send about it.',
+  );
+}
+
 export function paymentFailedEmail(url: string): Omit<Email, 'to'> {
   return simpleEmail(
     'Your Haven payment didn’t go through',

@@ -6,7 +6,7 @@ export default function PrivacyPage() {
   return (
     <>
       <h1>Privacy Policy</h1>
-      <p className="sub">Last updated November 17, 2026</p>
+      <p className="sub">Last updated November 19, 2026</p>
 
       <h2>The short version</h2>
       <p>Haven keeps what you plan so you can plan it. We don’t sell your data, we don’t show ads, and we don’t use advertising cookies. You can export or delete everything at any time.</p>
@@ -26,7 +26,7 @@ export default function PrivacyPage() {
       <ul>
         <li><strong>AgentaOS</strong>, our merchant of record, for payments, tax, invoices and receipts. AgentaOS is the seller of your subscription and processes your payment details under its own privacy policy.</li>
         <li><strong>Vercel</strong> (hosting and analytics) and <strong>Neon</strong> (database), which store and serve Haven.</li>
-        <li><strong>Resend</strong>, which delivers sign-in and billing emails.</li>
+        <li><strong>Resend</strong>, which delivers sign-in and billing emails, plus two one-off account emails: a reminder to plan your first week if you haven’t yet, and a note when your free trial ends.</li>
         <li><strong>Google</strong>, only if you choose to sign in with Google.</li>
       </ul>
       <p>We share data with authorities only when the law requires it.</p>

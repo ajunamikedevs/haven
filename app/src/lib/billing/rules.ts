@@ -30,6 +30,32 @@ export function needsTrialReminder(h: { trialEndsAt: Date; trialReminderSentAt: 
   return left > 0 && left <= 3 * 86_400_000;
 }
 
+const DAY = 86_400_000;
+
+/**
+ * One "plan your first week" nudge, for organizers who signed up a day or more ago and haven't
+ * planned anything of their own yet. Accounts older than
+ * four days are left alone, so a late or first run of the daily job doesn't email stale sign-ups.
+ */
+export function needsFirstWeekNudge(h: { createdAt: Date; nudgeSentAt: Date | null; trialEndsAt: Date; subscriptionStatus: SubscriptionStatus | null; hasPlanned: boolean }, now: Date): boolean {
+  if (h.nudgeSentAt || h.hasPlanned) return false;
+  if (h.subscriptionStatus && isLive(h.subscriptionStatus)) return false;
+  if (h.trialEndsAt.getTime() <= now.getTime()) return false;
+  const age = now.getTime() - h.createdAt.getTime();
+  return age >= DAY && age < 4 * DAY;
+}
+
+/**
+ * One "your trial has ended" email, for households whose trial ended in the last three days and
+ * that never subscribed. Someone whose paid plan ended isn't a trial ending, so any subscription
+ * row rules it out.
+ */
+export function needsTrialEndedEmail(h: { trialEndsAt: Date; trialEndedSentAt: Date | null; subscriptionStatus: SubscriptionStatus | null }, now: Date): boolean {
+  if (h.trialEndedSentAt || h.subscriptionStatus) return false;
+  const since = now.getTime() - h.trialEndsAt.getTime();
+  return since >= 0 && since < 3 * DAY;
+}
+
 /** Webhook deliveries are retried, so each gets a stable key: the checkout session, or a hash of the body. */
 export function eventKey(type: string, sessionId: string | null, bodyHash: string): string {
   return type === 'checkout.session.completed' && sessionId ? `checkout:${sessionId}` : `${type}:${bodyHash}`;
