@@ -504,3 +504,22 @@ details.more[open] summary::before { content: "–"; }
 .legal ul { padding-left: 20px; margin: 4px 0; display: grid; gap: 6px; }
 .legal-links { display: flex; gap: 16px; }
 .legal-links a, .hint a, .fine a { color: inherit; text-decoration: underline; text-underline-offset: 2px; }
+
+/* Owner metrics */
+.metrics { max-width: 960px; margin: 0 auto; display: flex; flex-direction: column; gap: 16px; }
+.metric-tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; }
+.metric-tile { padding: 16px; display: flex; flex-direction: column; gap: 2px; }
+.metric-label { color: var(--text-muted); font-size: 14px; font-weight: 600; }
+.metric-value { font-family: var(--font-head); font-size: 30px; font-weight: 800; line-height: 1.15; font-variant-numeric: tabular-nums; }
+.metric-note { color: var(--text-muted); font-size: 14px; }
+.metric-section { padding: 18px; display: flex; flex-direction: column; gap: 10px; }
+.metric-section h2 { font-size: 18px; font-weight: 800; }
+.funnel { list-style: none; padding: 0; margin: 4px 0 0; display: grid; gap: 12px; }
+.funnel-row { display: flex; justify-content: space-between; gap: 12px; font-variant-numeric: tabular-nums; }
+.funnel-bar { height: 8px; border-radius: 999px; background: var(--surface-3); margin-top: 6px; overflow: hidden; }
+.funnel-bar span { display: block; height: 100%; border-radius: inherit; background: var(--primary); }
+.table-scroll { overflow-x: auto; }
+.cohorts { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; min-width: 460px; }
+.cohorts th, .cohorts td { text-align: left; padding: 10px 8px; border-top: 1px solid var(--line); white-space: nowrap; }
+.cohorts thead th { border-top: 0; color: var(--text-muted); font-size: 14px; font-weight: 600; }
+.cohorts tbody th { font-weight: 600; }
