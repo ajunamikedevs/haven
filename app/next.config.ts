@@ -38,6 +38,13 @@ const nextConfig: NextConfig = {
   // PGlite (local development database) loads its own WebAssembly files; keep it out of the bundle
   serverExternalPackages: ["@electric-sql/pglite"],
   poweredByHeader: false,
+  // Haven's home is havenweek.app. The first production address forwards there (308 keeps POSTs,
+  // so webhooks still sent to it arrive), because sign-in only accepts requests from its own address.
+  async redirects() {
+    return [
+      { source: "/:path*", has: [{ type: "host", value: "haven-omega-ashy.vercel.app" }], destination: "https://havenweek.app/:path*", permanent: true },
+    ];
+  },
   async headers() {
     return [
       { source: "/:path*", headers: securityHeaders },
